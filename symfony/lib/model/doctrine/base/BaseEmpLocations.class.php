@@ -36,6 +36,8 @@ abstract class BaseEmpLocations extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        
+        $this->hasOne('Employee', array(
+             'local' => 'emp_number',
+             'foreign' => 'emp_number'));
     }
 }

@@ -7,7 +7,12 @@ class createXmlAction extends baseShiftAction {
 
     public function execute($request) {
 
+       
+
         $scheduleID=$request->getParameter('schedule_id');
+        $this->getShiftService()->createXml($scheduleID);
+        // $this->getShiftService()->createRotaryXml($scheduleID);
+        $this->schedule_id=$scheduleID;
         $result=$this->getShiftService()->getRosterResult();
 
         $shiftTypes=$this->getShiftService()->getShiftTypeList($scheduleID);

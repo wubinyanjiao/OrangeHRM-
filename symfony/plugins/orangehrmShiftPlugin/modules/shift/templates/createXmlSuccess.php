@@ -2,11 +2,7 @@
 
 <?php
 
-// var_dump($result);exit;
-
 ?>
-
-
 
 
 <div class="box ">
@@ -18,6 +14,12 @@
         <div class="inner">
      
             <form name="frmEmpDelDependents" id="frmEmpDelDependents" method="" action="">
+
+                  <p id="listActions">
+                
+                    <input type="button" id="btnCSV" class="" value="<?php echo __("导出excel表"); ?>"/>
+                  
+                </p>
        
                 <table id="dependent_list" class="table hover" >
                 <!-- 标题 -->
@@ -75,3 +77,22 @@
         </div>
     </div> 
    </div>
+   <script type="text/javascript">
+      
+    $(document).ready(function(){
+
+
+
+         $('#btnCSV').click(function() {
+
+            
+            location.href = "<?php echo url_for('shift/createCSV?schedule_id='.$schedule_id) ?>";
+        });
+
+          $('#export').click(function(){
+                
+            })
+       
+
+    });
+   </script>

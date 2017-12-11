@@ -36,15 +36,15 @@ abstract class BaseWorkShiftRotary extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 25,
              ));
-        $this->hasColumn('first_document_id as firstDocument', 'integer', 6, array(
+        $this->hasColumn('first_department_id as firstDepartment', 'integer', 6, array(
              'type' => 'integer',
              'length' => 6,
              ));
-        $this->hasColumn('second_document_id as secondDocument', 'integer', 6, array(
+        $this->hasColumn('second_department_id as secondDepartment', 'integer', 6, array(
              'type' => 'integer',
              'length' => 6,
              ));
-        $this->hasColumn('third_document_id as thirdDocument', 'integer', 6, array(
+        $this->hasColumn('third_department_id as thirdDepartment', 'integer', 6, array(
              'type' => 'integer',
              'length' => 6,
              ));

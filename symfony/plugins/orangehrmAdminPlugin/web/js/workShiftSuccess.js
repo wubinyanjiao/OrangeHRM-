@@ -1,6 +1,7 @@
 $(document).ready(function() {
        
     $('#btnAssignEmployee').click(function() {  
+     
         return !$('#workShift_availableEmp option:selected').remove().appendTo('#workShift_assignedEmp');  
     }); 
     

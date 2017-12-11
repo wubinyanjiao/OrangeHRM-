@@ -1,0 +1,1680 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NurseRoster id="1">
+	<id>1</id>
+	<code>long_hint01</code>
+	<nurseRosterParametrization id="2">
+		<id>0</id>
+		<firstShiftDate id="3">
+			<id>0</id>
+			<dayIndex>0</dayIndex>
+			<date id="4" resolves-to="java.time.Ser">
+				<byte>3</byte>
+				<int>2017</int>
+				<byte>12</byte>
+				<byte>1</byte>
+			</date>
+			<shiftList id="5">
+				<Shift id="6">
+					<id>133</id>
+					<shiftDate reference="3"/>
+					<shiftType id="7">
+						<id>17</id>
+						<code>17</code>
+						<index>17</index>
+						<startTimeString>07:00:00</startTimeString>
+						<endTimeString>02:00:00</endTimeString>
+						<night>false</night>
+						<description>7</description>
+					</shiftType>
+					<index>133</index>
+					<requiredEmployeeSize>3</requiredEmployeeSize>
+				</Shift>
+				<Shift id="8">
+					<id>141</id>
+					<shiftDate reference="3"/>
+					<shiftType id="9">
+						<id>18</id>
+						<code>18</code>
+						<index>18</index>
+						<startTimeString>00:15:00</startTimeString>
+						<endTimeString>07:45:00</endTimeString>
+						<night>false</night>
+						<description>9</description>
+					</shiftType>
+					<index>141</index>
+					<requiredEmployeeSize>3</requiredEmployeeSize>
+				</Shift>
+			</shiftList>
+		</firstShiftDate>
+		<lastShiftDate id="10">
+			<id>7</id>
+			<dayIndex>70</dayIndex>
+			<date id="11" resolves-to="java.time.Ser">
+				<byte>3</byte>
+				<int>2017</int>
+				<byte>12</byte>
+				<byte>8</byte>
+			</date>
+			<shiftList id="12">
+				<Shift id="13">
+					<id>140</id>
+					<shiftDate reference="10"/>
+					<shiftType reference="7"/>
+					<index>140</index>
+					<requiredEmployeeSize>3</requiredEmployeeSize>
+				</Shift>
+				<Shift id="14">
+					<id>148</id>
+					<shiftDate reference="10"/>
+					<shiftType reference="9"/>
+					<index>148</index>
+					<requiredEmployeeSize>3</requiredEmployeeSize>
+				</Shift>
+			</shiftList>
+		</lastShiftDate>
+		<planningWindowStart reference="3"/>
+	</nurseRosterParametrization>
+	<patternList id="15">
+		<IdenticalShiftLastSomeDaysPattern id="16">
+			<id>0</id>
+			<code>0</code>
+			<weight>2</weight>
+			<dayShiftType reference="9"/>
+			<ShiftLastLength>1</ShiftLastLength>
+		</IdenticalShiftLastSomeDaysPattern>
+		<ShiftAssignedOnlyforManPattern id="17">
+			<id>1</id>
+			<code>1</code>
+			<weight>2</weight>
+			<dayShiftType reference="9"/>
+		</ShiftAssignedOnlyforManPattern>
+		<FreeAfterWeekendWorkDayPattern id="18">
+			<id>2</id>
+			<code>2</code>
+			<weight>2</weight>
+			<workDayOfWeek>SATURDAY</workDayOfWeek>
+		</FreeAfterWeekendWorkDayPattern>
+		<FreeAfterANightShiftPattern id="19">
+			<id>3</id>
+			<code>3</code>
+			<weight>1</weight>
+			<dayShiftType reference="7"/>
+			<workShiftType reference="7"/>
+		</FreeAfterANightShiftPattern>
+		<ShiftAssignedAveragedAtAllEmployeesPattern id="20">
+			<id>4</id>
+			<code>4</code>
+			<weight>2</weight>
+			<dayShiftType reference="9"/>
+			<dayShiftLength>2</dayShiftLength>
+		</ShiftAssignedAveragedAtAllEmployeesPattern>
+		<FreeTwoDaysEveryWeekPattern id="21">
+			<id>5</id>
+			<code>5</code>
+			<weight>2</weight>
+			<workDayLength>7</workDayLength>
+			<freeDayLength>2</freeDayLength>
+		</FreeTwoDaysEveryWeekPattern>
+		<ShiftAssignedSomeWeeksPattern id="22">
+			<id>6</id>
+			<code>6</code>
+			<weight>2</weight>
+			<dayShiftType reference="7"/>
+			<weekGapLength>2</weekGapLength>
+		</ShiftAssignedSomeWeeksPattern>
+		<ShiftType2DaysPattern id="23">
+			<id>7</id>
+			<code>7</code>
+			<weight>2</weight>
+			<dayIndex0ShiftType reference="9"/>
+			<dayIndex1ShiftType reference="7"/>
+		</ShiftType2DaysPattern>
+		<ShiftType2DaysPattern id="24">
+			<id>8</id>
+			<code>8</code>
+			<weight>2</weight>
+			<dayIndex0ShiftType reference="9"/>
+			<dayIndex1ShiftType reference="7"/>
+		</ShiftType2DaysPattern>
+	</patternList>
+	<contractList id="25">
+		<Contract id="26">
+			<id>0</id>
+			<code>0</code>
+			<description>fulltime</description>
+			<weekendDefinition>SATURDAY_SUNDAY</weekendDefinition>
+			<contractLineList id="27">
+				<BooleanContractLine id="28">
+					<id>0</id>
+					<contract reference="26"/>
+					<contractLineType>SINGLE_ASSIGNMENT_PER_DAY</contractLineType>
+					<enabled>true</enabled>
+					<weight>1</weight>
+				</BooleanContractLine>
+				<MinMaxContractLine id="29">
+					<id>1</id>
+					<contract reference="26"/>
+					<contractLineType>TOTAL_ASSIGNMENTS</contractLineType>
+					<minimumEnabled>true</minimumEnabled>
+					<minimumValue>10</minimumValue>
+					<minimumWeight>1</minimumWeight>
+					<maximumEnabled>true</maximumEnabled>
+					<maximumValue>20</maximumValue>
+					<maximumWeight>1</maximumWeight>
+				</MinMaxContractLine>
+				<MinMaxContractLine id="30">
+					<id>2</id>
+					<contract reference="26"/>
+					<contractLineType>CONSECUTIVE_WORKING_DAYS</contractLineType>
+					<minimumEnabled>true</minimumEnabled>
+					<minimumValue>3</minimumValue>
+					<minimumWeight>1</minimumWeight>
+					<maximumEnabled>true</maximumEnabled>
+					<maximumValue>5</maximumValue>
+					<maximumWeight>1</maximumWeight>
+				</MinMaxContractLine>
+				<MinMaxContractLine id="31">
+					<id>3</id>
+					<contract reference="26"/>
+					<contractLineType>CONSECUTIVE_FREE_DAYS</contractLineType>
+					<minimumEnabled>true</minimumEnabled>
+					<minimumValue>3</minimumValue>
+					<minimumWeight>1</minimumWeight>
+					<maximumEnabled>true</maximumEnabled>
+					<maximumValue>4</maximumValue>
+					<maximumWeight>1</maximumWeight>
+				</MinMaxContractLine>
+				<MinMaxContractLine id="32">
+					<id>4</id>
+					<contract reference="26"/>
+					<contractLineType>CONSECUTIVE_WORKING_WEEKENDS</contractLineType>
+					<minimumEnabled>true</minimumEnabled>
+					<minimumValue>2</minimumValue>
+					<minimumWeight>1</minimumWeight>
+					<maximumEnabled>true</maximumEnabled>
+					<maximumValue>2</maximumValue>
+					<maximumWeight>2</maximumWeight>
+				</MinMaxContractLine>
+				<BooleanContractLine id="33">
+					<id>5</id>
+					<contract reference="26"/>
+					<contractLineType>COMPLETE_WEEKENDS</contractLineType>
+					<enabled>true</enabled>
+					<weight>1</weight>
+				</BooleanContractLine>
+				<BooleanContractLine id="34">
+					<id>6</id>
+					<contract reference="26"/>
+					<contractLineType>IDENTICAL_SHIFT_TYPES_DURING_WEEKEND</contractLineType>
+					<enabled>true</enabled>
+					<weight>1</weight>
+				</BooleanContractLine>
+				<BooleanContractLine id="35">
+					<id>7</id>
+					<contract reference="26"/>
+					<contractLineType>NO_NIGHT_SHIFT_BEFORE_FREE_WEEKEND</contractLineType>
+					<enabled>true</enabled>
+					<weight>1</weight>
+				</BooleanContractLine>
+				<BooleanContractLine id="36">
+					<id>8</id>
+					<contract reference="26"/>
+					<contractLineType>ALTERNATIVE_SKILL_CATEGORY</contractLineType>
+					<enabled>true</enabled>
+					<weight>1</weight>
+				</BooleanContractLine>
+			</contractLineList>
+		</Contract>
+		<Contract id="37">
+			<id>1</id>
+			<code>1</code>
+			<description>75_time</description>
+			<weekendDefinition>SATURDAY_SUNDAY</weekendDefinition>
+			<contractLineList id="38">
+				<BooleanContractLine id="39">
+					<id>9</id>
+					<contract reference="37"/>
+					<contractLineType>SINGLE_ASSIGNMENT_PER_DAY</contractLineType>
+					<enabled>true</enabled>
+					<weight>1</weight>
+				</BooleanContractLine>
+				<MinMaxContractLine id="40">
+					<id>10</id>
+					<contract reference="37"/>
+					<contractLineType>TOTAL_ASSIGNMENTS</contractLineType>
+					<minimumEnabled>true</minimumEnabled>
+					<minimumValue>6</minimumValue>
+					<minimumWeight>1</minimumWeight>
+					<maximumEnabled>true</maximumEnabled>
+					<maximumValue>15</maximumValue>
+					<maximumWeight>1</maximumWeight>
+				</MinMaxContractLine>
+				<MinMaxContractLine id="41">
+					<id>11</id>
+					<contract reference="37"/>
+					<contractLineType>CONSECUTIVE_WORKING_DAYS</contractLineType>
+					<minimumEnabled>true</minimumEnabled>
+					<minimumValue>3</minimumValue>
+					<minimumWeight>1</minimumWeight>
+					<maximumEnabled>true</maximumEnabled>
+					<maximumValue>5</maximumValue>
+					<maximumWeight>1</maximumWeight>
+				</MinMaxContractLine>
+				<MinMaxContractLine id="42">
+					<id>12</id>
+					<contract reference="37"/>
+					<contractLineType>CONSECUTIVE_FREE_DAYS</contractLineType>
+					<minimumEnabled>true</minimumEnabled>
+					<minimumValue>2</minimumValue>
+					<minimumWeight>1</minimumWeight>
+					<maximumEnabled>true</maximumEnabled>
+					<maximumValue>5</maximumValue>
+					<maximumWeight>1</maximumWeight>
+				</MinMaxContractLine>
+				<MinMaxContractLine id="43">
+					<id>13</id>
+					<contract reference="37"/>
+					<contractLineType>CONSECUTIVE_WORKING_WEEKENDS</contractLineType>
+					<minimumEnabled>true</minimumEnabled>
+					<minimumValue>1</minimumValue>
+					<minimumWeight>1</minimumWeight>
+					<maximumEnabled>true</maximumEnabled>
+					<maximumValue>3</maximumValue>
+					<maximumWeight>1</maximumWeight>
+				</MinMaxContractLine>
+				<BooleanContractLine id="44">
+					<id>14</id>
+					<contract reference="37"/>
+					<contractLineType>COMPLETE_WEEKENDS</contractLineType>
+					<enabled>true</enabled>
+					<weight>1</weight>
+				</BooleanContractLine>
+				<BooleanContractLine id="45">
+					<id>15</id>
+					<contract reference="37"/>
+					<contractLineType>IDENTICAL_SHIFT_TYPES_DURING_WEEKEND</contractLineType>
+					<enabled>true</enabled>
+					<weight>1</weight>
+				</BooleanContractLine>
+				<BooleanContractLine id="46">
+					<id>16</id>
+					<contract reference="37"/>
+					<contractLineType>NO_NIGHT_SHIFT_BEFORE_FREE_WEEKEND</contractLineType>
+					<enabled>true</enabled>
+					<weight>1</weight>
+				</BooleanContractLine>
+				<BooleanContractLine id="47">
+					<id>17</id>
+					<contract reference="37"/>
+					<contractLineType>ALTERNATIVE_SKILL_CATEGORY</contractLineType>
+					<enabled>true</enabled>
+					<weight>1</weight>
+				</BooleanContractLine>
+			</contractLineList>
+		</Contract>
+		<Contract id="48">
+			<id>2</id>
+			<code>2</code>
+			<description>50_percent</description>
+			<weekendDefinition>FRIDAY_SATURDAY_SUNDAY</weekendDefinition>
+			<contractLineList id="49">
+				<BooleanContractLine id="50">
+					<id>18</id>
+					<contract reference="48"/>
+					<contractLineType>SINGLE_ASSIGNMENT_PER_DAY</contractLineType>
+					<enabled>true</enabled>
+					<weight>1</weight>
+				</BooleanContractLine>
+				<MinMaxContractLine id="51">
+					<id>19</id>
+					<contract reference="48"/>
+					<contractLineType>TOTAL_ASSIGNMENTS</contractLineType>
+					<minimumEnabled>true</minimumEnabled>
+					<minimumValue>4</minimumValue>
+					<minimumWeight>1</minimumWeight>
+					<maximumEnabled>true</maximumEnabled>
+					<maximumValue>10</maximumValue>
+					<maximumWeight>1</maximumWeight>
+				</MinMaxContractLine>
+				<MinMaxContractLine id="52">
+					<id>20</id>
+					<contract reference="48"/>
+					<contractLineType>CONSECUTIVE_WORKING_DAYS</contractLineType>
+					<minimumEnabled>true</minimumEnabled>
+					<minimumValue>2</minimumValue>
+					<minimumWeight>1</minimumWeight>
+					<maximumEnabled>true</maximumEnabled>
+					<maximumValue>4</maximumValue>
+					<maximumWeight>1</maximumWeight>
+				</MinMaxContractLine>
+				<MinMaxContractLine id="53">
+					<id>21</id>
+					<contract reference="48"/>
+					<contractLineType>CONSECUTIVE_FREE_DAYS</contractLineType>
+					<minimumEnabled>true</minimumEnabled>
+					<minimumValue>3</minimumValue>
+					<minimumWeight>1</minimumWeight>
+					<maximumEnabled>true</maximumEnabled>
+					<maximumValue>5</maximumValue>
+					<maximumWeight>1</maximumWeight>
+				</MinMaxContractLine>
+				<MinMaxContractLine id="54">
+					<id>22</id>
+					<contract reference="48"/>
+					<contractLineType>CONSECUTIVE_WORKING_WEEKENDS</contractLineType>
+					<minimumEnabled>false</minimumEnabled>
+					<minimumValue>0</minimumValue>
+					<minimumWeight>0</minimumWeight>
+					<maximumEnabled>true</maximumEnabled>
+					<maximumValue>1</maximumValue>
+					<maximumWeight>1</maximumWeight>
+				</MinMaxContractLine>
+				<BooleanContractLine id="55">
+					<id>23</id>
+					<contract reference="48"/>
+					<contractLineType>COMPLETE_WEEKENDS</contractLineType>
+					<enabled>true</enabled>
+					<weight>1</weight>
+				</BooleanContractLine>
+				<BooleanContractLine id="56">
+					<id>24</id>
+					<contract reference="48"/>
+					<contractLineType>IDENTICAL_SHIFT_TYPES_DURING_WEEKEND</contractLineType>
+					<enabled>true</enabled>
+					<weight>1</weight>
+				</BooleanContractLine>
+				<BooleanContractLine id="57">
+					<id>25</id>
+					<contract reference="48"/>
+					<contractLineType>NO_NIGHT_SHIFT_BEFORE_FREE_WEEKEND</contractLineType>
+					<enabled>true</enabled>
+					<weight>1</weight>
+				</BooleanContractLine>
+				<BooleanContractLine id="58">
+					<id>26</id>
+					<contract reference="48"/>
+					<contractLineType>ALTERNATIVE_SKILL_CATEGORY</contractLineType>
+					<enabled>true</enabled>
+					<weight>1</weight>
+				</BooleanContractLine>
+			</contractLineList>
+		</Contract>
+	</contractList>
+	<contractLineList id="59">
+		<BooleanContractLine reference="28"/>
+		<BooleanContractLine reference="33"/>
+		<BooleanContractLine reference="34"/>
+		<BooleanContractLine reference="35"/>
+		<BooleanContractLine reference="36"/>
+		<BooleanContractLine reference="39"/>
+		<BooleanContractLine reference="44"/>
+		<BooleanContractLine reference="45"/>
+		<BooleanContractLine reference="46"/>
+		<BooleanContractLine reference="47"/>
+		<BooleanContractLine reference="50"/>
+		<BooleanContractLine reference="55"/>
+		<BooleanContractLine reference="56"/>
+		<BooleanContractLine reference="57"/>
+		<BooleanContractLine reference="58"/>
+		<MinMaxContractLine reference="29"/>
+		<MinMaxContractLine reference="30"/>
+		<MinMaxContractLine reference="31"/>
+		<MinMaxContractLine reference="32"/>
+		<MinMaxContractLine reference="40"/>
+		<MinMaxContractLine reference="41"/>
+		<MinMaxContractLine reference="42"/>
+		<MinMaxContractLine reference="43"/>
+		<MinMaxContractLine reference="51"/>
+		<MinMaxContractLine reference="52"/>
+		<MinMaxContractLine reference="53"/>
+		<MinMaxContractLine reference="54"/>
+	</contractLineList>
+	<patternContractLineList id="60">
+		<PatternContractLine id="61">
+			<id>0</id>
+			<contract reference="26"/>
+			<pattern class="IdenticalShiftLastSomeDaysPattern" reference="16"/>
+		</PatternContractLine>
+		<PatternContractLine id="62">
+			<id>1</id>
+			<contract reference="26"/>
+			<pattern class="ShiftAssignedOnlyforManPattern" reference="17"/>
+		</PatternContractLine>
+		<PatternContractLine id="63">
+			<id>2</id>
+			<contract reference="26"/>
+			<pattern class="FreeAfterWeekendWorkDayPattern" reference="18"/>
+		</PatternContractLine>
+		<PatternContractLine id="64">
+			<id>3</id>
+			<contract reference="26"/>
+			<pattern class="FreeAfterANightShiftPattern" reference="19"/>
+		</PatternContractLine>
+		<PatternContractLine id="65">
+			<id>4</id>
+			<contract reference="26"/>
+			<pattern class="ShiftAssignedAveragedAtAllEmployeesPattern" reference="20"/>
+		</PatternContractLine>
+		<PatternContractLine id="66">
+			<id>5</id>
+			<contract reference="26"/>
+			<pattern class="FreeTwoDaysEveryWeekPattern" reference="21"/>
+		</PatternContractLine>
+		<PatternContractLine id="67">
+			<id>6</id>
+			<contract reference="26"/>
+			<pattern class="ShiftAssignedSomeWeeksPattern" reference="22"/>
+		</PatternContractLine>
+		<PatternContractLine id="68">
+			<id>7</id>
+			<contract reference="26"/>
+			<pattern class="ShiftType2DaysPattern" reference="24"/>
+		</PatternContractLine>
+		<PatternContractLine id="69">
+			<id>8</id>
+			<contract reference="26"/>
+			<pattern class="ShiftType2DaysPattern" reference="24"/>
+		</PatternContractLine>
+		<PatternContractLine id="70">
+			<id>9</id>
+			<contract reference="37"/>
+			<pattern class="IdenticalShiftLastSomeDaysPattern" reference="16"/>
+		</PatternContractLine>
+		<PatternContractLine id="71">
+			<id>10</id>
+			<contract reference="37"/>
+			<pattern class="ShiftAssignedOnlyforManPattern" reference="17"/>
+		</PatternContractLine>
+		<PatternContractLine id="72">
+			<id>11</id>
+			<contract reference="37"/>
+			<pattern class="FreeAfterWeekendWorkDayPattern" reference="18"/>
+		</PatternContractLine>
+		<PatternContractLine id="73">
+			<id>12</id>
+			<contract reference="37"/>
+			<pattern class="FreeAfterANightShiftPattern" reference="19"/>
+		</PatternContractLine>
+		<PatternContractLine id="74">
+			<id>13</id>
+			<contract reference="37"/>
+			<pattern class="ShiftAssignedAveragedAtAllEmployeesPattern" reference="20"/>
+		</PatternContractLine>
+		<PatternContractLine id="75">
+			<id>14</id>
+			<contract reference="37"/>
+			<pattern class="FreeTwoDaysEveryWeekPattern" reference="21"/>
+		</PatternContractLine>
+		<PatternContractLine id="76">
+			<id>15</id>
+			<contract reference="37"/>
+			<pattern class="ShiftAssignedSomeWeeksPattern" reference="22"/>
+		</PatternContractLine>
+		<PatternContractLine id="77">
+			<id>16</id>
+			<contract reference="37"/>
+			<pattern class="ShiftType2DaysPattern" reference="24"/>
+		</PatternContractLine>
+		<PatternContractLine id="78">
+			<id>17</id>
+			<contract reference="37"/>
+			<pattern class="ShiftType2DaysPattern" reference="24"/>
+		</PatternContractLine>
+		<PatternContractLine id="79">
+			<id>18</id>
+			<contract reference="48"/>
+			<pattern class="IdenticalShiftLastSomeDaysPattern" reference="16"/>
+		</PatternContractLine>
+		<PatternContractLine id="80">
+			<id>19</id>
+			<contract reference="48"/>
+			<pattern class="ShiftAssignedOnlyforManPattern" reference="17"/>
+		</PatternContractLine>
+		<PatternContractLine id="81">
+			<id>20</id>
+			<contract reference="48"/>
+			<pattern class="FreeAfterWeekendWorkDayPattern" reference="18"/>
+		</PatternContractLine>
+		<PatternContractLine id="82">
+			<id>21</id>
+			<contract reference="48"/>
+			<pattern class="FreeAfterANightShiftPattern" reference="19"/>
+		</PatternContractLine>
+		<PatternContractLine id="83">
+			<id>22</id>
+			<contract reference="48"/>
+			<pattern class="ShiftAssignedAveragedAtAllEmployeesPattern" reference="20"/>
+		</PatternContractLine>
+		<PatternContractLine id="84">
+			<id>23</id>
+			<contract reference="48"/>
+			<pattern class="FreeTwoDaysEveryWeekPattern" reference="21"/>
+		</PatternContractLine>
+		<PatternContractLine id="85">
+			<id>24</id>
+			<contract reference="48"/>
+			<pattern class="ShiftAssignedSomeWeeksPattern" reference="22"/>
+		</PatternContractLine>
+		<PatternContractLine id="86">
+			<id>25</id>
+			<contract reference="48"/>
+			<pattern class="ShiftType2DaysPattern" reference="24"/>
+		</PatternContractLine>
+		<PatternContractLine id="87">
+			<id>26</id>
+			<contract reference="48"/>
+			<pattern class="ShiftType2DaysPattern" reference="24"/>
+		</PatternContractLine>
+	</patternContractLineList>
+	<employeeList id="88">
+		<Employee id="89">
+			<id>0</id>
+			<code>0</code>
+			<name>65</name>
+			<age>2017</age>
+			<title>1</title>
+			<gender>null</gender>
+			<workyear>1</workyear>
+			<freedays>1</freedays>
+			<education>null</education>
+			<mutexname>1</mutexname>
+			<currdepartment>null</currdepartment>
+			<allodepartment>1</allodepartment>
+			<contract reference="26"/>
+			<dayOffRequestMap id="90"/>
+			<dayOnRequestMap id="91"/>
+			<shiftOffRequestMap id="92"/>
+			<shiftOnRequestMap id="93"/>
+		</Employee>
+		<Employee id="94">
+			<id>1</id>
+			<code>1</code>
+			<name>58</name>
+			<age>0</age>
+			<title>1</title>
+			<gender>1</gender>
+			<workyear>21</workyear>
+			<freedays>1</freedays>
+			<education>1</education>
+			<mutexname>1</mutexname>
+			<currdepartment>2</currdepartment>
+			<allodepartment>1</allodepartment>
+			<contract reference="26"/>
+			<dayOffRequestMap id="95"/>
+			<dayOnRequestMap id="96"/>
+			<shiftOffRequestMap id="97"/>
+			<shiftOnRequestMap id="98"/>
+		</Employee>
+		<Employee id="99">
+			<id>2</id>
+			<code>2</code>
+			<name>64</name>
+			<age>2017</age>
+			<title>1</title>
+			<gender>null</gender>
+			<workyear>5</workyear>
+			<freedays>1</freedays>
+			<education>null</education>
+			<mutexname>1</mutexname>
+			<currdepartment>null</currdepartment>
+			<allodepartment>1</allodepartment>
+			<contract reference="26"/>
+			<dayOffRequestMap id="100"/>
+			<dayOnRequestMap id="101"/>
+			<shiftOffRequestMap id="102"/>
+			<shiftOnRequestMap id="103"/>
+		</Employee>
+		<Employee id="104">
+			<id>3</id>
+			<code>3</code>
+			<name>61</name>
+			<age>2017</age>
+			<title>1</title>
+			<gender>1</gender>
+			<workyear>11</workyear>
+			<freedays>1</freedays>
+			<education>1</education>
+			<mutexname>1</mutexname>
+			<currdepartment>3</currdepartment>
+			<allodepartment>1</allodepartment>
+			<contract reference="26"/>
+			<dayOffRequestMap id="105"/>
+			<dayOnRequestMap id="106"/>
+			<shiftOffRequestMap id="107"/>
+			<shiftOnRequestMap id="108"/>
+		</Employee>
+		<Employee id="109">
+			<id>4</id>
+			<code>4</code>
+			<name>66</name>
+			<age>2017</age>
+			<title>1</title>
+			<gender>null</gender>
+			<workyear>2</workyear>
+			<freedays>1</freedays>
+			<education>null</education>
+			<mutexname>1</mutexname>
+			<currdepartment>null</currdepartment>
+			<allodepartment>1</allodepartment>
+			<contract reference="26"/>
+			<dayOffRequestMap id="110"/>
+			<dayOnRequestMap id="111"/>
+			<shiftOffRequestMap id="112"/>
+			<shiftOnRequestMap id="113"/>
+		</Employee>
+		<Employee id="114">
+			<id>5</id>
+			<code>5</code>
+			<name>62</name>
+			<age>17</age>
+			<title>1</title>
+			<gender>1</gender>
+			<workyear>3</workyear>
+			<freedays>1</freedays>
+			<education>1</education>
+			<mutexname>1</mutexname>
+			<currdepartment>3</currdepartment>
+			<allodepartment>1</allodepartment>
+			<contract reference="26"/>
+			<dayOffRequestMap id="115"/>
+			<dayOnRequestMap id="116"/>
+			<shiftOffRequestMap id="117"/>
+			<shiftOnRequestMap id="118"/>
+		</Employee>
+		<Employee id="119">
+			<id>6</id>
+			<code>6</code>
+			<name>57</name>
+			<age>-1</age>
+			<title>1</title>
+			<gender>1</gender>
+			<workyear>10</workyear>
+			<freedays>1</freedays>
+			<education>1</education>
+			<mutexname>1</mutexname>
+			<currdepartment>1</currdepartment>
+			<allodepartment>1</allodepartment>
+			<contract reference="26"/>
+			<dayOffRequestMap id="120">
+				<entry>
+					<ShiftDate id="121">
+						<id>2</id>
+						<dayIndex>2</dayIndex>
+						<date id="122" resolves-to="java.time.Ser">
+							<byte>3</byte>
+							<int>2017</int>
+							<byte>12</byte>
+							<byte>3</byte>
+						</date>
+						<shiftList id="123">
+							<Shift id="124">
+								<id>135</id>
+								<shiftDate reference="121"/>
+								<shiftType reference="7"/>
+								<index>135</index>
+								<requiredEmployeeSize>3</requiredEmployeeSize>
+							</Shift>
+							<Shift id="125">
+								<id>143</id>
+								<shiftDate reference="121"/>
+								<shiftType reference="9"/>
+								<index>143</index>
+								<requiredEmployeeSize>3</requiredEmployeeSize>
+							</Shift>
+						</shiftList>
+					</ShiftDate>
+					<DayOffRequest id="126">
+						<id>126</id>
+						<employee reference="119"/>
+						<ShiftDate reference="121"/>
+						<weight>10</weight>
+					</DayOffRequest>
+				</entry>
+				<entry>
+					<ShiftDate id="127">
+						<id>3</id>
+						<dayIndex>3</dayIndex>
+						<date id="128" resolves-to="java.time.Ser">
+							<byte>3</byte>
+							<int>2017</int>
+							<byte>12</byte>
+							<byte>4</byte>
+						</date>
+						<shiftList id="129">
+							<Shift id="130">
+								<id>136</id>
+								<shiftDate reference="127"/>
+								<shiftType reference="7"/>
+								<index>136</index>
+								<requiredEmployeeSize>3</requiredEmployeeSize>
+							</Shift>
+							<Shift id="131">
+								<id>144</id>
+								<shiftDate reference="127"/>
+								<shiftType reference="9"/>
+								<index>144</index>
+								<requiredEmployeeSize>3</requiredEmployeeSize>
+							</Shift>
+						</shiftList>
+					</ShiftDate>
+					<DayOffRequest id="132">
+						<id>132</id>
+						<employee reference="119"/>
+						<ShiftDate reference="127"/>
+						<weight>10</weight>
+					</DayOffRequest>
+				</entry>
+				<entry>
+					<ShiftDate id="133">
+						<id>4</id>
+						<dayIndex>4</dayIndex>
+						<date id="134" resolves-to="java.time.Ser">
+							<byte>3</byte>
+							<int>2017</int>
+							<byte>12</byte>
+							<byte>5</byte>
+						</date>
+						<shiftList id="135">
+							<Shift id="136">
+								<id>137</id>
+								<shiftDate reference="133"/>
+								<shiftType reference="7"/>
+								<index>137</index>
+								<requiredEmployeeSize>3</requiredEmployeeSize>
+							</Shift>
+							<Shift id="137">
+								<id>145</id>
+								<shiftDate reference="133"/>
+								<shiftType reference="9"/>
+								<index>145</index>
+								<requiredEmployeeSize>3</requiredEmployeeSize>
+							</Shift>
+						</shiftList>
+					</ShiftDate>
+					<DayOffRequest id="138">
+						<id>138</id>
+						<employee reference="119"/>
+						<ShiftDate reference="133"/>
+						<weight>10</weight>
+					</DayOffRequest>
+				</entry>
+				<entry>
+					<ShiftDate id="139">
+						<id>5</id>
+						<dayIndex>5</dayIndex>
+						<date id="140" resolves-to="java.time.Ser">
+							<byte>3</byte>
+							<int>2017</int>
+							<byte>12</byte>
+							<byte>6</byte>
+						</date>
+						<shiftList id="141">
+							<Shift id="142">
+								<id>138</id>
+								<shiftDate reference="139"/>
+								<shiftType reference="7"/>
+								<index>138</index>
+								<requiredEmployeeSize>3</requiredEmployeeSize>
+							</Shift>
+							<Shift id="143">
+								<id>146</id>
+								<shiftDate reference="139"/>
+								<shiftType reference="9"/>
+								<index>146</index>
+								<requiredEmployeeSize>3</requiredEmployeeSize>
+							</Shift>
+						</shiftList>
+					</ShiftDate>
+					<DayOffRequest id="144">
+						<id>144</id>
+						<employee reference="119"/>
+						<ShiftDate reference="139"/>
+						<weight>10</weight>
+					</DayOffRequest>
+				</entry>
+			</dayOffRequestMap>
+			<dayOnRequestMap id="145"/>
+			<shiftOffRequestMap id="146"/>
+			<shiftOnRequestMap id="147"/>
+		</Employee>
+
+
+	<Employee id="119">
+      <id>1</id>
+      <code>1</code>
+      <name>1</name>
+  	  <age>1</age>
+  	  <title>1</title>
+  	  <gender>1</gender>
+  	  <workyear>1</workyear>
+  	  <freedays>1</freedays>
+  	  <education>1</education>
+  	  <mutexname>1</mutexname>
+  	  <currdepartment>1</currdepartment>
+  	  <allodepartment>1</allodepartment>
+      <contract reference="45"/>
+      <dayOffRequestMap id="114">
+      <entry>
+    	<ShiftDate id="430">
+	        <id>3</id>
+	        <dayIndex>3</dayIndex>
+	        <date id="431" resolves-to="java.time.Ser">
+		       <byte>3</byte>
+		       <int>2017</int>
+		       <byte>12</byte>
+		       <byte>3</byte>
+		     </date>
+		      <shiftList id="432">
+		        <Shift id="433">
+		          <id>73</id>
+		          <shiftDate reference="430"/>
+		          <shiftType reference="919"/>
+		          <index>73</index>
+		          <requiredEmployeeSize>8</requiredEmployeeSize>
+		        </Shift>
+		        <Shift id="434">
+		          <id>74</id>
+		          <shiftDate reference="430"/>
+		          <shiftType reference="11"/>
+		          <index>74</index>
+		          <requiredEmployeeSize>8</requiredEmployeeSize>
+		        </Shift>
+		      </shiftList>
+    	</ShiftDate>
+        <DayOffRequest id="1002">
+            <id>2</id>
+            <employee reference="113"/>
+            <shiftDate reference="430"/>
+        	<weight>10</weight>
+        </DayOffRequest>
+      </entry>
+	    <entry>
+	      <ShiftDate id="438">
+      <id>4</id>
+      <dayIndex>4</dayIndex>
+      <date id="439" resolves-to="java.time.Ser">
+        <byte>3</byte>
+        <int>2017</int>
+        <byte>9</byte>
+        <byte>22</byte>
+      </date>
+      <shiftList id="440">
+        <Shift id="441">
+          <id>90</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="919"/>
+          <index>90</index>
+          <requiredEmployeeSize>8</requiredEmployeeSize>
+        </Shift>
+        <Shift id="442">
+          <id>91</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="942"/>
+          <index>91</index>
+          <requiredEmployeeSize>8</requiredEmployeeSize>
+        </Shift>
+        <Shift id="443">
+          <id>92</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="17"/>
+          <index>92</index>
+          <requiredEmployeeSize>5</requiredEmployeeSize>
+        </Shift>
+        <Shift id="444">
+          <id>93</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="911"/>
+          <index>93</index>
+          <requiredEmployeeSize>6</requiredEmployeeSize>
+        </Shift>
+        <Shift id="445">
+          <id>94</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="917"/>
+          <index>94</index>
+          <requiredEmployeeSize>2</requiredEmployeeSize>
+        </Shift>
+		<Shift id="832">
+          <id>95</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="15"/>
+          <index>95</index>
+          <requiredEmployeeSize>1</requiredEmployeeSize>
+        </Shift>
+		<Shift id="833">
+          <id>96</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="907"/>
+          <index>96</index>
+          <requiredEmployeeSize>3</requiredEmployeeSize>
+        </Shift>
+		<Shift id="834">
+          <id>97</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="903"/>
+          <index>97</index>
+          <requiredEmployeeSize>1</requiredEmployeeSize>
+        </Shift>
+		<Shift id="835">
+          <id>98</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="803"/>
+          <index>98</index>
+          <requiredEmployeeSize>1</requiredEmployeeSize>
+        </Shift>
+		<Shift id="971">
+          <id>99</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="7"/>
+          <index>99</index>
+          <requiredEmployeeSize>1</requiredEmployeeSize>
+        </Shift>
+		<Shift id="972">
+          <id>100</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="11"/>
+          <index>100</index>
+          <requiredEmployeeSize>1</requiredEmployeeSize>
+        </Shift>
+		<Shift id="973">
+          <id>101</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="801"/>
+          <index>101</index>
+          <requiredEmployeeSize>1</requiredEmployeeSize>
+        </Shift>
+		<Shift id="974">
+          <id>102</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="9"/>
+          <index>102</index>
+          <requiredEmployeeSize>1</requiredEmployeeSize>
+        </Shift>
+		<Shift id="975">
+          <id>103</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="909"/>
+          <index>103</index>
+          <requiredEmployeeSize>1</requiredEmployeeSize>
+        </Shift>
+		<Shift id="976">
+          <id>104</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="905"/>
+          <index>104</index>
+          <requiredEmployeeSize>1</requiredEmployeeSize>
+        </Shift>
+		<Shift id="977">
+          <id>105</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="901"/>
+          <index>105</index>
+          <requiredEmployeeSize>1</requiredEmployeeSize>
+        </Shift>
+		<Shift id="978">
+          <id>106</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="915"/>
+          <index>106</index>
+          <requiredEmployeeSize>1</requiredEmployeeSize>
+        </Shift>
+		<Shift id="979">
+          <id>107</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="913"/>
+          <index>107</index>
+          <requiredEmployeeSize>1</requiredEmployeeSize>
+        </Shift>
+		<Shift id="980">
+          <id>108</id>
+          <shiftDate reference="438"/>
+          <shiftType reference="805"/>
+          <index>108</index>
+          <requiredEmployeeSize>1</requiredEmployeeSize>
+        </Shift>
+      </shiftList>
+    </ShiftDate>
+	      <DayOffRequest id="1003">
+            <id>3</id>
+            <employee reference="113"/>
+            <shiftDate reference="438"/>
+            <weight>10</weight>
+          </DayOffRequest>
+	    </entry>
+	    <entry>
+	       <ShiftDate id="446">
+      <id>5</id>
+      <dayIndex>5</dayIndex>
+      <date id="447" resolves-to="java.time.Ser">
+        <byte>3</byte>
+        <int>2017</int>
+        <byte>9</byte>
+        <byte>23</byte>
+      </date>
+      <shiftList id="448">
+        <Shift id="449">
+          <id>109</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="9"/>
+          <index>109</index>
+          <requiredEmployeeSize>8</requiredEmployeeSize>
+        </Shift>
+        <Shift id="450">
+          <id>110</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="11"/>
+          <index>110</index>
+          <requiredEmployeeSize>8</requiredEmployeeSize>
+        </Shift>
+        <Shift id="451">
+          <id>111</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="17"/>
+          <index>111</index>
+          <requiredEmployeeSize>5</requiredEmployeeSize>
+        </Shift>
+        <Shift id="452">
+          <id>112</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="917"/>
+          <index>112</index>
+          <requiredEmployeeSize>6</requiredEmployeeSize>
+        </Shift>
+        <Shift id="453">
+          <id>113</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="913"/>
+          <index>113</index>
+          <requiredEmployeeSize>2</requiredEmployeeSize>
+        </Shift>
+		<Shift id="836">
+          <id>114</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="803"/>
+          <index>114</index>
+          <requiredEmployeeSize>2</requiredEmployeeSize>
+        </Shift>
+		<Shift id="981">
+          <id>115</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="805"/>
+          <index>115</index>
+          <requiredEmployeeSize>2</requiredEmployeeSize>
+        </Shift>
+		<Shift id="982">
+          <id>116</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="903"/>
+          <index>116</index>
+          <requiredEmployeeSize>2</requiredEmployeeSize>
+        </Shift>
+		<Shift id="983">
+          <id>117</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="905"/>
+          <index>117</index>
+          <requiredEmployeeSize>2</requiredEmployeeSize>
+        </Shift>
+		<Shift id="984">
+          <id>118</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="907"/>
+          <index>118</index>
+          <requiredEmployeeSize>2</requiredEmployeeSize>
+        </Shift>
+		<Shift id="985">
+          <id>119</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="15"/>
+          <index>119</index>
+          <requiredEmployeeSize>2</requiredEmployeeSize>
+        </Shift>
+		<Shift id="986">
+          <id>120</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="901"/>
+          <index>120</index>
+          <requiredEmployeeSize>2</requiredEmployeeSize>
+        </Shift>
+		<Shift id="987">
+          <id>121</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="7"/>
+          <index>121</index>
+          <requiredEmployeeSize>2</requiredEmployeeSize>
+        </Shift>
+		<Shift id="988">
+          <id>122</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="11"/>
+          <index>122</index>
+          <requiredEmployeeSize>2</requiredEmployeeSize>
+        </Shift>
+		<Shift id="989">
+          <id>123</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="915"/>
+          <index>123</index>
+          <requiredEmployeeSize>2</requiredEmployeeSize>
+        </Shift>
+		<Shift id="990">
+          <id>124</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="909"/>
+          <index>124</index>
+          <requiredEmployeeSize>2</requiredEmployeeSize>
+        </Shift>
+		<Shift id="991">
+          <id>125</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="911"/>
+          <index>125</index>
+          <requiredEmployeeSize>2</requiredEmployeeSize>
+        </Shift>
+		<Shift id="992">
+          <id>126</id>
+          <shiftDate reference="446"/>
+          <shiftType reference="801"/>
+          <index>126</index>
+          <requiredEmployeeSize>2</requiredEmployeeSize>
+        </Shift>
+      </shiftList>
+    </ShiftDate>
+	      <DayOffRequest id="1004">
+            <id>4</id>
+            <employee reference="113"/>
+            <shiftDate reference="446"/>
+            <weight>10</weight>
+          </DayOffRequest>
+	    </entry>
+	  </dayOffRequestMap>
+      <dayOnRequestMap id="115"/>
+      <shiftOffRequestMap id="116"/>
+      <shiftOnRequestMap id="117"/>
+    </Employee>
+		<Employee id="148">
+			<id>7</id>
+			<code>7</code>
+			<name>63</name>
+			<age>2017</age>
+			<title>1</title>
+			<gender>null</gender>
+			<workyear>1</workyear>
+			<freedays>1</freedays>
+			<education>null</education>
+			<mutexname>1</mutexname>
+			<currdepartment>null</currdepartment>
+			<allodepartment>1</allodepartment>
+			<contract reference="26"/>
+			<dayOffRequestMap id="149"/>
+			<dayOnRequestMap id="150"/>
+			<shiftOffRequestMap id="151"/>
+			<shiftOnRequestMap id="152"/>
+		</Employee>
+	</employeeList>
+	<shiftDateList id="153">
+		<ShiftDate reference="3"/>
+		<ShiftDate id="154">
+			<id>1</id>
+			<dayIndex>64</dayIndex>
+			<date id="155" resolves-to="java.time.Ser">
+				<byte>3</byte>
+				<int>2017</int>
+				<byte>12</byte>
+				<byte>2</byte>
+			</date>
+			<shiftList id="156">
+				<Shift id="157">
+					<id>134</id>
+					<shiftDate reference="154"/>
+					<shiftType reference="7"/>
+					<index>134</index>
+					<requiredEmployeeSize>3</requiredEmployeeSize>
+				</Shift>
+				<Shift id="158">
+					<id>142</id>
+					<shiftDate reference="154"/>
+					<shiftType reference="9"/>
+					<index>142</index>
+					<requiredEmployeeSize>3</requiredEmployeeSize>
+				</Shift>
+			</shiftList>
+		</ShiftDate>
+		<ShiftDate reference="121"/>
+		<ShiftDate reference="127"/>
+		<ShiftDate reference="133"/>
+		<ShiftDate reference="139"/>
+		<ShiftDate id="159">
+			<id>6</id>
+			<dayIndex>69</dayIndex>
+			<date id="160" resolves-to="java.time.Ser">
+				<byte>3</byte>
+				<int>2017</int>
+				<byte>12</byte>
+				<byte>7</byte>
+			</date>
+			<shiftList id="161">
+				<Shift id="162">
+					<id>139</id>
+					<shiftDate reference="159"/>
+					<shiftType reference="7"/>
+					<index>139</index>
+					<requiredEmployeeSize>3</requiredEmployeeSize>
+				</Shift>
+				<Shift id="163">
+					<id>147</id>
+					<shiftDate reference="159"/>
+					<shiftType reference="9"/>
+					<index>147</index>
+					<requiredEmployeeSize>3</requiredEmployeeSize>
+				</Shift>
+			</shiftList>
+		</ShiftDate>
+		<ShiftDate reference="10"/>
+	</shiftDateList>
+	<shiftTypeList id="164">
+		<ShiftType reference="7"/>
+		<ShiftType reference="9"/>
+	</shiftTypeList>
+	<shiftList id="165">
+		<Shift reference="6"/>
+		<Shift reference="8"/>
+		<Shift reference="13"/>
+		<Shift reference="14"/>
+		<Shift reference="124"/>
+		<Shift reference="125"/>
+		<Shift reference="130"/>
+		<Shift reference="131"/>
+		<Shift reference="136"/>
+		<Shift reference="137"/>
+		<Shift reference="142"/>
+		<Shift reference="143"/>
+		<Shift reference="157"/>
+		<Shift reference="158"/>
+		<Shift reference="162"/>
+		<Shift reference="163"/>
+	</shiftList>
+	<skillList id="166">
+		<Skill id="167">
+			<id>4</id>
+			<code>4</code>
+		</Skill>
+		<Skill id="168">
+			<id>3</id>
+			<code>3</code>
+		</Skill>
+		<Skill id="169">
+			<id>1</id>
+			<code>1</code>
+		</Skill>
+		<Skill id="170">
+			<id>2</id>
+			<code>2</code>
+		</Skill>
+	</skillList>
+	<shiftTypeSkillRequirementList id="171">
+		<ShiftTypeSkillRequirement id="172">
+			<id>76</id>
+			<shiftType reference="7"/>
+			<skill reference="167"/>
+		</ShiftTypeSkillRequirement>
+		<ShiftTypeSkillRequirement id="173">
+			<id>77</id>
+			<shiftType reference="7"/>
+			<skill reference="168"/>
+		</ShiftTypeSkillRequirement>
+		<ShiftTypeSkillRequirement id="174">
+			<id>78</id>
+			<shiftType reference="7"/>
+			<skill reference="169"/>
+		</ShiftTypeSkillRequirement>
+		<ShiftTypeSkillRequirement id="175">
+			<id>79</id>
+			<shiftType reference="7"/>
+			<skill reference="170"/>
+		</ShiftTypeSkillRequirement>
+		<ShiftTypeSkillRequirement id="176">
+			<id>80</id>
+			<shiftType reference="9"/>
+			<skill reference="167"/>
+		</ShiftTypeSkillRequirement>
+		<ShiftTypeSkillRequirement id="177">
+			<id>81</id>
+			<shiftType reference="9"/>
+			<skill reference="168"/>
+		</ShiftTypeSkillRequirement>
+		<ShiftTypeSkillRequirement id="178">
+			<id>82</id>
+			<shiftType reference="9"/>
+			<skill reference="169"/>
+		</ShiftTypeSkillRequirement>
+		<ShiftTypeSkillRequirement id="179">
+			<id>83</id>
+			<shiftType reference="9"/>
+			<skill reference="170"/>
+		</ShiftTypeSkillRequirement>
+	</shiftTypeSkillRequirementList>
+	<skillProficiencyList id="180">
+		<SkillProficiency id="181">
+			<id>3</id>
+			<employee reference="94"/>
+			<skill reference="167"/>
+		</SkillProficiency>
+		<SkillProficiency id="182">
+			<id>6</id>
+			<employee reference="104"/>
+			<skill reference="167"/>
+		</SkillProficiency>
+		<SkillProficiency id="183">
+			<id>7</id>
+			<employee reference="109"/>
+			<skill reference="167"/>
+		</SkillProficiency>
+		<SkillProficiency id="184">
+			<id>9</id>
+			<employee reference="89"/>
+			<skill reference="167"/>
+		</SkillProficiency>
+		<SkillProficiency id="185">
+			<id>10</id>
+			<employee reference="99"/>
+			<skill reference="167"/>
+		</SkillProficiency>
+		<SkillProficiency id="186">
+			<id>2</id>
+			<employee reference="119"/>
+			<skill reference="168"/>
+		</SkillProficiency>
+		<SkillProficiency id="187">
+			<id>8</id>
+			<employee reference="89"/>
+			<skill reference="168"/>
+		</SkillProficiency>
+		<SkillProficiency id="188">
+			<id>12</id>
+			<employee reference="148"/>
+			<skill reference="168"/>
+		</SkillProficiency>
+		<SkillProficiency id="189">
+			<id>15</id>
+			<employee reference="114"/>
+			<skill reference="168"/>
+		</SkillProficiency>
+		<SkillProficiency id="190">
+			<id>16</id>
+			<employee reference="104"/>
+			<skill reference="168"/>
+		</SkillProficiency>
+		<SkillProficiency id="191">
+			<id>1</id>
+			<employee reference="119"/>
+			<skill reference="169"/>
+		</SkillProficiency>
+		<SkillProficiency id="192">
+			<id>11</id>
+			<employee reference="99"/>
+			<skill reference="169"/>
+		</SkillProficiency>
+		<SkillProficiency id="193">
+			<id>13</id>
+			<employee reference="148"/>
+			<skill reference="169"/>
+		</SkillProficiency>
+		<SkillProficiency id="194">
+			<id>14</id>
+			<employee reference="114"/>
+			<skill reference="169"/>
+		</SkillProficiency>
+	</skillProficiencyList>
+	<dayOffRequestList id="195">
+		<DayOffRequest reference="126"/>
+		<DayOffRequest reference="132"/>
+		<DayOffRequest reference="138"/>
+		<DayOffRequest reference="144"/>
+	</dayOffRequestList>
+	<dayOnRequestList class="empty-list"/>
+	<shiftOffRequestList class="empty-list"/>
+	<shiftOnRequestList class="empty-list"/>
+	<shiftAssignmentList id="196">
+		<ShiftAssignment id="197">
+			<id>2841</id>
+			<shift reference="6"/>
+			<indexInShift>0</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="198">
+			<id>2842</id>
+			<shift reference="6"/>
+			<indexInShift>1</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="199">
+			<id>2843</id>
+			<shift reference="6"/>
+			<indexInShift>2</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="200">
+			<id>2844</id>
+			<shift reference="157"/>
+			<indexInShift>0</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="201">
+			<id>2845</id>
+			<shift reference="157"/>
+			<indexInShift>1</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="202">
+			<id>2846</id>
+			<shift reference="157"/>
+			<indexInShift>2</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="203">
+			<id>2847</id>
+			<shift reference="124"/>
+			<indexInShift>0</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="204">
+			<id>2848</id>
+			<shift reference="124"/>
+			<indexInShift>1</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="205">
+			<id>2849</id>
+			<shift reference="124"/>
+			<indexInShift>2</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="206">
+			<id>2850</id>
+			<shift reference="130"/>
+			<indexInShift>0</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="207">
+			<id>2851</id>
+			<shift reference="130"/>
+			<indexInShift>1</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="208">
+			<id>2852</id>
+			<shift reference="130"/>
+			<indexInShift>2</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="209">
+			<id>2853</id>
+			<shift reference="136"/>
+			<indexInShift>0</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="210">
+			<id>2854</id>
+			<shift reference="136"/>
+			<indexInShift>1</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="211">
+			<id>2855</id>
+			<shift reference="136"/>
+			<indexInShift>2</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="212">
+			<id>2856</id>
+			<shift reference="142"/>
+			<indexInShift>0</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="213">
+			<id>2857</id>
+			<shift reference="142"/>
+			<indexInShift>1</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="214">
+			<id>2858</id>
+			<shift reference="142"/>
+			<indexInShift>2</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="215">
+			<id>2859</id>
+			<shift reference="162"/>
+			<indexInShift>0</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="216">
+			<id>2860</id>
+			<shift reference="162"/>
+			<indexInShift>1</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="217">
+			<id>2861</id>
+			<shift reference="162"/>
+			<indexInShift>2</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="218">
+			<id>2862</id>
+			<shift reference="13"/>
+			<indexInShift>0</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="219">
+			<id>2863</id>
+			<shift reference="13"/>
+			<indexInShift>1</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="220">
+			<id>2864</id>
+			<shift reference="13"/>
+			<indexInShift>2</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="221">
+			<id>2865</id>
+			<shift reference="8"/>
+			<indexInShift>0</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="222">
+			<id>2866</id>
+			<shift reference="8"/>
+			<indexInShift>1</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="223">
+			<id>2867</id>
+			<shift reference="8"/>
+			<indexInShift>2</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="224">
+			<id>2868</id>
+			<shift reference="158"/>
+			<indexInShift>0</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="225">
+			<id>2869</id>
+			<shift reference="158"/>
+			<indexInShift>1</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="226">
+			<id>2870</id>
+			<shift reference="158"/>
+			<indexInShift>2</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="227">
+			<id>2871</id>
+			<shift reference="125"/>
+			<indexInShift>0</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="228">
+			<id>2872</id>
+			<shift reference="125"/>
+			<indexInShift>1</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="229">
+			<id>2873</id>
+			<shift reference="125"/>
+			<indexInShift>2</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="230">
+			<id>2874</id>
+			<shift reference="131"/>
+			<indexInShift>0</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="231">
+			<id>2875</id>
+			<shift reference="131"/>
+			<indexInShift>1</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="232">
+			<id>2876</id>
+			<shift reference="131"/>
+			<indexInShift>2</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="233">
+			<id>2877</id>
+			<shift reference="137"/>
+			<indexInShift>0</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="234">
+			<id>2878</id>
+			<shift reference="137"/>
+			<indexInShift>1</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="235">
+			<id>2879</id>
+			<shift reference="137"/>
+			<indexInShift>2</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="236">
+			<id>2880</id>
+			<shift reference="143"/>
+			<indexInShift>0</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="237">
+			<id>2881</id>
+			<shift reference="143"/>
+			<indexInShift>1</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="238">
+			<id>2882</id>
+			<shift reference="143"/>
+			<indexInShift>2</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="239">
+			<id>2883</id>
+			<shift reference="163"/>
+			<indexInShift>0</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="240">
+			<id>2884</id>
+			<shift reference="163"/>
+			<indexInShift>1</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="241">
+			<id>2885</id>
+			<shift reference="163"/>
+			<indexInShift>2</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="242">
+			<id>2886</id>
+			<shift reference="14"/>
+			<indexInShift>0</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="243">
+			<id>2887</id>
+			<shift reference="14"/>
+			<indexInShift>1</indexInShift>
+		</ShiftAssignment>
+		<ShiftAssignment id="244">
+			<id>2888</id>
+			<shift reference="14"/>
+			<indexInShift>2</indexInShift>
+		</ShiftAssignment>
+	</shiftAssignmentList>
+</NurseRoster>

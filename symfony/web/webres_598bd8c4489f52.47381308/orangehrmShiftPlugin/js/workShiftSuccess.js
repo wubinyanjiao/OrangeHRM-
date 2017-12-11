@@ -23,6 +23,7 @@ $(document).ready(function() {
             $(this).parent().text($(this).text());
         });
     }
+
     
     //hide add work experience section
 
@@ -52,6 +53,15 @@ $(document).ready(function() {
             $("#workCheckAll").attr('checked', 'checked');
         }
     });
+
+    $('#btnAssignEmployee').click(function() {  
+
+        return !$('#workShift_availableEmp option:selected').remove().appendTo('#workShift_assignedEmp');  
+    }); 
+    
+    $('#btnRemoveEmployee').click(function() {  
+        return !$('#workShift_assignedEmp option:selected').remove().appendTo('#workShift_availableEmp');  
+    }); 
 
     $("#addWorkExperience").click(function() {
 

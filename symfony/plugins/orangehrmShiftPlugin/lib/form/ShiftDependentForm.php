@@ -338,9 +338,23 @@ class ShiftDependentForm extends BaseForm {
             $shiftAssignment = new WorkShiftAssignment;
             $shiftAssignment->setShiftId($shiftId);
             $shiftAssignment->setScheduleId($schedule_id);
+            $shiftAssignment->setShiftIndex($i);
             $this->getShiftService()->saveShiftAssignments($shiftAssignment);
         }
         
+    }
+
+    //默认如果创建班，也就给全部员工分配上这个班
+    private function _saveEmployeeWorkShift($workShiftId) {
+        $empWorkShiftCollection = new Doctrine_Collection('EmployeeWorkShift');
+        
+        for ($i = 0; $i < count($empArray); $i++) {
+            $empWorkShift = new EmployeeWorkShift();
+            $empWorkShift->setWorkShiftId($workShiftId);
+            $empWorkShift->setEmpNumber($empArray[$i]);
+            $empWorkShiftCollection->add($empWorkShift);
+        }
+        $this->getWorkShiftService()->saveEmployeeWorkShiftCollection($empWorkShiftCollection);
     }
 
 

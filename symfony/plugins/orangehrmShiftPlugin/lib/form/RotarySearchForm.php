@@ -39,21 +39,23 @@ class RotarySearchForm extends BaseForm {
     }
 
 
-    private function _getShiftTypeList() {
 
-        $scheduleID = $this->getOption('scheduleID');
+     public function _getShiftTypeList(){
+       $locationList = array('' => '-- ' . __('选择部门') . ' --');
 
-        $shiftTypeService = new ShiftService();
-        $shiftTypeList = $shiftTypeService->getJobDepartmentList();
+        $locationService = new LocationService();
+        $locations = $locationService->getLocationList();        
 
-        $list = array("" => "选择部门");
+        $accessibleLocations = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntityIds('Location');
 
-        foreach($shiftTypeList as $shiftType) {
-            $list[$shiftType->getId()] = $shiftType->getName();
+    
+        foreach ($locations as $location) {
+            if (in_array($location->id, $accessibleLocations)) {
+                $locationList[$location->id] = $location->name;
+            }
         }
-
-
-        return $list;
+      
+        return($locationList);
     }
 
     private function _getEmployeeList() {

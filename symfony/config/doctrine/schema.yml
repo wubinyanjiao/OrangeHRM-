@@ -6,7 +6,12 @@ EmpLocations:
       primary: true
     location_id as locationId:
       type: integer
-      primary: true      
+      primary: true
+  relations:
+    Employee:
+      local: emp_number
+      foreign: emp_number
+      type: one       
 
 EmpChildren:
   tableName: hs_hr_emp_children

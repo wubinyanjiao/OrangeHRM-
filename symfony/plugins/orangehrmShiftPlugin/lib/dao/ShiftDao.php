@@ -13,6 +13,7 @@ class ShiftDao extends BaseDao {
     }
 
     public function saveShiftRotary(WorkShiftRotary $shiftRotary) {
+         
         try {
             $shiftRotary->save();            
         } catch (Exception $e) {
@@ -277,6 +278,20 @@ class ShiftDao extends BaseDao {
         try {
             $q = Doctrine_Query::create()->from('WorkTypeSkill')
                                          ->orderBy('id');
+
+            return $q->fetchArray();
+        // @codeCoverageIgnoreStart
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }
+        // @codeCoverageIgnoreEnd
+    }
+
+    public function getEmoloyeeLocation() {
+        try {
+            $q = Doctrine_Query::create()->from('EmpLocations el')
+                                         ->leftJoin('el.Employee e')
+                                         ->orderBy('el.emp_number');
 
             return $q->fetchArray();
         // @codeCoverageIgnoreStart

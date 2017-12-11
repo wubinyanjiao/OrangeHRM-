@@ -20,6 +20,10 @@ abstract class BaseWorkShiftAssignment extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 11,
              ));
+        $this->hasColumn('shift_index', 'integer', 11, array(
+             'type' => 'integer',
+             'length' => 11,
+             ));
        
     }
 

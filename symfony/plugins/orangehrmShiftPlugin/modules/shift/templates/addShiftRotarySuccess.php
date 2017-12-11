@@ -156,9 +156,9 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
                             // echo "<td valigh='top'>" . $shiftRoster->name . '</td>';
                             echo "<td valigh='top'>" . $shiftRoster->dateFrom . '</td>';
                             echo "<td valigh='top'>" . $shiftRoster->dateTo . '</td>';
-                            echo "<td valigh='top'>" . $jopdocument_list[$shiftRoster->firstDocument]. '</td>';
-                            echo "<td valigh='top'>" .  $jopdocument_list[$shiftRoster->secondDocument] . '</td>';
-                            echo "<td valigh='top'>" . $jopdocument_list[$shiftRoster->thirdDocument] . '</td>';
+                            echo "<td valigh='top'>" . $jopdocument_list[$shiftRoster->firstDepartment]. '</td>';
+                            echo "<td valigh='top'>" .  $jopdocument_list[$shiftRoster->secondDepartment] . '</td>';
+                            echo "<td valigh='top'>" . $jopdocument_list[$shiftRoster->thirdDepartment] . '</td>';
                             echo '</tr>';
                             $row++;
                         endforeach;

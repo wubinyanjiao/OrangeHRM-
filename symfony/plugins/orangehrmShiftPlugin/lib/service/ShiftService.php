@@ -1,6 +1,5 @@
 <?php
 
-
 class ShiftService extends BaseService {
 
     /**
@@ -120,8 +119,12 @@ class ShiftService extends BaseService {
         return $this->getShiftDao()->getShiftTypeToSkillList();
     }
     
-     public function getShiftRosters(){
+    public function getShiftRosters(){
         return $this->getShiftDao()->getShiftRosters();
+    }
+
+    public function getEmoloyeeLocation(){
+        return $this->getShiftDao()->getEmoloyeeLocation();
     }
     
     /**
@@ -141,6 +144,7 @@ class ShiftService extends BaseService {
     }
 
     public function saveShiftRotary(WorkShiftRotary $shiftRotary) {
+        
         return $this->getShiftDao()->saveShiftRotary($shiftRotary);
     }
 
@@ -669,6 +673,7 @@ class ShiftService extends BaseService {
         $shiftTypes=$this->getShiftTypeList($scheduleID);
         $shiftAssignments=$this->getShiftAssignmentList($scheduleID);
 
+
         $patternList=$this->saveFile('patternContranct');
 
 
@@ -705,6 +710,8 @@ class ShiftService extends BaseService {
 
         $shiftTypeIndex=array();
         $shiftDateIndex=array();
+
+
         
         //只是得到第一天和最后一天信息，同时将创建的shiftTypeId 和shiftDateID存储起来
         foreach ($shiftDates as $key => $shiftDate) {
@@ -767,8 +774,7 @@ class ShiftService extends BaseService {
 
             }
 
-       
-
+   
 
             if($key==$last_index){
                 $index++;
@@ -822,7 +828,6 @@ class ShiftService extends BaseService {
 
         }
 
-        $tcm_pharmacy['shiftDateList']['@attributes']['id']=$index;
 
         $tcm_pharmacy['nurseRosterParametrization']['planningWindowStart']['@attributes']['reference']=$firstDateIndex;
         $tcm_pharmacy['nurseRosterParametrization']['planningWindowStart']['@data']='';
@@ -830,6 +835,15 @@ class ShiftService extends BaseService {
 
 
         
+        $index++;
+        $tcm_pharmacy['skillList']['@attributes']['id']=$index;
+
+        $index++;
+        $tcm_pharmacy['shiftTypeList']['@attributes']['id']=$index;
+
+        $index++;
+        $tcm_pharmacy['shiftTypeSkillRequirementList']['@attributes']['id']=$index;
+
 
 
         //值班人员
@@ -893,6 +907,9 @@ class ShiftService extends BaseService {
             $tcm_pharmacy['patternList']['FreeAfterANightShiftPattern']['dayShiftType']['@attributes']['reference']=$shiftTypeIndex[$nightAfterNightShiftType];
             $tcm_pharmacy['patternList']['FreeAfterANightShiftPattern']['dayShiftType']['@data']='';
 
+            $tcm_pharmacy['patternList']['FreeAfterANightShiftPattern']['workShiftType']['@attributes']['reference']=$shiftTypeIndex[$nightAfterNightShiftType];
+            $tcm_pharmacy['patternList']['FreeAfterANightShiftPattern']['workShiftType']['@data']='';
+
         }
 
 
@@ -940,7 +957,6 @@ class ShiftService extends BaseService {
 
 
         //不希望此班次后继续班次
-
         foreach ($patternList['restAfterOneShift'] as $key => $restAfterOneShift) {
             $index++;
            // echo'<pre>'; var_dump($restAfterOneShift);exit;
@@ -955,6 +971,17 @@ class ShiftService extends BaseService {
             $tcm_pharmacy['patternList'][1]['ShiftType2DaysPattern']['dayIndex0ShiftType']['@data']='';
             $tcm_pharmacy['patternList'][1]['ShiftType2DaysPattern']['dayIndex1ShiftType']['@attributes']['reference']=$shiftTypeIndex[$index1ShiftType];
             $tcm_pharmacy['patternList'][1]['ShiftType2DaysPattern']['dayIndex1ShiftType']['@data']='';
+
+            $index++;
+            $tcm_pharmacy['patternList'][2]['ShiftType2DaysPattern']['@attributes']['id']= $index;
+            $patternIndex['ShiftType2DaysPattern1']=$index;
+            $tcm_pharmacy['patternList'][2]['ShiftType2DaysPattern']['id']='8';
+            $tcm_pharmacy['patternList'][2]['ShiftType2DaysPattern']['code']='8';
+            $tcm_pharmacy['patternList'][2]['ShiftType2DaysPattern']['weight']=$restAfterOneShift['restAfterOneShiftWeight'];
+            $tcm_pharmacy['patternList'][2]['ShiftType2DaysPattern']['dayIndex0ShiftType']['@attributes']['reference']=$shiftTypeIndex[$index0ShiftType];
+            $tcm_pharmacy['patternList'][2]['ShiftType2DaysPattern']['dayIndex0ShiftType']['@data']='';
+            $tcm_pharmacy['patternList'][2]['ShiftType2DaysPattern']['dayIndex1ShiftType']['@attributes']['reference']=$shiftTypeIndex[$index1ShiftType];
+            $tcm_pharmacy['patternList'][2]['ShiftType2DaysPattern']['dayIndex1ShiftType']['@data']='';
         }
 
 
@@ -1101,7 +1128,7 @@ class ShiftService extends BaseService {
 
         $booleanContractIndex[$index]=$index;
 
-       /* $index++;
+        $index++;
         $tcm_pharmacy['contractList'][2]['Contract']['@attributes']['id']=$index;
 
         $contractIndex[2]=$index;
@@ -1380,7 +1407,7 @@ class ShiftService extends BaseService {
         $tcm_pharmacy['contractList'][3]['Contract']['contractLineList'][8]['BooleanContractLine']['enabled']='true';
         $tcm_pharmacy['contractList'][3]['Contract']['contractLineList'][8]['BooleanContractLine']['weight']='1';
         $booleanContractIndex[$index]=$index;
-*/
+
 
         //contractLineList列表
         $index++;
@@ -1505,7 +1532,7 @@ class ShiftService extends BaseService {
         $tcm_pharmacy['patternContractLineList'][9]['PatternContractLine']['pattern']['@data']='';
 
 
-/*
+
         $index++;
         $tcm_pharmacy['patternContractLineList'][10]['PatternContractLine']['@attributes']['id']=$index;
         $tcm_pharmacy['patternContractLineList'][10]['PatternContractLine']['id']='9';
@@ -1714,14 +1741,15 @@ class ShiftService extends BaseService {
 
 
         $index++;
+      
         $tcm_pharmacy['patternContractLineList'][28]['PatternContractLine']['@attributes']['id']=$index;
         $tcm_pharmacy['patternContractLineList'][28]['PatternContractLine']['id']='26';
         $tcm_pharmacy['patternContractLineList'][28]['PatternContractLine']['contract']['@attributes']['reference']=$contractIndex[3];
         $tcm_pharmacy['patternContractLineList'][28]['PatternContractLine']['contract']['@data']='';
         
          $tcm_pharmacy['patternContractLineList'][28]['PatternContractLine']['pattern']['@attributes']['class']='ShiftType2DaysPattern';
-         $tcm_pharmacy['patternContractLineList'][28]['PatternContractLine']['pattern']['@attributes']['reference']=$patternIndex['ShiftType2DaysPattern2'];
-        $tcm_pharmacy['patternContractLineList'][28]['PatternContractLine']['pattern']['@data']='';*/
+         $tcm_pharmacy['patternContractLineList'][28]['PatternContractLine']['pattern']['@attributes']['reference']=$patternIndex['ShiftType2DaysPattern1'];
+        $tcm_pharmacy['patternContractLineList'][28]['PatternContractLine']['pattern']['@data']='';
 
 
 
@@ -1731,40 +1759,39 @@ class ShiftService extends BaseService {
        
 
         // var_dump($shiftDateIndex);
-        // var_dump($shiftTypeIndex);exit;
+    
 
         $index++;
         $tcm_pharmacy['employeeList']['@attributes']['id']=$index;
 
         foreach ($employeeList as $key => $employee) {
+            
 
             $age=$this->birthday($employee['emp_birthday']);
-            $workyear=$this->birthday($employee['joined_date']);
+            
             $index++;
             $tcm_pharmacy['employeeList'][$key]['Employee']['@attributes']['id']=$index;
             $employeeIndex[$employee['empNumber']]=$index;
             $tcm_pharmacy['employeeList'][$key]['Employee']['id']=$key;
-            $tcm_pharmacy['employeeList'][$key]['Employee']['code']=$employee['empNumber'];
+            $tcm_pharmacy['employeeList'][$key]['Employee']['code']=$key;
             $tcm_pharmacy['employeeList'][$key]['Employee']['name']=$employee['empNumber'];
-            $tcm_pharmacy['employeeList'][$key]['Employee']['age']=$age;
-            $tcm_pharmacy['employeeList'][$key]['Employee']['title']='1';
-            $tcm_pharmacy['employeeList'][$key]['Employee']['gender']=$employee['emp_gender'];
-            $tcm_pharmacy['employeeList'][$key]['Employee']['workyear']=$workyear;
-            $tcm_pharmacy['employeeList'][$key]['Employee']['freedays']='1';
-            $tcm_pharmacy['employeeList'][$key]['Employee']['education']=$employee['emp_gender'][0]['institute'];
-            $tcm_pharmacy['employeeList'][$key]['Employee']['mutexname']='1';
-            $tcm_pharmacy['employeeList'][$key]['Employee']['currdepartment']=$employee['job_title_code'];
-            $tcm_pharmacy['employeeList'][$key]['Employee']['allodepartment']='1';
+            // $tcm_pharmacy['employeeList'][$key]['Employee']['age']=$age;
+            // $tcm_pharmacy['employeeList'][$key]['Employee']['title']='1';
+            // $tcm_pharmacy['employeeList'][$key]['Employee']['gender']=$employee['emp_gender'];
+            // $tcm_pharmacy['employeeList'][$key]['Employee']['workyear']=$employee['working_years'];;
+            // $tcm_pharmacy['employeeList'][$key]['Employee']['freedays']='1';
+            // $tcm_pharmacy['employeeList'][$key]['Employee']['education']=$employee['emp_gender'][0]['institute'];
+            // $tcm_pharmacy['employeeList'][$key]['Employee']['mutexname']='1';
+            // $tcm_pharmacy['employeeList'][$key]['Employee']['currdepartment']=$employee['job_title_code'];
+            // $tcm_pharmacy['employeeList'][$key]['Employee']['allodepartment']='1';
             $tcm_pharmacy['employeeList'][$key]['Employee']['contract']['@attributes']['reference']=$contractIndex[1];
             $tcm_pharmacy['employeeList'][$key]['Employee']['contract']['@data']='';
 
 
-
-
             $index++;
             $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap']['@attributes']['id']=$index;
+            
             // 如果没有给任何员工安排班，则所有员工的的未上班日期为计划中所有天
-
             if(empty($employee['EmployeeWorkShift'])){
                 $noShiftDate=array_column($shiftDates,'id');
             }else{
@@ -1775,94 +1802,118 @@ class ShiftService extends BaseService {
                     $shiftDateID[$shiftkey]=$this->getShiftById($shift_id)->shiftdate_id;
                     
                 }
-                // var_dump($shiftDateID);
+
                 //获得这个员工有班的日期；
                 $shiftDateID=array_unique($shiftDateID);
-
                 //查找所有日期
-
                 $shiftDatesIdList=array_column($shiftDates,'id');
 
                 $noShiftDate=array_diff($shiftDatesIdList,$shiftDateID);
-                //筛选出没有班的日期
-                // var_dump($noShiftDate);exit;
-                
-               
+          
             }
-            //键值互换
-            $exit_shiftDate=array_flip($shiftDateIndex);
+
+            // echo'<pre>';var_dump($noShiftDate);exit;
+          
 
 
-            foreach ($noShiftDate as $dayOffKey => $dayOff) {
-                $shiftDateOff=$this->getShiftDateById($dayOff);
+            $exist = true;
+         
+            if (empty($noShiftDate)) {
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap']['@data']="";
+                    // break;
+               
+            }else{
+                
+               $exist = false;
+            }
 
-                //首先判断是否已经创建过该天和该类型,如果没有创建过，则运用下面模式，同时存储shiftDataindex中；
-                if(!in_array($dayOff, $exit_shiftDate)){
-
-                    $date_format=$this->getFormatDate($shiftDateOff->shiftDate);
-                 
-                    $index++;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['@attributes']['id']=$index;
-                    $shiftDateIndex[$dayOff]=$index;
-
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['id']='2';
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['dayIndex']='2';
-
-                    $index++;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['date']['@attributes']['id']=$index;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['date']['@attributes']['resolves-to']='java.time.Ser';
-                    
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['date'][]['byte']='3';
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['date'][]['int']=$date_format['y'];
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['date'][]['byte']=$date_format['m'];
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['date'][]['byte']=$date_format['d'];
+            if(!$exist) {//如果员工有些天休息，循环休息天
 
 
-                    $index++;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList']['@attributes']['id']=$index;
+                foreach ($noShiftDate as $dayOffKey => $dayOff) {
+                    $shiftDateOff=$this->getShiftDateById($dayOff);
+                    //首先判断是否已经创建过该天和该类型,如果没有创建过，则运用下面模式，同时存储shiftDataindex中；
+                    $exit_shiftDate=array_flip($shiftDateIndex);
 
-                    foreach ($shiftDateOff->shiftList as $k => $shift) {
+                    if(!in_array($dayOff, $exit_shiftDate)){
+
+                        $date_format=$this->getFormatDate($shiftDateOff->shiftDate);
+                     
+                        $index++;
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['@attributes']['id']=$index;
+
+
+                        $shiftDateIndex[$dayOff]=$index;
+                       
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['id']=$dayOffKey;
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['dayIndex']=$dayOffKey;
 
                         $index++;
-                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList'][$k]['Shift']['@attributes']['id']=$index;
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['date']['@attributes']['id']=$index;
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['date']['@attributes']['resolves-to']='java.time.Ser';
+                        
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['date'][]['byte']='3';
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['date'][]['int']=$date_format['y'];
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['date'][]['byte']=$date_format['m'];
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['date'][]['byte']=$date_format['d'];
 
-                         $shiftListIndex[$shift->id]=$index;
+
+                        $index++;
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList']['@attributes']['id']=$index;
+
+                        foreach ($shiftDateOff->shiftList as $k => $shift) {
+
+                            $index++;
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList'][$k]['Shift']['@attributes']['id']=$index;
+
+                             $shiftListIndex[$shift->id]=$index;
+
+                             $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList'][$k]['Shift']['id']=$shift->id;
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList'][$k]['Shift']['shiftDate']['@attributes']['reference']=$shiftDateIndex[$dayOff];
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList'][$k]['Shift']['shiftDate']['@data']='';
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList'][$k]['Shift']['shiftType']['@attributes']['reference']=$shiftTypeIndex[$shift->shift_type_id];
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList'][$k]['Shift']['shiftType']['@data']='';
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList'][$k]['Shift']['index']=$shift->id;
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList'][$k]['Shift']['requiredEmployeeSize']=$shift->required_employee;
 
 
-                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList'][$k]['Shift']['shiftDate']['@attributes']['reference']=$shiftDateIndex[$dayOff];
-                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList'][$k]['Shift']['shiftDate']['@data']='';
-                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList'][$k]['Shift']['shiftType']['@attributes']['reference']=$shiftTypeIndex[$shift->shift_type_id];
-                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList'][$k]['Shift']['shiftType']['@data']='';
-                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList'][$k]['Shift']['index']=$shift->id;
-                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['shiftList'][$k]['Shift']['requiredEmployeeSize']=$shift->required_employee;
+
+                            }
+                            $index++;
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['@attributes']['id']=$index;
+                            $dayOffRequest[$index]=$index;
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['id']=$index;
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['employee']['@attributes']['reference']=$employeeIndex[$employee['empNumber']];
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['employee']['@data']='';
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['ShiftDate']['@attributes']['reference']=$shiftDateIndex[$dayOff];
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['ShiftDate']['@data']='';
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['weight']='10';
+
+
+                    }else{
+                        //如果已经创建过该天信息
+                   
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['@attributes']['reference']=$shiftDateIndex[$dayOff];
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['@data']='';
+                        $index++;
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['@attributes']['id']=$index;
+
+                        $dayOffRequest[$index]=$index;
+
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['id']=$index;
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['employee']['@attributes']['reference']=$employeeIndex[$employee['empNumber']];
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['employee']['@data']='';
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['ShiftDate']['@attributes']['reference']=$shiftDateIndex[$dayOff];
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['ShiftDate']['@data']='';
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['weight']='10';
+
                     }
-
-
-                }else{
-                    //如果已经创建过该天信息
-               
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['@attributes']['reference']=$shiftDateIndex[$dayOff];
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['ShiftDate']['@data']='';
-                    $index++;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['@attributes']['id']=$index;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['id']=$index;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['employee']['@attributes']['reference']=$employeeIndex[$employee['empNumber']];
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['employee']['@data']='';
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['ShiftDate']['@attributes']['reference']=$shiftDateIndex[$dayOff];
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['ShiftDate']['@data']='';
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['weight']='10';
-
+                    
                 }
-                
             }
 
+
             
-
-
-
-
-
-
 
             $index++;
             $tcm_pharmacy['employeeList'][$key]['Employee']['dayOnRequestMap']['@attributes']['id']=$index;
@@ -1879,23 +1930,287 @@ class ShiftService extends BaseService {
         }
 
 
+    
+
+        //只是得到第一天和最后一天信息，同时将创建的shiftTypeId 和shiftDateID存储起来
+        $index++;
+        $tcm_pharmacy['shiftDateList']['@attributes']['id']=$index;
 
        
+       
+        $exit_shiftDate=array_flip($shiftDateIndex);
 
-        $tcm_pharmacy['dayOffRequestList']['@attributes']['class']='empty-list';
-        $tcm_pharmacy['dayOffRequestList']['@data']='';
-        $tcm_pharmacy['dayOnRequestList']['@attributes']['class']='empty-list';
+
+          
+        foreach ($shiftDates as $key => $shiftDate) {
+
+           if(in_array($shiftDate['id'], $exit_shiftDate)){
+
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['@attributes']['reference']=$shiftDateIndex[$shiftDate['id']];
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['@data']='';
+           }else{
+                $date_format=$this->getFormatDate($shiftDate['shiftDate']);
+
+                $index++;
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['@attributes']['id']=$index;
+                $shiftDataIndex[$key]=$index;
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['id']=$key;
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['dayIndex']=$shiftDate['id'];
+                $index++;
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['date']['@attributes']['id']=$index;
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['date']['@attributes']['resolves-to']='java.time.Ser';
+               
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['date'][]['byte']='3';
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['date'][]['int']=$date_format['y'];
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['date'][]['byte']=$date_format['m'];
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['date'][]['byte']=$date_format['d'];
+                $index++;
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList']['@attributes']['id']=$index;
+
+                
+                foreach($shiftDates[$key]['shiftList'] as $k=>$shift){
+           
+                    $shiftType=$this->getShiftTypeById($shift['shift_type_id']);
+   
+                    $index++;
+
+                    $shiftListIndex[$shift['id']]=$index;
+
+                    $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList'][$k]['Shift']['@attributes']['id']=$index;
+                  
+                    $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList'][$k]['Shift']['id']=$shift['id'];
+                    $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList'][$k]['Shift']['shiftDate']['@attributes']['reference']= $shiftDataIndex[$key];
+                    $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList'][$k]['Shift']['shiftDate']['@data']='';
+
+
+                    //记录shiftTypeID
+                   $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList'][$k]['Shift']['shiftType']['@attributes']['reference']=$shiftTypeIndex[$shiftType->id];
+                    $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList'][$k]['Shift']['shiftType']['@data']='';
+                    
+
+                    $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList'][$k]['Shift']['index']=$shift['id'];;
+                    $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList'][$k]['Shift']['requiredEmployeeSize']=$shift['required_employee'];;
+
+                }
+           }
+            
+            
+        }
+
+
+        //shiftType列表；
+        // $index++;
+        // $tcm_pharmacy['shiftTypeList']['@attributes']['id']=$index;
+        foreach ($shiftTypeIndex as $key => $shiftType) {
+           $tcm_pharmacy['shiftTypeList'][$key]['ShiftType']['@attributes']['reference']=$shiftType;
+           $tcm_pharmacy['shiftTypeList'][$key]['ShiftType']['@data']='';
+        }
+
+
+        //排班列表
+        $index++;
+        $tcm_pharmacy['shiftList']['@attributes']['id']=$index;
+        if(empty($shifts)){
+
+            $tcm_pharmacy['shiftList']['@data']='';
+
+        }else{
+            foreach ($shiftListIndex as $key => $shift) {
+                $tcm_pharmacy['shiftList'][$key]['Shift']['@attributes']['reference']=$shift;
+                $tcm_pharmacy['shiftList'][$key]['Shift']['@data']='';
+        }
+        }
+
+
+        //技能列表
+        // $index++;
+        // $tcm_pharmacy['skillList']['@attributes']['id']=$index;
+        foreach ($skillList as $key => $skill) {
+          
+            $index++;
+            $tcm_pharmacy['skillList'][$key]['Skill']['@attributes']['id']=$index;
+            $skillListIndex[$skill['id']]=$index;
+            $tcm_pharmacy['skillList'][$key]['Skill']['id']=$skill['id'];
+            $tcm_pharmacy['skillList'][$key]['Skill']['code']=$skill['id'];
+        }
+
+         //每个轮班类型所需岗位
+        // $index++;
+        // $tcm_pharmacy['shiftTypeSkillRequirementList']['@attributes']['id']=$index;
+
+
+        foreach ($shiftTypeToSkillList as $key => $shiftTypeToSkill) {
+     
+            $index++;
+            $tcm_pharmacy['shiftTypeSkillRequirementList'][$key]['ShiftTypeSkillRequirement']['@attributes']['id']=$index;
+            $tcm_pharmacy['shiftTypeSkillRequirementList'][$key]['ShiftTypeSkillRequirement']['id']=$shiftTypeToSkill['id'];
+            $tcm_pharmacy['shiftTypeSkillRequirementList'][$key]['ShiftTypeSkillRequirement']['shiftType']['@attributes']['reference']=$shiftTypeIndex[$shiftTypeToSkill['shift_type_id']];
+            $tcm_pharmacy['shiftTypeSkillRequirementList'][$key]['ShiftTypeSkillRequirement']['shiftType']['@data']='';
+            $tcm_pharmacy['shiftTypeSkillRequirementList'][$key]['ShiftTypeSkillRequirement']['skill']['@attributes']['reference']=$skillListIndex[$shiftTypeToSkill['skill_id']];
+            $tcm_pharmacy['shiftTypeSkillRequirementList'][$key]['ShiftTypeSkillRequirement']['skill']['@data']='';
+        }
+
+
+
+         //技能列表
+        $index++;
+        $tcm_pharmacy['skillProficiencyList']['@attributes']['id']=$index;
+        foreach ($employeeSkillList as $key => $employeeSkill) {
+
+            $index++;
+            $tcm_pharmacy['skillProficiencyList'][$key]['SkillProficiency']['@attributes']['id']=$index;
+            $tcm_pharmacy['skillProficiencyList'][$key]['SkillProficiency']['id']=$employeeSkill['id'];
+            $tcm_pharmacy['skillProficiencyList'][$key]['SkillProficiency']['employee']['@attributes']['reference']=$employeeIndex[$employeeSkill['emp_number']];
+            $tcm_pharmacy['skillProficiencyList'][$key]['SkillProficiency']['employee']['@data']='';
+            $tcm_pharmacy['skillProficiencyList'][$key]['SkillProficiency']['skill']['@attributes']['reference']=$skillListIndex[$employeeSkill['skillId']];
+            $tcm_pharmacy['skillProficiencyList'][$key]['SkillProficiency']['skill']['@data']='';
+
+        }
+
+
+        //不上班
+        if(!empty($dayOffRequest)){
+            $index++;
+            $tcm_pharmacy['dayOffRequestList']['@attributes']['id']=$index;
+            foreach ($dayOffRequest as $key => $dayOff) {
+            
+                $tcm_pharmacy['dayOffRequestList'][$key]['DayOffRequest']['@attributes']['reference']=$dayOff;
+                $tcm_pharmacy['dayOffRequestList'][$key]['DayOffRequest']['@data']='';
+
+            }
+
+        }else{
+            $tcm_pharmacy['dayOffRequestList']['@attributes']['class']="empty-list";
+            $tcm_pharmacy['dayOffRequestList']['@data']='';
+        }
+        
+
+        $tcm_pharmacy['dayOnRequestList']['@attributes']['class']="empty-list";
         $tcm_pharmacy['dayOnRequestList']['@data']='';
-        $tcm_pharmacy['shiftOffRequestList']['@attributes']['class']='empty-list';
+
+        $tcm_pharmacy['shiftOffRequestList']['@attributes']['class']="empty-list";
         $tcm_pharmacy['shiftOffRequestList']['@data']='';
-        $tcm_pharmacy['shiftOnRequestList']['@attributes']['class']='empty-list';
+
+        $tcm_pharmacy['shiftOnRequestList']['@attributes']['class']="empty-list";
         $tcm_pharmacy['shiftOnRequestList']['@data']='';
+        
+        // 例如10月1日的早班需要三个人，则会生成三个 ShiftAssignment-->
+        //循环计划中所有班，然后依次取出每个班所需要人数；根据人数来复制
+
+        // echo '<pre>';var_dump($shiftAssignments);exit;
+
+        foreach($shiftAssignments as $key=>$shiftAssignment){
+            $shift_assign_list[$shiftAssignment['shift_id']][]=$shiftAssignment;
+
+        }
+
+
+
+
+        $index++;
+        $tcm_pharmacy['shiftAssignmentList']['@attributes']['id']=$index;
+        foreach($shiftAssignments as $key=>$shiftAssignment){
+
+                $index++;
+                $tcm_pharmacy['shiftAssignmentList'][$key]['ShiftAssignment']['@attributes']['id']=$index;
+                $tcm_pharmacy['shiftAssignmentList'][$key]['ShiftAssignment']['id']=$shiftAssignment['id'];
+                $tcm_pharmacy['shiftAssignmentList'][$key]['ShiftAssignment']['shift']['@attributes']['reference']=$shiftListIndex[$shiftAssignment['shift_id']];
+                $tcm_pharmacy['shiftAssignmentList'][$key]['ShiftAssignment']['shift']['@data']='';
+                $tcm_pharmacy['shiftAssignmentList'][$key]['ShiftAssignment']['indexInShift']=$shiftAssignment['shift_index'];
+
+        }
+
+
+        //将数组存储为静态文件
+        $TCM=$this->saveFile('TCMschedule',$tcm_pharmacy);
+
+         //将数据转化为xml格式；
+        $toXmData=$this->array_to_xml($TCM);
+
+        //将XML存储为静态文件
+        $this->cacheData('TCM_xml_schedule',$toXmData);
+       
+        // header("Content-type: text/xml");
+
+        // print_r($toXmData);exit;
+    }
+
+    public function getRosterResult(){
+
+       $arr = file_get_contents('http://localhost:8080/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/result.xml');
+
+       $result=$this->xmlToArray($arr);
+       return $result;
+  
+    }
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     //最终结果拼接格式化数据
+    public function createRotaryXml($scheduleID){
+
+
+        
+        $tcm_pharmacy=array();
+
+        $shifts=$this->getShiftList($scheduleID);
+        $shiftDates=$this->getShiftDateList($scheduleID);
+        $shiftTypes=$this->getShiftTypeList($scheduleID);
+        $shiftAssignments=$this->getShiftAssignmentList($scheduleID);
+
+        $patternList=$this->saveFile('patternContranct');
+
+
+        $skillList=$this->getSkillList();
+        $employeeList=$this->getEmployeeList();
+
+        $employeeSkillList=$this->getEmployeeSkillList();
+        $shiftTypeToSkillList=$this->getShiftTypeToSkillList();
+    
+        $shiftTypes = array_column($shiftTypes, NULL, 'id');
+    
+
+
+        $k=1;
+        $tcm_pharmacy['@name']="NurseRoster";
+        $tcm_pharmacy['@attributes']['id']=$k;
+        $tcm_pharmacy['id']=1;
+        $tcm_pharmacy['code']='long_hint01';
+        $tcm_pharmacy['nurseRosterParametrization']['@attributes']['id']=$k+1;
+        $tcm_pharmacy['nurseRosterParametrization']['id']='0';//全局变量
+
+        $index=$k+2;
+        $last_index=count($shiftDates)-1;
+        
+
+
+
+        $shiftTypeIndex=array();
+        $shiftDateIndex=array();
 
 
         //只是得到第一天和最后一天信息，同时将创建的shiftTypeId 和shiftDateID存储起来
@@ -1906,7 +2221,7 @@ class ShiftService extends BaseService {
        
         // $exit_shiftDate=array_flip($shiftDateIndex);
           
-        foreach ($shiftDates as $key => $shiftDate) {
+        /*foreach ($shiftDates as $key => $shiftDate) {
 
            if(in_array($shiftDate['id'], $exit_shiftDate)){
 
@@ -1960,7 +2275,641 @@ class ShiftService extends BaseService {
            }
             
             
+        }*/
+
+        
+        //只是得到第一天和最后一天信息，同时将创建的shiftTypeId 和shiftDateID存储起来
+        foreach ($shiftDates as $key => $shiftDate) {
+            //如果是第一天
+            if($key==0){
+
+
+                $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['@attributes']['id']=$index;
+                $firstDateIndex=$index;
+
+                 $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['@attributes']['reference']=$firstDateIndex;
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['@data']="";
+                $shiftDateIndex[$shiftDate['id']]=$index;
+
+                $date_format=$this->getFormatDate($shiftDate['shiftDate']);
+                
+                $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['id']=$key;
+                $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['dayIndex']=0;
+                $index++;
+                $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['date']['@attributes']['id']=$index;
+                $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['date']['@attributes']['resolves-to']='java.time.Ser';
+
+                $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['date'][]['byte']='3';
+                $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['date']['int']=$date_format['y'];
+                $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['date'][]['byte']=$date_format['m'];
+                $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['date'][]['byte']=$date_format['d'];
+                $index++;
+                $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['shiftList']['@attributes']['id']=$index;
+
+
+                foreach($shiftDate['shiftList'] as $k=>$shift){
+
+
+                    $shiftType=$this->getShiftTypeById($shift['shift_type_id']);
+     
+                    $index++;
+
+                    $shiftListIndex[$shift['id']]=$index;
+
+                    $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['shiftList'][$k]['Shift']['@attributes']['id']=$index;
+
+                    $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['shiftList'][$k]['Shift']['id']=$shift['id'];
+                    $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['shiftList'][$k]['Shift']['shiftDate']['@attributes']['reference']=$firstDateIndex;
+                    $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['shiftList'][$k]['Shift']['shiftDate']['@data']='';
+
+                    $index++;
+
+                    //记录shiftTypeID
+                    $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['shiftList'][$k]['Shift']['shiftType']['@attributes']['id']=$index;
+                    $shiftTypeIndex[$shiftType->id]=$index;
+                    $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['shiftList'][$k]['Shift']['shiftType']['id']=$shiftType->id;
+                    $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['shiftList'][$k]['Shift']['shiftType']['code']=$shiftType->id;
+                    $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['shiftList'][$k]['Shift']['shiftType']['index']=$shiftType->id;
+                    $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['shiftList'][$k]['Shift']['shiftType']['startTimeString']=$shiftType->start_time;
+                    $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['shiftList'][$k]['Shift']['shiftType']['endTimeString']=$shiftType->end_time;
+                    $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['shiftList'][$k]['Shift']['shiftType']['night']='false';
+                    $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['shiftList'][$k]['Shift']['shiftType']['description']=$index;
+
+                    $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['shiftList'][$k]['Shift']['index']=$shift['id'];
+                    $tcm_pharmacy['nurseRosterParametrization']['firstShiftDate']['shiftList'][$k]['Shift']['requiredEmployeeSize']=$shift['required_employee'];
+
+                }
+
+
+            }
+
+            if($key>0&&$key<$last_index){
+                $date_format=$this->getFormatDate($shiftDate['shiftDate']);
+
+                $index++;
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['@attributes']['id']=$index;
+                $shiftDataIndex[$key]=$index;
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['id']=$key;
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['dayIndex']=$shiftDate['id'];
+                $index++;
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['date']['@attributes']['id']=$index;
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['date']['@attributes']['resolves-to']='java.time.Ser';
+               
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['date'][]['byte']='3';
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['date'][]['int']=$date_format['y'];
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['date'][]['byte']=$date_format['m'];
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['date'][]['byte']=$date_format['d'];
+                $index++;
+                $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList']['@attributes']['id']=$index;
+
+                
+                foreach($shiftDates[$key]['shiftList'] as $k=>$shift){
+           
+                    $shiftType=$this->getShiftTypeById($shift['shift_type_id']);
+   
+                    $index++;
+
+                    $shiftListIndex[$shift['id']]=$index;
+
+                    $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList'][$k]['Shift']['@attributes']['id']=$index;
+                  
+                    $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList'][$k]['Shift']['id']=$shift['id'];
+                    $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList'][$k]['Shift']['shiftDate']['@attributes']['reference']= $shiftDataIndex[$key];
+                    $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList'][$k]['Shift']['shiftDate']['@data']='';
+
+
+                    //记录shiftTypeID
+                   $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList'][$k]['Shift']['shiftType']['@attributes']['reference']=$shiftTypeIndex[$shiftType->id];
+                    $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList'][$k]['Shift']['shiftType']['@data']='';
+                    
+
+                    $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList'][$k]['Shift']['index']=$shift['id'];;
+                    $tcm_pharmacy['shiftDateList'][$key]['ShiftDate']['shiftList'][$k]['Shift']['requiredEmployeeSize']=$shift['required_employee'];;
+
+                }
+            }
+
+   
+
+            if($key==$last_index){
+                $index++;
+
+                $lastDateIndex=$index;
+
+                $date_format=$this->getFormatDate($shiftDate['shiftDate']);
+
+                $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['@attributes']['id']=$index;
+
+                $shiftDateIndex[$shiftDate['id']]=$index;
+                
+                $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['id']=$key;
+                $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['dayIndex']=$shiftDate['id'];
+                $index++;
+                $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['date']['@attributes']['id']=$index;
+                $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['date']['@attributes']['resolves-to']='java.time.Ser';
+                $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['date'][]['byte']='3';
+                $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['date']['int']=$date_format['y'];
+                $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['date'][]['byte']=$date_format['m'];
+                $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['date'][]['byte']=$date_format['d'];
+                $index++;
+                $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['shiftList']['@attributes']['id']=$index;
+
+                foreach($shiftDates[$last_index]['shiftList'] as $k=>$shift){
+           
+                    $shiftType=$this->getShiftTypeById($shift['shift_type_id']);
+   
+                    $index++;
+
+                    $shiftListIndex[$shift['id']]=$index;
+
+                     $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['shiftList'][$k]['Shift']['@attributes']['id']=$index;
+                  
+                    $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['shiftList'][$k]['Shift']['id']=$shift['id'];
+                    $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['shiftList'][$k]['Shift']['shiftDate']['@attributes']['reference']=$lastDateIndex;
+                    $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['shiftList'][$k]['Shift']['shiftDate']['@data']='';
+
+
+                    //记录shiftTypeID
+                    $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['shiftList'][$k]['Shift']['shiftType']['@attributes']['reference']=$shiftTypeIndex[$shiftType->id];
+                    $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['shiftList'][$k]['Shift']['shiftType']['@data']='';
+                    
+
+                    $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['shiftList'][$k]['Shift']['index']=$shift['id'];;
+                    $tcm_pharmacy['nurseRosterParametrization']['lastShiftDate']['shiftList'][$k]['Shift']['requiredEmployeeSize']=$shift['required_employee'];;
+
+                }
+
+            }
+
         }
+
+        $tcm_pharmacy['shiftDateList']['@attributes']['id']=$index;
+
+        $tcm_pharmacy['nurseRosterParametrization']['planningWindowStart']['@attributes']['reference']=$firstDateIndex;
+        $tcm_pharmacy['nurseRosterParametrization']['planningWindowStart']['@data']='';
+
+
+
+        
+
+
+
+
+        //值班人员
+
+        //持续上某一个班
+        $index++;
+        $tcm_pharmacy['patternList']['@attributes']['id']=$index;
+
+        foreach ($patternList['assignmentAfterShift'] as $key => $assignmentAfterShift) {
+
+            $shiftType=$assignmentAfterShift['assignmentAfterShiftSelect'];
+
+            $index++;
+            $tcm_pharmacy['patternList']['IdenticalShiftLastSomeDaysPattern']['@attributes']['id']=$index;
+            $patternIndex['LastSomeDaysPattern']=$index;
+            $tcm_pharmacy['patternList']['IdenticalShiftLastSomeDaysPattern']['id']='0';
+            $tcm_pharmacy['patternList']['IdenticalShiftLastSomeDaysPattern']['code']='0';
+            $tcm_pharmacy['patternList']['IdenticalShiftLastSomeDaysPattern']['weight']=$assignmentAfterShift['assignmentAfterShiftWeight'];
+            $tcm_pharmacy['patternList']['IdenticalShiftLastSomeDaysPattern']['dayShiftType']['@attributes']['reference']=$shiftTypeIndex[$shiftType];
+            $tcm_pharmacy['patternList']['IdenticalShiftLastSomeDaysPattern']['dayShiftType']['@data']='';
+            $tcm_pharmacy['patternList']['IdenticalShiftLastSomeDaysPattern']['ShiftLastLength']=$assignmentAfterShift['assignmentAfterShiftDays'];
+            
+        }
+
+        
+        foreach ($patternList['shiftdOnlyforMan'] as $key => $shiftdOnlyforMan) {
+
+            $onlyforManShiftType=$shiftdOnlyforMan['shiftdOnlyforManShiftSelect'];
+
+            $index++;
+            $tcm_pharmacy['patternList']['ShiftAssignedOnlyforManPattern']['@attributes']['id']= $index;
+            $patternIndex['AssignedOnlyforMan']=$index;
+            $tcm_pharmacy['patternList']['ShiftAssignedOnlyforManPattern']['id']='1';
+            $tcm_pharmacy['patternList']['ShiftAssignedOnlyforManPattern']['code']='1';
+            $tcm_pharmacy['patternList']['ShiftAssignedOnlyforManPattern']['weight']=$shiftdOnlyforMan['shiftdOnlyforManWeight'];
+            $tcm_pharmacy['patternList']['ShiftAssignedOnlyforManPattern']['dayShiftType']['@attributes']['reference']=$shiftTypeIndex[$onlyforManShiftType];
+            $tcm_pharmacy['patternList']['ShiftAssignedOnlyforManPattern']['dayShiftType']['@data']='';
+        }
+
+
+        $index++;
+        $tcm_pharmacy['patternList']['FreeAfterWeekendWorkDayPattern']['@attributes']['id']= $index;
+        $patternIndex['FreeAfterWeekendWorkDayPattern']=$index;
+        $tcm_pharmacy['patternList']['FreeAfterWeekendWorkDayPattern']['id']='2';
+        $tcm_pharmacy['patternList']['FreeAfterWeekendWorkDayPattern']['code']='2';
+        $tcm_pharmacy['patternList']['FreeAfterWeekendWorkDayPattern']['weight']=$patternList['restOnTuOrTues']["restOnTuOrTuesWeight"];
+        $tcm_pharmacy['patternList']['FreeAfterWeekendWorkDayPattern']['workDayOfWeek']='SATURDAY';
+    
+ 
+
+        foreach ($patternList['nightAfterNightLeisureShift'] as $key => $nightAfterNightLeisureShift) {
+       
+            $nightAfterNightShiftType=$nightAfterNightLeisureShift['nightAfterNightLeisureShiftSelect'];
+            $index++;
+            $tcm_pharmacy['patternList']['FreeAfterANightShiftPattern']['@attributes']['id']= $index;
+            $patternIndex['FreeAfterANightShiftPattern']=$index;
+
+            $tcm_pharmacy['patternList']['FreeAfterANightShiftPattern']['id']='3';
+            $tcm_pharmacy['patternList']['FreeAfterANightShiftPattern']['code']='3';
+            $tcm_pharmacy['patternList']['FreeAfterANightShiftPattern']['weight']=$nightAfterNightLeisureShift['nightAfterNightLeisureWeight'];
+            $tcm_pharmacy['patternList']['FreeAfterANightShiftPattern']['dayShiftType']['@attributes']['reference']=$shiftTypeIndex[$nightAfterNightShiftType];
+            $tcm_pharmacy['patternList']['FreeAfterANightShiftPattern']['dayShiftType']['@data']='';
+
+        }
+
+
+        foreach ($patternList['averageAssignment'] as $key => $averageAssignment) {
+ 
+            $averageAssignmentShiftType=$averageAssignment['averageAssignmentShiftSelect'];
+            $index++;
+            $tcm_pharmacy['patternList']['ShiftAssignedAveragedAtAllEmployeesPattern']['@attributes']['id']= $index;
+            $patternIndex['ShiftAssignedAveragedAtAllEmployeesPattern']=$index;
+            $tcm_pharmacy['patternList']['ShiftAssignedAveragedAtAllEmployeesPattern']['id']='4';
+            $tcm_pharmacy['patternList']['ShiftAssignedAveragedAtAllEmployeesPattern']['code']='4';
+            $tcm_pharmacy['patternList']['ShiftAssignedAveragedAtAllEmployeesPattern']['weight']=$averageAssignment['averageAssignmentWeight'];
+            $tcm_pharmacy['patternList']['ShiftAssignedAveragedAtAllEmployeesPattern']['dayShiftType']['@attributes']['reference']=$shiftTypeIndex[$averageAssignmentShiftType];
+            $tcm_pharmacy['patternList']['ShiftAssignedAveragedAtAllEmployeesPattern']['dayShiftType']['@data']='';
+            $tcm_pharmacy['patternList']['ShiftAssignedAveragedAtAllEmployeesPattern']['dayShiftLength']=$averageAssignment['averageAssignment'];
+        }
+        
+
+        // 每周公休分配
+        $index++;
+        $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['@attributes']['id']= $index;
+        $patternIndex['FreeTwoDaysEveryWeekPattern']=$index;
+        $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['id']='5';
+        $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['code']='5';
+        $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['weight']=$patternList['noBehindShift']["freeTwoDaysWeight"];
+        $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['workDayLength']='7';
+        $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['freeDayLength']=$patternList['noBehindShift']["freeTwoDaysSelect"];
+
+
+        
+        // 该班次分配后间隔后再分配
+        foreach ($patternList['assignmentAfterInterval'] as $key => $assignmentAfterInterval) {
+            $AfteInteShiftType=$assignmentAfterInterval['assignmentAfterIntervalShiftSelect'];
+            $index++;
+            $tcm_pharmacy['patternList']['ShiftAssignedSomeWeeksPattern']['@attributes']['id']= $index;
+            $patternIndex['ShiftAssignedSomeWeeksPattern']=$index;
+            $tcm_pharmacy['patternList']['ShiftAssignedSomeWeeksPattern']['id']='6';
+            $tcm_pharmacy['patternList']['ShiftAssignedSomeWeeksPattern']['code']='6';
+            $tcm_pharmacy['patternList']['ShiftAssignedSomeWeeksPattern']['weight']=$assignmentAfterInterval['assignmentAfterIntervalWeight'];
+            $tcm_pharmacy['patternList']['ShiftAssignedSomeWeeksPattern']['dayShiftType']['@attributes']['reference']=$shiftTypeIndex[$AfteInteShiftType];
+            $tcm_pharmacy['patternList']['ShiftAssignedSomeWeeksPattern']['dayShiftType']['@data']='';
+            $tcm_pharmacy['patternList']['ShiftAssignedSomeWeeksPattern']['weekGapLength']=$assignmentAfterInterval['assignmentAfterIntervalEmployee'];
+        }
+        
+
+
+        //不希望此班次后继续班次
+
+        foreach ($patternList['restAfterOneShift'] as $key => $restAfterOneShift) {
+            $index++;
+           // echo'<pre>'; var_dump($restAfterOneShift);exit;
+            $index0ShiftType=$restAfterOneShift['startShiftSelect'];
+            $index1ShiftType=$restAfterOneShift['nextShiftSelect'];
+            $tcm_pharmacy['patternList'][1]['ShiftType2DaysPattern']['@attributes']['id']= $index;
+            $patternIndex['ShiftType2DaysPattern1']=$index;
+            $tcm_pharmacy['patternList'][1]['ShiftType2DaysPattern']['id']='7';
+            $tcm_pharmacy['patternList'][1]['ShiftType2DaysPattern']['code']='7';
+            $tcm_pharmacy['patternList'][1]['ShiftType2DaysPattern']['weight']=$restAfterOneShift['restAfterOneShiftWeight'];
+            $tcm_pharmacy['patternList'][1]['ShiftType2DaysPattern']['dayIndex0ShiftType']['@attributes']['reference']=$shiftTypeIndex[$index0ShiftType];
+            $tcm_pharmacy['patternList'][1]['ShiftType2DaysPattern']['dayIndex0ShiftType']['@data']='';
+            $tcm_pharmacy['patternList'][1]['ShiftType2DaysPattern']['dayIndex1ShiftType']['@attributes']['reference']=$shiftTypeIndex[$index1ShiftType];
+            $tcm_pharmacy['patternList'][1]['ShiftType2DaysPattern']['dayIndex1ShiftType']['@data']='';
+        }
+
+
+        //contractList
+       //第一个contranct
+        $index++;
+        $tcm_pharmacy['contractList']['@attributes']['id']=$index;
+
+
+        $index++;
+        $tcm_pharmacy['contractList'][1]['Contract']['@attributes']['id']=$index;
+
+        $contractIndex[1]=$index;
+
+        $tcm_pharmacy['contractList'][1]['Contract']['id']='0';
+        $tcm_pharmacy['contractList'][1]['Contract']['code']='0';
+        $tcm_pharmacy['contractList'][1]['Contract']['description']='fulltime';
+        $tcm_pharmacy['contractList'][1]['Contract']['weekendDefinition']='SATURDAY_SUNDAY';
+
+
+        $index++;
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList']['@attributes']['id']=$index;
+
+
+        $index++;
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][0]['BooleanContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][0]['BooleanContractLine']['id']='0';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][0]['BooleanContractLine']['contract']['@attributes']['reference']=$contractIndex[1];
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][0]['BooleanContractLine']['contract']['@data']='';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][0]['BooleanContractLine']['contractLineType']='SINGLE_ASSIGNMENT_PER_DAY';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][0]['BooleanContractLine']['enabled']='true';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][0]['BooleanContractLine']['weight']='1';
+        $booleanContractIndex[$index]=$index;
+
+
+        
+        $index++;
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][1]['MinMaxContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][1]['MinMaxContractLine']['id']='1';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][1]['MinMaxContractLine']['contract']['@attributes']['reference']=$contractIndex[1];
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][1]['MinMaxContractLine']['contract']['@data']='';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][1]['MinMaxContractLine']['contractLineType']='TOTAL_ASSIGNMENTS';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][1]['MinMaxContractLine']['minimumEnabled']='true';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][1]['MinMaxContractLine']['minimumValue']='10';  
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][1]['MinMaxContractLine']['minimumWeight']='1';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][1]['MinMaxContractLine']['maximumEnabled']='true';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][1]['MinMaxContractLine']['maximumValue']='20';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][1]['MinMaxContractLine']['maximumWeight']='1';
+        $MinMaxContractIndex[$index]=$index;
+
+        
+        $index++;
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][2]['MinMaxContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][2]['MinMaxContractLine']['id']='2';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][2]['MinMaxContractLine']['contract']['@attributes']['reference']=$contractIndex[1];
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][2]['MinMaxContractLine']['contract']['@data']='';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][2]['MinMaxContractLine']['contractLineType']='CONSECUTIVE_WORKING_DAYS';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][2]['MinMaxContractLine']['minimumEnabled']='true';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][2]['MinMaxContractLine']['minimumValue']='3';  
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][2]['MinMaxContractLine']['minimumWeight']='1';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][2]['MinMaxContractLine']['maximumEnabled']='true';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][2]['MinMaxContractLine']['maximumValue']='5';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][2]['MinMaxContractLine']['maximumWeight']='1';
+        $MinMaxContractIndex[$index]=$index;
+
+
+
+        $index++;
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][3]['MinMaxContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][3]['MinMaxContractLine']['id']='3';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][3]['MinMaxContractLine']['contract']['@attributes']['reference']=$contractIndex[1];
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][3]['MinMaxContractLine']['contract']['@data']='';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][3]['MinMaxContractLine']['contractLineType']='CONSECUTIVE_FREE_DAYS';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][3]['MinMaxContractLine']['minimumEnabled']='true';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][3]['MinMaxContractLine']['minimumValue']='3';  
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][3]['MinMaxContractLine']['minimumWeight']='1';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][3]['MinMaxContractLine']['maximumEnabled']='true';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][3]['MinMaxContractLine']['maximumValue']='4';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][3]['MinMaxContractLine']['maximumWeight']='1';
+        $MinMaxContractIndex[$index]=$index;
+
+
+        //连续工作几个周末
+         
+        $index++;
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][4]['MinMaxContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][4]['MinMaxContractLine']['id']='4';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][4]['MinMaxContractLine']['contract']['@attributes']['reference']=$contractIndex[1];
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][4]['MinMaxContractLine']['contract']['@data']='';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][4]['MinMaxContractLine']['contractLineType']='CONSECUTIVE_WORKING_WEEKENDS';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][4]['MinMaxContractLine']['minimumEnabled']='true';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][4]['MinMaxContractLine']['minimumValue']=$patternList['minWorkWeekendNum']['minWorkWeekendCount'];  
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][4]['MinMaxContractLine']['minimumWeight']='1';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][4]['MinMaxContractLine']['maximumEnabled']='true';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][4]['MinMaxContractLine']['maximumValue']=$patternList['maxWeekendShift']["allowWeekendShift"];
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][4]['MinMaxContractLine']['maximumWeight']=$patternList['maxWeekendShift']["maxWeekendShiftWeight"];
+        $MinMaxContractIndex[$index]=$index;
+
+
+        $index++;
+
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][5]['BooleanContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][5]['BooleanContractLine']['id']='5';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][5]['BooleanContractLine']['contract']['@attributes']['reference']=$contractIndex[1];
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][5]['BooleanContractLine']['contract']['@data']='';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][5]['BooleanContractLine']['contractLineType']='COMPLETE_WEEKENDS';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][5]['BooleanContractLine']['enabled']='true';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][5]['BooleanContractLine']['weight']='1';
+        $booleanContractIndex[$index]=$index;
+
+
+        $index++;
+
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][6]['BooleanContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][6]['BooleanContractLine']['id']='6';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][6]['BooleanContractLine']['contract']['@attributes']['reference']=$contractIndex[1];
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][6]['BooleanContractLine']['contract']['@data']='';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][6]['BooleanContractLine']['contractLineType']='IDENTICAL_SHIFT_TYPES_DURING_WEEKEND';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][6]['BooleanContractLine']['enabled']='true';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][6]['BooleanContractLine']['weight']='1';
+        $booleanContractIndex[$index]=$index;
+
+
+        $index++;
+
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][8]['BooleanContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][8]['BooleanContractLine']['id']='7';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][8]['BooleanContractLine']['contract']['@attributes']['reference']=$contractIndex[1];
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][8]['BooleanContractLine']['contract']['@data']='';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][8]['BooleanContractLine']['contractLineType']='NO_NIGHT_SHIFT_BEFORE_FREE_WEEKEND';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][8]['BooleanContractLine']['enabled']='true';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][8]['BooleanContractLine']['weight']='1';
+        $booleanContractIndex[$index]=$index;
+
+        $index++;
+
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][9]['BooleanContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][9]['BooleanContractLine']['id']='8';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][9]['BooleanContractLine']['contract']['@attributes']['reference']=$contractIndex[1];
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][9]['BooleanContractLine']['contract']['@data']='';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][9]['BooleanContractLine']['contractLineType']='ALTERNATIVE_SKILL_CATEGORY';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][9]['BooleanContractLine']['enabled']='true';
+        $tcm_pharmacy['contractList'][1]['Contract']['contractLineList'][9]['BooleanContractLine']['weight']='1';
+
+        $booleanContractIndex[$index]=$index;
+
+
+        //contractLineList列表
+        $index++;
+        $tcm_pharmacy['contractLineList']['@attributes']['id']=$index;
+
+        foreach ($booleanContractIndex as $key => $booleanContract) {
+            $tcm_pharmacy['contractLineList'][$key]['BooleanContractLine']['@attributes']['reference']=$booleanContract;
+            $tcm_pharmacy['contractLineList'][$key]['BooleanContractLine']['@data']='';
+        }
+
+        foreach ($MinMaxContractIndex as $key => $minMaxContract) {
+            $tcm_pharmacy['contractLineList'][$key]['MinMaxContractLine']['@attributes']['reference']=$minMaxContract;
+            $tcm_pharmacy['contractLineList'][$key]['MinMaxContractLine']['@data']='';
+        }
+
+
+
+
+        $index++;
+        $tcm_pharmacy['patternContractLineList']['@attributes']['id']=$index;
+
+        $index++;
+        $tcm_pharmacy['patternContractLineList'][1]['PatternContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['patternContractLineList'][1]['PatternContractLine']['id']='0';
+        $tcm_pharmacy['patternContractLineList'][1]['PatternContractLine']['contract']['@attributes']['reference']=$contractIndex[1];
+        $tcm_pharmacy['patternContractLineList'][1]['PatternContractLine']['contract']['@data']='';
+        
+         $tcm_pharmacy['patternContractLineList'][1]['PatternContractLine']['pattern']['@attributes']['class']='IdenticalShiftLastSomeDaysPattern';
+         $tcm_pharmacy['patternContractLineList'][1]['PatternContractLine']['pattern']['@attributes']['reference']=$patternIndex['LastSomeDaysPattern'];
+        $tcm_pharmacy['patternContractLineList'][1]['PatternContractLine']['pattern']['@data']='';
+
+
+        $index++;
+        $tcm_pharmacy['patternContractLineList'][2]['PatternContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['patternContractLineList'][2]['PatternContractLine']['id']='1';
+        $tcm_pharmacy['patternContractLineList'][2]['PatternContractLine']['contract']['@attributes']['reference']=$contractIndex[1];
+        $tcm_pharmacy['patternContractLineList'][2]['PatternContractLine']['contract']['@data']='';
+        
+        $tcm_pharmacy['patternContractLineList'][2]['PatternContractLine']['pattern']['@attributes']['class']='ShiftAssignedOnlyforManPattern';
+        $tcm_pharmacy['patternContractLineList'][2]['PatternContractLine']['pattern']['@attributes']['reference']=$patternIndex['AssignedOnlyforMan'];
+        $tcm_pharmacy['patternContractLineList'][2]['PatternContractLine']['pattern']['@data']='';
+
+
+// echo'<pre>';var_dump($patternIndex['AssignedOnlyforMan']);exit;
+        $index++;
+        $tcm_pharmacy['patternContractLineList'][3]['PatternContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['patternContractLineList'][3]['PatternContractLine']['id']='2';
+        $tcm_pharmacy['patternContractLineList'][3]['PatternContractLine']['contract']['@attributes']['reference']=$contractIndex[1];;
+        $tcm_pharmacy['patternContractLineList'][3]['PatternContractLine']['contract']['@data']='';
+        
+         $tcm_pharmacy['patternContractLineList'][3]['PatternContractLine']['pattern']['@attributes']['class']='FreeAfterWeekendWorkDayPattern';
+         $tcm_pharmacy['patternContractLineList'][3]['PatternContractLine']['pattern']['@attributes']['reference']=$patternIndex['FreeAfterWeekendWorkDayPattern'];
+        $tcm_pharmacy['patternContractLineList'][3]['PatternContractLine']['pattern']['@data']='';
+
+
+        $index++;
+        $tcm_pharmacy['patternContractLineList'][4]['PatternContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['patternContractLineList'][4]['PatternContractLine']['id']='3';
+        $tcm_pharmacy['patternContractLineList'][4]['PatternContractLine']['contract']['@attributes']['reference']=$contractIndex[1];;
+        $tcm_pharmacy['patternContractLineList'][4]['PatternContractLine']['contract']['@data']='';
+        
+        $tcm_pharmacy['patternContractLineList'][4]['PatternContractLine']['pattern']['@attributes']['class']='FreeAfterANightShiftPattern';
+        $tcm_pharmacy['patternContractLineList'][4]['PatternContractLine']['pattern']['@attributes']['reference']=$patternIndex['FreeAfterANightShiftPattern'];
+        $tcm_pharmacy['patternContractLineList'][4]['PatternContractLine']['pattern']['@data']='';
+
+
+
+        $index++;
+        $tcm_pharmacy['patternContractLineList'][5]['PatternContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['patternContractLineList'][5]['PatternContractLine']['id']='4';
+        $tcm_pharmacy['patternContractLineList'][5]['PatternContractLine']['contract']['@attributes']['reference']=$contractIndex[1];;
+        $tcm_pharmacy['patternContractLineList'][5]['PatternContractLine']['contract']['@data']='';
+        
+         $tcm_pharmacy['patternContractLineList'][5]['PatternContractLine']['pattern']['@attributes']['class']='ShiftAssignedAveragedAtAllEmployeesPattern';
+        $tcm_pharmacy['patternContractLineList'][5]['PatternContractLine']['pattern']['@attributes']['reference']=$patternIndex['ShiftAssignedAveragedAtAllEmployeesPattern'];
+        $tcm_pharmacy['patternContractLineList'][5]['PatternContractLine']['pattern']['@data']='';
+
+
+        $index++;
+        $tcm_pharmacy['patternContractLineList'][6]['PatternContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['patternContractLineList'][6]['PatternContractLine']['id']='5';
+        $tcm_pharmacy['patternContractLineList'][6]['PatternContractLine']['contract']['@attributes']['reference']=$contractIndex[1];;
+        $tcm_pharmacy['patternContractLineList'][6]['PatternContractLine']['contract']['@data']='';
+        
+         $tcm_pharmacy['patternContractLineList'][6]['PatternContractLine']['pattern']['@attributes']['class']='FreeTwoDaysEveryWeekPattern';
+        $tcm_pharmacy['patternContractLineList'][6]['PatternContractLine']['pattern']['@attributes']['reference']=$patternIndex['FreeTwoDaysEveryWeekPattern'];
+        $tcm_pharmacy['patternContractLineList'][6]['PatternContractLine']['pattern']['@data']='';
+
+
+
+        $index++;
+        $tcm_pharmacy['patternContractLineList'][7]['PatternContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['patternContractLineList'][7]['PatternContractLine']['id']='6';
+        $tcm_pharmacy['patternContractLineList'][7]['PatternContractLine']['contract']['@attributes']['reference']=$contractIndex[1];
+        $tcm_pharmacy['patternContractLineList'][7]['PatternContractLine']['contract']['@data']='';
+        
+        $tcm_pharmacy['patternContractLineList'][7]['PatternContractLine']['pattern']['@attributes']['class']='ShiftAssignedSomeWeeksPattern';
+        $tcm_pharmacy['patternContractLineList'][7]['PatternContractLine']['pattern']['@attributes']['reference']=$patternIndex['ShiftAssignedSomeWeeksPattern'];
+        $tcm_pharmacy['patternContractLineList'][7]['PatternContractLine']['pattern']['@data']='';
+
+
+        $index++;
+
+        $tcm_pharmacy['patternContractLineList'][8]['PatternContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['patternContractLineList'][8]['PatternContractLine']['id']='7';
+        $tcm_pharmacy['patternContractLineList'][8]['PatternContractLine']['contract']['@attributes']['reference']=$contractIndex[1];
+        $tcm_pharmacy['patternContractLineList'][8]['PatternContractLine']['contract']['@data']='';
+        
+        $tcm_pharmacy['patternContractLineList'][8]['PatternContractLine']['pattern']['@attributes']['class']='ShiftType2DaysPattern';
+        $tcm_pharmacy['patternContractLineList'][8]['PatternContractLine']['pattern']['@attributes']['reference']=$patternIndex['ShiftType2DaysPattern1'];
+        $tcm_pharmacy['patternContractLineList'][8]['PatternContractLine']['pattern']['@data']='';
+
+
+        $index++;
+        $tcm_pharmacy['patternContractLineList'][9]['PatternContractLine']['@attributes']['id']=$index;
+        $tcm_pharmacy['patternContractLineList'][9]['PatternContractLine']['id']='8';
+        $tcm_pharmacy['patternContractLineList'][9]['PatternContractLine']['contract']['@attributes']['reference']=$contractIndex[1];
+        $tcm_pharmacy['patternContractLineList'][9]['PatternContractLine']['contract']['@data']='';
+        
+        $tcm_pharmacy['patternContractLineList'][9]['PatternContractLine']['pattern']['@attributes']['class']='ShiftType2DaysPattern';
+        $tcm_pharmacy['patternContractLineList'][9]['PatternContractLine']['pattern']['@attributes']['reference']=$patternIndex['ShiftType2DaysPattern1'];
+        $tcm_pharmacy['patternContractLineList'][9]['PatternContractLine']['pattern']['@data']='';
+
+
+
+
+
+
+        //雇员信息
+
+       
+
+        // var_dump($shiftDateIndex);
+        // var_dump($shiftTypeIndex);exit;
+
+        $index++;
+        $tcm_pharmacy['employeeList']['@attributes']['id']=$index;
+
+        foreach ($employeeList as $key => $employee) {
+
+            $age=$this->birthday($employee['emp_birthday']);
+            $workyear=$this->birthday($employee['joined_date']);
+            $index++;
+            $tcm_pharmacy['employeeList'][$key]['Employee']['@attributes']['id']=$index;
+            $employeeIndex[$employee['empNumber']]=$index;
+            $tcm_pharmacy['employeeList'][$key]['Employee']['id']=$key;
+            $tcm_pharmacy['employeeList'][$key]['Employee']['code']=$employee['empNumber'];
+            $tcm_pharmacy['employeeList'][$key]['Employee']['name']=$employee['empNumber'];
+            $tcm_pharmacy['employeeList'][$key]['Employee']['age']=$age;
+            $tcm_pharmacy['employeeList'][$key]['Employee']['title']='1';
+            $tcm_pharmacy['employeeList'][$key]['Employee']['gender']=$employee['emp_gender'];
+            $tcm_pharmacy['employeeList'][$key]['Employee']['workyear']=$workyear;
+            $tcm_pharmacy['employeeList'][$key]['Employee']['freedays']='1';
+            $tcm_pharmacy['employeeList'][$key]['Employee']['education']=$employee['emp_gender'][0]['institute'];
+            $tcm_pharmacy['employeeList'][$key]['Employee']['mutexname']='1';
+            $tcm_pharmacy['employeeList'][$key]['Employee']['currdepartment']=$employee['job_title_code'];
+            $tcm_pharmacy['employeeList'][$key]['Employee']['allodepartment']='1';
+            $tcm_pharmacy['employeeList'][$key]['Employee']['contract']['@attributes']['reference']=$contractIndex[1];
+            $tcm_pharmacy['employeeList'][$key]['Employee']['contract']['@data']='';
+
+
+
+
+            $index++;
+            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap']['@attributes']['id']=$index;
+           $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap']['@data']="";
+            
+            $index++;
+            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOnRequestMap']['@attributes']['id']=$index;
+            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOnRequestMap']['@data']='';
+
+            $index++;
+            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap']['@attributes']['id']=$index;
+            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap']['@data']='';
+
+            $index++;
+            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOnRequestMap']['@attributes']['id']=$index;
+            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOnRequestMap']['@data']='';
+            
+        }
+
+
+
+    
+
+        
 
 
         //shiftType列表；
@@ -1970,6 +2919,7 @@ class ShiftService extends BaseService {
            $tcm_pharmacy['shiftTypeList'][$key]['ShiftType']['@attributes']['reference']=$shiftType;
            $tcm_pharmacy['shiftTypeList'][$key]['ShiftType']['@data']='';
         }
+
 
         //排班列表
         $index++;
@@ -1984,7 +2934,6 @@ class ShiftService extends BaseService {
                 $tcm_pharmacy['shiftList'][$key]['Shift']['@data']='';
         }
         }
-
 
 
         //技能列表
@@ -2003,7 +2952,7 @@ class ShiftService extends BaseService {
         $index++;
         $tcm_pharmacy['shiftTypeSkillRequirementList']['@attributes']['id']=$index;
 
-    // echo'<pre>';var_dump($shiftTypeToSkillList);exit;
+
         foreach ($shiftTypeToSkillList as $key => $shiftTypeToSkill) {
      
             $index++;
@@ -2059,20 +3008,11 @@ class ShiftService extends BaseService {
         $toXmData=$this->array_to_xml($TCM);
 
         //将XML存储为静态文件
-        $this->cacheData('TCM_xml_schedule',$toXmData);
+        $this->cacheData('TCM_xml_Rotary',$toXmData);
        
         // header("Content-type: text/xml");
 
         // print_r($toXmData);exit;
-    }
-
-    public function getRosterResult(){
-
-       $arr = file_get_contents('http://localhost:8080/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/result.xml');
-
-       $result=$this->xmlToArray($arr);
-       return $result;
-  
     }
 
 

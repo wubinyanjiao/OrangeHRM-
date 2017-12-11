@@ -531,6 +531,10 @@ abstract class BaseEmployee extends sfDoctrineRecord
              'type' => 'date',
              'length' => 25,
              ));
+        $this->hasColumn('working_years', 'string', 4, array(
+             'type' => 'string',
+             'length' => 50,
+             ));
     }
 
     public function setUp()

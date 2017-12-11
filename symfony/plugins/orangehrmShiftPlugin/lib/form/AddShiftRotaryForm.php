@@ -85,20 +85,23 @@ class AddShiftRotaryForm extends BaseForm {
     }
 
     public function getJobDocument(){
-        $jopDocuments=$this->getShiftService()->getJobDepartmentList();
-       
-       $jopdocument_list=array();
-        foreach($jopDocuments as $key=>$jopDocument){
-            $jopdocument_list[$jopDocument['id']]=$jopDocument['name'];
+       $locationList = array('' => '-- ' . __('Select') . ' --');
+
+        $locationService = new LocationService();
+        $locations = $locationService->getLocationList();        
+
+        $accessibleLocations = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntityIds('Location');
+ 
+        foreach ($locations as $location) {
+            if (in_array($location->id, $accessibleLocations)) {
+                $locationList[$location->id] = $location->name;
+            }
         }
-
-
-        return $jopdocument_list;
+      
+        return($locationList);
     }
 
     public function save() {
-
-      
 
         $rotaryID=(int)$this->getValue('RotaryID');
         $shift_rotary['name']=$this->getValue('name');
@@ -124,15 +127,87 @@ class AddShiftRotaryForm extends BaseForm {
         $shiftRotary->setDateFrom($shift_rotary['date_from']);    
       
         $shiftRotary->setDateTo($shift_rotary['date_to']);  
-        $shiftRotary->setFirstDocument($shift_rotary['firDocument']);
-        $shiftRotary->setSecondDocument($shift_rotary['secDocument']);   
-        $shiftRotary->setthirdDocument($shift_rotary['thirDocument']);      
+        $shiftRotary->setFirstDepartment($shift_rotary['firDocument']);
+        $shiftRotary->setSecondDepartment($shift_rotary['secDocument']);   
+        $shiftRotary->setthirdDepartment($shift_rotary['thirDocument']);      
    
-        
-        $this->shiftService->saveShiftRotary($shiftRotary); 
+        $this->getShiftService()->saveShiftRotary($shiftRotary); 
 
-   
+        $id=$shiftRotary->getId();
+        if(!empty($id)){
+            $shift_rotary['id']=$id;
+        }
+        $this->setRoatary($shift_rotary);
+
         return $message;    
+
+    }
+
+     /*
+        具体操作步骤
+        第一，分别罗列出三个部门所有员工；
+        第二，获取部门顺序，例如，部门顺序是A部门－>B部门－>C部门
+        第三，foreachA部门，取出A部门经验最大的一个员工，加入到B部门；
+        第四，foreachB部门，取出B部门经验最大的一个员工（不包涵新加入的A部门员工），加入到C部门；
+        第五，foreachC部门，取出C部门经验最大的一个员工（不包涵新加入的B部门员工），加入到A部门；
+    */
+
+    public function setRoatary($shift_rotary){
+
+
+        $firDoc=$shift_rotary['firDocument'];
+        $secDoc=$shift_rotary['secDocument'];
+        $thirDoc=$shift_rotary['thirDocument'];
+      
+        //获取部门员工信息；
+        $document_employee=$this->getShiftService()->getEmoloyeeLocation();
+
+        //获得每个部门下的员工
+        foreach ($document_employee as $key => $employee) {
+            $empLocation[$employee['locationId']][]=$employee['Employee'];
+        }
+       
+  
+
+        //第一个部门所有员工的详细信息
+        $firsDocEmp=$empLocation[$firDoc];
+
+        // var_dump($firsDocEmp);exit; 
+        
+        //第一个部门中工龄最大的员工empNumber
+        $firsDocEmp = array_column($firsDocEmp, 'working_years', 'empNumber');
+        $firMax= array_search(max($firsDocEmp), $firsDocEmp);  
+
+         
+        //第二个部门员工
+        $secDocEmp=$empLocation[$secDoc];
+        //第三个部门员工
+        $thirDocEmp=$empLocation[$thirDoc];
+
+        foreach ($firsDocEmp as $key_fir => $fir_emp) {
+            //获取工龄最大的员工；
+            //获取轮换时间：一个月轮换
+            //原始部门ID；
+            //轮转部门ID：
+            $rotaryEmp['rotary_id']="";
+            $this->saveRotaryEmployee()
+
+
+           
+        }
+
+        
+    }
+
+    public function saveRotaryEmployee($rotaryEmp){
+        $rotary_emp=new WorkRotaryEmplayee();
+
+        $rotary_emp->setRotaryId($rotaryEmp['rotary_id']);
+        $rotary_emp->setRotaryId($rotaryEmp['emp_number']);
+        $rotary_emp->setDateFrom($rotaryEmp['date_from']);
+        $rotary_emp->setDateTo($rotaryEmp['date_to']);
+        $rotary_emp->setOrangeDepartment($rotaryEmp['orange_department_id']);
+        $rotary_emp->settRotaryDepartment($rotaryEmp['rotary_department_id']);
 
     }
 

@@ -211,7 +211,7 @@ $haveSkills = count($form->empSkillList)>0;
         $("#addSkill").click(function() {
             
             removeEditLinks();
-            clearMessageBar();
+            
             $('div#changeSkill label.error').hide();        
             
             //changing the headings
@@ -237,7 +237,7 @@ $haveSkills = count($form->empSkillList)>0;
         //clicking of delete button
         $("#delSkill").click(function(){
             
-            clearMessageBar();
+            // clearMessageBar();
             
             if ($("div#tblSkill .chkbox:checked").length > 0) {
                 $("#frmDelSkill").submit();
@@ -248,7 +248,7 @@ $haveSkills = count($form->empSkillList)>0;
         });
         
         $("#btnSave").click(function() {
-            clearMessageBar();
+            // clearMessageBar();
             
             $("#frmSkill").submit();
         });
@@ -269,7 +269,7 @@ $haveSkills = count($form->empSkillList)>0;
         });
         
         $("#btnSkillCancel").click(function() {
-            clearMessageBar();
+            // clearMessageBar();
           
             addEditLinks();
            
@@ -296,7 +296,7 @@ $haveSkills = count($form->empSkillList)>0;
         
         $('form#frmDelSkill a.edit').live('click', function(event) {
             event.preventDefault();
-            clearMessageBar();
+            // clearMessageBar();
             
             //changing the headings
             $("#headChangeSkill").text(lang_editSkill);

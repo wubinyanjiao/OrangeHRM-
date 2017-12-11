@@ -13,6 +13,9 @@ class addShiftRotaryAction extends baseShiftAction {
         }
     }
 
+
+    
+
     public function execute($request) {
         
         $loggedInEmpNum = $this->getUser()->getEmployeeNumber();
@@ -31,9 +34,12 @@ class addShiftRotaryAction extends baseShiftAction {
         $this->deleteForm = new EmployeeEmergencyContactsDeleteForm(array(), $param, true);
         $this->shiftRosters = $this->getShiftService()->getShiftRosters();
         $this->jopdocument_list=$this->getJobDocument();
-    
         
+    
     }
+
+   
+
     public function getJobDocument(){
         $jopDocuments=$this->getShiftService()->getJobDepartmentList();
        
