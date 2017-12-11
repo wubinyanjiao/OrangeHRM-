@@ -70,6 +70,30 @@ class ContranctaSearchForm extends BaseForm {
         return $list;
     }
 
+    private function _getShiftDateList() {
+
+        $scheduleID = $this->getOption('scheduleID');
+
+        $shiftDateService = new ShiftDateService();
+        $shifDateList = $shiftDateService->getShiftDates($scheduleID);
+
+
+        $list = array("" => "选择日期");
+
+        foreach($shifDateList as $shiftDate) {
+           
+            $list[$shiftDate->getId()] = $shiftDate->getShiftDate();
+        }
+   
+
+
+        return $list;
+    }
+
+  
+
+
+
     private function getPersonalInfoWidgets() {
 
         $status = array('1' => __('Enabled'), '0' => __('Disabled'));
@@ -129,6 +153,7 @@ class ContranctaSearchForm extends BaseForm {
             // 该班次不分配给某员工
             'shiftNotForEmployeeShiftSelect' => new sfWidgetFormSelect(array('choices' => $this->_getShiftTypeList())),
             'shiftNotForEmployee' => new sfWidgetFormSelect(array('choices' => $this->_getEmployeeList())),
+            'shiftDate' => new sfWidgetFormSelect(array('choices' => $this->_getShiftDateList())),
             'shiftNotForEmployeeWeight' => new sfWidgetFormInputText(),
             'shiftNotForEmployeeStatus' => new sfWidgetFormSelect(array('choices' => $status)),
 
@@ -237,6 +262,7 @@ class ContranctaSearchForm extends BaseForm {
         $widgets['shiftNotForEmployeeShiftSelect']->setAttribute('value', '');
         $widgets['shiftNotForEmployee']->setAttribute('value','');
         $widgets['shiftNotForEmployeeWeight']->setAttribute('value', '');
+        $widgets['shiftDate']->setAttribute('value', '');
         $widgets['shiftNotForEmployeeStatus']->setAttribute('value', '');
 
 

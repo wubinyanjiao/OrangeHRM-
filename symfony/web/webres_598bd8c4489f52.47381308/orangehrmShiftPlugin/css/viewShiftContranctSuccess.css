@@ -1,14 +1,14 @@
 .personalDetails form ol li select{
-    width:170px;
+    width:110px;
 }
 
 .personalDetails form ol li input[type=text]{
-    width:161px;
+    width:110px;
 }
 
 .personalDetails form ol.fieldsInLine li
 {
-    width:185px;
+    width:145px;
     margin-bottom:0;
 }
 

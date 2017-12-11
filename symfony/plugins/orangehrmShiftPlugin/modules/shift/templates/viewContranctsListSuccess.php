@@ -138,7 +138,7 @@
                             <ol class="fieldsInLine">
                                 <li>
                                     <div class="fieldDescription"><em>*</em> <?php echo __('班次选择'); ?></div>
-                                    <?php echo $form['shiftNotForEmployeeShiftSelect']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('班次选择'))); ?>
+                                    <?php echo $form['shiftNotForEmployeeShiftSelect']->render(array("class" => " block default editable", "maxlength" => 30, "title" => __('班次选择'))); ?>
                                 </li>
 
                                 <li style="margin-bottom: 13px">
@@ -148,6 +148,10 @@
                                 <li>
                                     <div class="fieldDescription"><em>*</em> <?php echo __('选择员工'); ?></div>
                                     <?php echo $form['shiftNotForEmployee']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Last Name'))); ?>
+                                </li>
+                                <li>
+                                    <div class="fieldDescription"><em>*</em> <?php echo __('选择日期'); ?></div>
+                                    <?php echo $form['shiftDate']->render(array("class" => "shiftDateSele block default editable", "maxlength" => 30, "title" => __('Last Name'))); ?>
                                 </li>
                                 <li>
                                     <div class="fieldDescription"><em>*</em> <?php echo __('状态'); ?></div>
@@ -611,19 +615,22 @@
             var temoli2=nighttempTr.children("ol").find("li").eq(1);
             var temoli3=nighttempTr.children("ol").find("li").eq(2);
             var temoli4=nighttempTr.children("ol").find("li").eq(3);
+            var temoli5=nighttempTr.children("ol").find("li").eq(4);
 
             //获取属性名
      
             var name='shiftNotForEmployeeShiftSelect[' + count +']'+'';
             var name2='shiftNotForEmployeeWeight[' + count +']'+'';
             var name3='shiftNotForEmployee[' + count +']'+'';
-            var name4='shiftNotForEmployeeStatus[' + count +']'+'';
+            var name4='shiftDate[' + count +']'+'';
+            var name5='shiftNotForEmployeeStatus[' + count +']'+'';
 
             //属性赋值
             temoli.children("select").attr("name",name);
             temoli2.children("input").attr("name",name2);
             temoli3.children("select").attr("name",name3);
             temoli4.children("select").attr("name",name4);
+            temoli5.children("select").attr("name",name5);
 
             $("#shiftNotForEmployee").after(nighttempTr); 
 
@@ -751,6 +758,9 @@
 
 
     }); 
+    
+
+
     
  
     //]]>

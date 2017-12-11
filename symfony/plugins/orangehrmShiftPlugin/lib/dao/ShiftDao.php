@@ -393,6 +393,26 @@ class ShiftDao extends BaseDao {
    
     }
 
+    public function getShiftByTypeAndDate($shiftype,$shifDate) {
+
+        try {
+            $q = Doctrine_Query:: create()->from('WorkShiftNew st')
+                            ->where('st.shift_type_id = ?', $shiftype)
+                            ->andWhere('st.shiftdate_id = ?', $shifDate)
+                            ->orderBy('st.id ASC');
+           
+
+            return $q->fetchOne();
+
+           
+
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }
+    }
+
+
+
     public function saveShiftContranct(WorkShiftContranct $shiftcontranct) {
 
         try {

@@ -213,6 +213,7 @@ class viewContranctsListAction extends baseShiftAction {
                     $shiftNotForEmployee[$key]['shiftNotForEmployeeShiftSelect']=$value;
                     $shiftNotForEmployee[$key]['shiftNotForEmployeeWeight']=$_POST['shiftNotForEmployeeWeight'][$key];
                     $shiftNotForEmployee[$key]['shiftNotForEmployee']=$_POST['shiftNotForEmployee'][$key];
+                    $shiftNotForEmployee[$key]['shiftDate']=$_POST['shiftDate'][$key];
                     $shiftNotForEmployee[$key]['shiftNotForEmployeeStatus']=$_POST['shiftNotForEmployeeStatus'][$key];
                 }
 
@@ -223,6 +224,7 @@ class viewContranctsListAction extends baseShiftAction {
                     $shift_notfor_employee[0]['shiftNotForEmployeeShiftSelect']=$_POST['personal']['shiftNotForEmployeeShiftSelect'];
                     $shift_notfor_employee[0]['shiftNotForEmployeeWeight']=$_POST['personal']['shiftNotForEmployeeWeight'];
                     $shift_notfor_employee[0]['shiftNotForEmployee']=$_POST['personal']['shiftNotForEmployee'];
+                    $shift_notfor_employee[0]['shiftDate']=$_POST['personal']['shiftDate'];
                     $shift_notfor_employee[0]['shiftNotForEmployeeStatus']=$_POST['personal']['shiftNotForEmployeeStatus'];
 
                     if(isset($_POST['shiftNotForEmployeeShiftSelect'])&&!empty($_POST['shiftNotForEmployeeShiftSelect'])){
@@ -231,12 +233,15 @@ class viewContranctsListAction extends baseShiftAction {
                             $shiftNotForEmployee[$key]['shiftNotForEmployeeShiftSelect']=$value;
                             $shiftNotForEmployee[$key]['shiftNotForEmployeeWeight']=$_POST['shiftNotForEmployeeWeight'][$key];
                             $shiftNotForEmployee[$key]['shiftNotForEmployee']=$_POST['shiftNotForEmployee'][$key];
+                            $shiftNotForEmployee[$key]['shiftDate']=$_POST['shiftDate'][$key];
                             $shiftNotForEmployee[$key]['shiftNotForEmployeeStatus']=$_POST['shiftNotForEmployeeStatus'][$key];
                         }
                         $shift_notfor_employee=array_merge($shift_notfor_employee,$shiftNotForEmployee);
                     }
 
             }
+
+           
 
 
             $patternList['shiftNotForEmployee']=$shift_notfor_employee;
