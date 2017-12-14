@@ -195,6 +195,11 @@ class ShiftService extends BaseService {
         return $this->getShiftDao()->getShiftContrancts($schedule_id,$status);
     }
 
+   
+     public function saveEmployeeWorkShiftCollection(Doctrine_Collection $empWorkShiftCollection) {
+        return $this->getShiftDao()->saveEmployeeWorkShiftCollection($empWorkShiftCollection);
+     }
+
     public function getShiftByTypeAndDate($shiftype,$shifDate) {
 
 
@@ -583,6 +588,7 @@ class ShiftService extends BaseService {
     }
 
     public function saveFile($key,$value='',$path=''){
+
         
         $this->_dir=dirname(__FILE__).'/files/';
 
@@ -598,10 +604,13 @@ class ShiftService extends BaseService {
             //写入文件
              file_put_contents($filename, json_encode($value));
         }
+
+
         //读取缓存文件
         if(!is_file($filename)){
             return false;
         }else{
+      
             return json_decode(file_get_contents($filename),true);
         }
       
@@ -1778,12 +1787,11 @@ class ShiftService extends BaseService {
             $index++;
             $tcm_pharmacy['employeeList'][$key]['Employee']['@attributes']['id']=$index;
             $employeeIndex[$employee['empNumber']]=$index;
-            $tcm_pharmacy['employeeList'][$key]['Employee']['id']=$key;
-            $tcm_pharmacy['employeeList'][$key]['Employee']['code']=$key;
+            $tcm_pharmacy['employeeList'][$key]['Employee']['id']=$employee['empNumber'];
+            $tcm_pharmacy['employeeList'][$key]['Employee']['code']=$employee['empNumber'];;
             $tcm_pharmacy['employeeList'][$key]['Employee']['name']=$employee['empNumber'];
             $tcm_pharmacy['employeeList'][$key]['Employee']['contract']['@attributes']['reference']=$contractIndex[1];
             $tcm_pharmacy['employeeList'][$key]['Employee']['contract']['@data']='';
-
 
             $index++;
             $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap']['@attributes']['id']=$index;
@@ -1799,19 +1807,15 @@ class ShiftService extends BaseService {
                     $shiftDateID[$shiftkey]=$this->getShiftById($shift_id)->shiftdate_id;
                     
                 }
-
                 //获得这个员工有班的日期；
                 $shiftDateID=array_unique($shiftDateID);
                 //查找所有日期
                 $shiftDatesIdList=array_column($shiftDates,'id');
 
                 $noShiftDate=array_diff($shiftDatesIdList,$shiftDateID);
-          
             }
 
-
-            $exist = true;
-         
+            $exist = true;         
             if (empty($noShiftDate)) {
                     $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap']['@data']="";
                
@@ -1821,7 +1825,6 @@ class ShiftService extends BaseService {
             }
 
             if(!$exist) {//如果员工有些天休息，循环休息天
-
 
                 foreach ($noShiftDate as $dayOffKey => $dayOff) {
                     $shiftDateOff=$this->getShiftDateById($dayOff);
@@ -1876,8 +1879,8 @@ class ShiftService extends BaseService {
                             $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['id']=$index;
                             $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['employee']['@attributes']['reference']=$employeeIndex[$employee['empNumber']];
                             $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['employee']['@data']='';
-                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['ShiftDate']['@attributes']['reference']=$shiftDateIndex[$dayOff];
-                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['ShiftDate']['@data']='';
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['shiftDate']['@attributes']['reference']=$shiftDateIndex[$dayOff];
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['shiftDate']['@data']='';
                             $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['weight']='10';
 
 
@@ -1893,8 +1896,8 @@ class ShiftService extends BaseService {
                         $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['id']=$index;
                         $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['employee']['@attributes']['reference']=$employeeIndex[$employee['empNumber']];
                         $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['employee']['@data']='';
-                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['ShiftDate']['@attributes']['reference']=$shiftDateIndex[$dayOff];
-                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['ShiftDate']['@data']='';
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['shiftDate']['@attributes']['reference']=$shiftDateIndex[$dayOff];
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['shiftDate']['@data']='';
                         $tcm_pharmacy['employeeList'][$key]['Employee']['dayOffRequestMap'][$dayOffKey]['entry']['DayOffRequest']['weight']='10';
 
                     }
@@ -1904,149 +1907,54 @@ class ShiftService extends BaseService {
 
 
 
-            //班次不分给某个员工；
-         
-            // var_dump($employee['empNumber']);
-            
-            // var_dump($patternList['shiftNotForEmployee']);
-
             //查找具体那一天哪些班不分配给该员工；
+            $shiftNoForEmp=array();
             foreach ($patternList['shiftNotForEmployee'] as $shifEmKey => $shifEmVal) {
-
-                
                 if($shifEmVal['shiftNotForEmployee']==$employee['empNumber']){
                     $shiftNoForEmp[$shifEmKey]['shiftType']=$shifEmVal['shiftNotForEmployeeShiftSelect'];
                     $shiftNoForEmp[$shifEmKey]['empNumber']=$shifEmVal['shiftNotForEmployee'];
                     $shiftNoForEmp[$shifEmKey]['shifDate']=$shifEmVal['shiftDate'];
                     $shiftNoForEmp[$shifEmKey]['weight']=$shifEmVal['shiftNotForEmployeeWeight'];
                 }
+
+
             }
-   
+
 
             
-
             $existEmp = true;
-            if(empty($shiftNoForEmp)){
-                $index++;
-                $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap']['@attributes']['id']=$index;
-                $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap']['@data']='';
-            }else{
-                $existEmp=false;
-            }
+            $index++;
+            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap']['@attributes']['id']=$index;
 
-           //existEmp：规则池中设置里该员工不安排某个班
-           //罗列出具体哪一天，
-          //查看这一天是否在上面已经创建，如果没有创建，罗列出这一天所有的班，并且这一天的这个班使用reference
-          //如果这一天已经创建,根据天和排班类型直接饮用这个班；
-        // var_dump($shiftDateIndex);
-        
-           if($existEmp==false){
-             foreach ($shiftNoForEmp as $sneKey => $emNoShift) {
+            /*
+                1,判断如果shiftNoForEmp设置没有设置了值
+
+            */
+            if(empty($shiftNoForEmp)){
+                $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap']['@data']='';
+                $existEmp = true;
+            }else{
                 
+             foreach ($shiftNoForEmp as $sneKey => $emNoShift) {
+              
                 $shiftDateEm=$emNoShift['shifDate'];
                 $shifTypeEm=$emNoShift['shiftType'];
                
-
                  $ifCreate=true;
-
                  $shiftEmtity=$this->getShiftByTypeAndDate($shifTypeEm,$shiftDateEm);
-                 
-
-                
+              
                  //查看这一天是否在已经存在,如果存在，查找这一天的这个班；
                  if(!empty($shiftDateIndex[$emNoShift['shifDate']])){
+                        $shiftEmtity=$this->getShiftByTypeAndDate($shifTypeEm,$shiftDateEm);
 
-                    
-                    
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['@attributes']['reference']=$shiftListIndex[$shiftEmtity->id];
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['@data']='';
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['@attributes']['reference']=$shiftListIndex[$shiftEmtity->id];
+                        $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['@data']='';
 
-
-                    $index++;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['@attributes']['id']=$index;
-
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['id']=$index;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['employee']['@attributes']['reference']=$employeeIndex[$employee['empNumber']];
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['employee']['@data']='';
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['shift']['@attributes']['reference']=$shiftListIndex[$shiftEmtity->id];
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['shift']['@data']='';
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['weight']=$emNoShift['weight'];
-
-                    
-
-                 }else{//如果这一天没有被创建过，则创建这一天；罗列出这一天所有班，
-                    $ifCreate=false;
-
-                 }
-                //如果这一天没有被创建过，则创建这一天；罗列出这一天所有班，
-                 if($ifCreate==false){
-
-                    //罗列出这一天所有的班
-                    $empNoShifts=$this->getShiftByDate($emNoShift['shifDate']);
-
-                    $date_format=$this->getFormatDate($shiftDatesByIndex[$shiftDateEm]['shiftDate']);
-
-
-
-                      $index++;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['@attributes']['id']=$index;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['id']=$index;
-
-
-                    $index++;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['@attributes']['id']=$index;
-                     
-                    $index++;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['@attributes']['id']=$index;
-
-
-
-                    // $shiftDateIndex[$dayOff]=$index;
-                   
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['id']=1;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['dayIndex']=$dayOffKey;
-
-                    $index++;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['date']['@attributes']['id']=$index;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['date']['@attributes']['resolves-to']='java.time.Ser';
-                    
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['date'][]['byte']='3';
-               
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['date'][]['int']=$date_format['y'];
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['date'][]['byte']=$date_format['m'];
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['date'][]['byte']=$date_format['d'];
-
-
-                    $index++;
-                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['shiftList']['@attributes']['id']=$index;
-
-
-                  foreach ($empNoShifts as $eskey => $empNoShift) {
-
-                        
-
-                            $index++;
-                            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['shiftList'][$eskey]['Shift']['@attributes']['id']=$index;
-
-                             $shiftListIndex[$empNoShift['id']]=$index;
-
-                             $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['shiftList'][$eskey]['Shift']['id']=$empNoShift['id'];
-                            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['shiftList'][$eskey]['Shift']['shiftDate']['@attributes']['reference']=$shiftDateIndex[$empNoShift['shiftdate_id']];
-                            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['shiftList'][$eskey]['Shift']['shiftDate']['@data']='';
-                            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['shiftList'][$eskey]['Shift']['shiftType']['@attributes']['reference']=$shiftTypeIndex[$empNoShift['shiftdate_id']];
-                            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['shiftList'][$eskey]['Shift']['shiftType']['@data']='';
-                            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['shiftList'][$eskey]['Shift']['index']=$empNoShift['id'];
-                            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['ShiftDate']['shiftList'][$eskey]['Shift']['requiredEmployeeSize']=$empNoShift['required_employee'];
-
-
-
-
-
-                             
-
-                        }  
+                      
                         $index++;
                         $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['@attributes']['id']=$index;
+
+                        $shiftOffRequest[$index]=$index;
 
                         $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['id']=$index;
                         $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['employee']['@attributes']['reference']=$employeeIndex[$employee['empNumber']];
@@ -2054,9 +1962,100 @@ class ShiftService extends BaseService {
                         $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['shift']['@attributes']['reference']=$shiftListIndex[$shiftEmtity->id];
                         $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['shift']['@data']='';
                         $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['weight']=$emNoShift['weight'];
-              
+          
+
+                 }else{//如果这一天没有被创建过，则创建这一天；罗列出这一天所有班，
+                    $ifCreate=false;
                  }
-             }
+
+                //如果这一天没有被创建过，则创建这一天；罗列出这一天所有班，
+                if($ifCreate==false){
+
+                    //罗列出这一天所有的班
+                    $empNoShifts=$this->getShiftByDate($emNoShift['shifDate']);
+                    $date_format=$this->getFormatDate($shiftDatesByIndex[$shiftDateEm]['shiftDate']);
+                    $entry_shift=array();
+
+                    $index++;
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['@attributes']['id']=$index;
+                    $entry_shift[$shiftEmtity->id]=$index;
+                    $shiftListIndex[$shiftEmtity->id]=$index;
+                    
+
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['id']=$index;
+
+
+                    $index++;
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['@attributes']['id']=$index;
+
+                    $shiftDateIndex[$emNoShift['shifDate']]=$index;
+
+                   
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['id']=$emNoShift['shifDate'];
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['dayIndex']=$emNoShift['shifDate'];
+
+                    $index++;
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['date']['@attributes']['id']=$index;
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['date']['@attributes']['resolves-to']='java.time.Ser';
+                    
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['date'][]['byte']='3';
+               
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['date'][]['int']=$date_format['y'];
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['date'][]['byte']=$date_format['m'];
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['date'][]['byte']=$date_format['d'];
+
+
+                    $index++;
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['shiftList']['@attributes']['id']=$index;
+
+                    // echo'<pre>';
+
+                    // var_dump($empNoShifts);
+
+                    //循环这一天所有班
+                    foreach ($empNoShifts as $eskey => $empNoShift) {
+
+                        if($shiftEmtity->id==$empNoShift['id']){
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['shiftList'][$eskey]['Shift']['@attributes']['reference']=  $entry_shift[$shiftEmtity->id];
+                            
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['shiftList'][$eskey]['Shift']['@data']= '';
+                        }else{
+                            $index++;
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['shiftList'][$eskey]['Shift']['@attributes']['id']=$index;
+
+                              $shiftListIndex[$empNoShift['id']]=$index;
+
+                             $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['shiftList'][$eskey]['Shift']['id']=$empNoShift['id'];
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['shiftList'][$eskey]['Shift']['shiftDate']['@attributes']['reference']=$shiftDateIndex[$empNoShift['shiftdate_id']];
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['shiftList'][$eskey]['Shift']['shiftDate']['@data']='';
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['shiftList'][$eskey]['Shift']['shiftType']['@attributes']['reference']=$shiftTypeIndex[$empNoShift['shift_type_id']];
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['shiftList'][$eskey]['Shift']['shiftType']['@data']='';
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['shiftList'][$eskey]['Shift']['index']=$empNoShift['id'];
+                            $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftDate']['shiftList'][$eskey]['Shift']['requiredEmployeeSize']=$empNoShift['required_employee'];
+                        }
+          
+                    }
+
+
+                   $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftType']['@attributes']['reference']=$shiftTypeIndex[$shiftEmtity->shift_type_id];
+                   $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['shiftType']['@data']='';
+                   $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['index']=$shiftEmtity->id;
+
+                   $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['Shift']['requiredEmployeeSize']=$shiftEmtity->required_employee;
+
+
+                    $index++;
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['@attributes']['id']=$index;
+                    $shiftOffRequest[$index]=$index;
+
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['id']=$index;
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['employee']['@attributes']['reference']=$employeeIndex[$employee['empNumber']];
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['employee']['@data']='';
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['shift']['@attributes']['reference']=$entry_shift[$shiftEmtity->id];
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['shift']['@data']='';
+                    $tcm_pharmacy['employeeList'][$key]['Employee']['shiftOffRequestMap'][$sneKey]['entry']['ShiftOffRequest']['weight']=$emNoShift['weight'];
+                }//$ifCreate==false结束
+            }
            }
 
 
@@ -2084,7 +2083,6 @@ class ShiftService extends BaseService {
         $exit_shiftDate=array_flip($shiftDateIndex);
 
 
-          
         foreach ($shiftDates as $key => $shiftDate) {
 
            if(in_array($shiftDate['id'], $exit_shiftDate)){
@@ -2140,7 +2138,9 @@ class ShiftService extends BaseService {
             
         }
 
-
+// echo'<pre>';
+// var_dump($shiftListIndex);exit;
+          
         //shiftType列表；
         // $index++;
         // $tcm_pharmacy['shiftTypeList']['@attributes']['id']=$index;
@@ -2181,7 +2181,8 @@ class ShiftService extends BaseService {
         // $index++;
         // $tcm_pharmacy['shiftTypeSkillRequirementList']['@attributes']['id']=$index;
 
-
+// echo'<pre>';var_dump($shiftTypeIndex);
+// var_dump($shiftTypeToSkillList);exit;
         foreach ($shiftTypeToSkillList as $key => $shiftTypeToSkill) {
      
             $index++;
@@ -2231,9 +2232,23 @@ class ShiftService extends BaseService {
         $tcm_pharmacy['dayOnRequestList']['@attributes']['class']="empty-list";
         $tcm_pharmacy['dayOnRequestList']['@data']='';
 
-        $tcm_pharmacy['shiftOffRequestList']['@attributes']['class']="empty-list";
-        $tcm_pharmacy['shiftOffRequestList']['@data']='';
 
+        if(!empty($shiftOffRequest)){
+            $index++;
+            $tcm_pharmacy['dayOffRequestList']['@attributes']['id']=$index;
+            foreach ($shiftOffRequest as $key => $shiftOff) {
+            
+                $tcm_pharmacy['shiftOffRequestList'][$key]['ShiftOffRequest']['@attributes']['reference']=$shiftOff;
+                $tcm_pharmacy['shiftOffRequestList'][$key]['ShiftOffRequest']['@data']='';
+
+            }
+
+        }else{
+            $tcm_pharmacy['shiftOffRequestList']['@attributes']['class']="empty-list";
+            $tcm_pharmacy['shiftOffRequestList']['@data']='';
+        }
+
+    
         $tcm_pharmacy['shiftOnRequestList']['@attributes']['class']="empty-list";
         $tcm_pharmacy['shiftOnRequestList']['@data']='';
         
@@ -2252,6 +2267,11 @@ class ShiftService extends BaseService {
 
         $index++;
         $tcm_pharmacy['shiftAssignmentList']['@attributes']['id']=$index;
+
+        // echo'<pre>';
+        // var_dump($shiftListIndex);
+        // var_dump($shiftAssignments);
+        // exit;
         foreach($shiftAssignments as $key=>$shiftAssignment){
 
                 $index++;
@@ -2280,7 +2300,7 @@ class ShiftService extends BaseService {
 
     public function getRosterResult(){
 
-       $arr = file_get_contents('http://localhost:8080/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/result.xml');
+       $arr = file_get_contents('http://localhost:8080/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/files/TCM_xml_schedule_solved.xml');
 
        $result=$this->xmlToArray($arr);
        return $result;

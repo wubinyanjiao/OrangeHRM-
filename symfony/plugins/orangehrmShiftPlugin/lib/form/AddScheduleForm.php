@@ -31,7 +31,7 @@ class AddScheduleForm extends sfForm {
 
         $status = array('0' => __('Enabled'), '1' => __('Disabled'));
 
-        $setStatusChoices =array( 'no'=> '不复制','one'=> '一周', 'two'=> '两周','three'=> '三周','four'=> '四周');
+        $setStatusChoices =array('one'=> '一周', 'two'=> '两周','three'=> '三周','four'=> '四周');
         $this->setWidgets(array(
             'id' => new sfWidgetFormInputHidden(),
             'name' => new sfWidgetFormInputText(array(), array("maxlength" => 52)),

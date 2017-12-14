@@ -17,7 +17,7 @@
 
             <?php include_partial('global/flash_messages', array('prefix' => 'personaldetails')); ?>
 
-            <form id="frmEmpPersonalDetails" method="post" action="<?php echo url_for('shift/viewContranctsList'); ?>">
+            <form id="frmEmpPersonalDetails" method="post" action="<?php echo url_for('shift/viewContranctsList?schedule_id='.$schedule_id); ?>">
 
                 <?php echo $form['_csrf_token']; ?>
                 <?php echo $form['txtEmpID']->render(); ?>
@@ -179,6 +179,11 @@
                                 <li>
                                     <div class="fieldDescription"><em>*</em> <?php echo __('选择员工'); ?></div>
                                     <?php echo $form['shiftForEmployee']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Last Name'))); ?>
+                                </li>
+
+                                <li>
+                                    <div class="fieldDescription"><em>*</em> <?php echo __('选择日期'); ?></div>
+                                    <?php echo $form['shiftDateForEmployee']->render(array("class" => "shiftDateSele block default editable", "maxlength" => 30, "title" => __('Last Name'))); ?>
                                 </li>
                                 <li>
                                     <div class="fieldDescription"><em>*</em> <?php echo __('状态'); ?></div>
@@ -648,13 +653,15 @@
             var temoli2=nighttempTr.children("ol").find("li").eq(1);
             var temoli3=nighttempTr.children("ol").find("li").eq(2);
             var temoli4=nighttempTr.children("ol").find("li").eq(3);
+            var temoli5=nighttempTr.children("ol").find("li").eq(4);
 
             //获取属性名
      
             var name='shiftForEmployeeShiftSelect[' + count +']'+'';
             var name2='shiftForEmployeeWeight[' + count +']'+'';
             var name3='shiftForEmployee[' + count +']'+'';
-            var name4='shiftForEmployeeStatus[' + count +']'+'';
+            var name4='shiftDateForEmployee[' + count +']'+'';
+            var name5='shiftForEmployeeStatus[' + count +']'+'';
 
             //属性赋值
             temoli.children("select").attr("name",name);

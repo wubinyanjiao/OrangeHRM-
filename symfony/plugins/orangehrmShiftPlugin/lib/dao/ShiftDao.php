@@ -411,6 +411,18 @@ class ShiftDao extends BaseDao {
         }
     }
 
+    public function saveEmployeeWorkShiftCollection(Doctrine_Collection $empWorkShiftCollection) {
+        try {
+
+            $empWorkShiftCollection->save();
+
+            // @codeCoverageIgnoreStart
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }
+        // @codeCoverageIgnoreEnd
+    }
+
 
 
     public function saveShiftContranct(WorkShiftContranct $shiftcontranct) {

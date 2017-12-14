@@ -259,8 +259,9 @@ class ShiftDependentForm extends BaseForm {
                     $shift->setRequiredEmployee($shift_list['required_employee']);
                     $shift->setCreateAt($create_at); 
                     $this->getShiftService()->saveShift($shift);
-                    // $shift_id=$shift->getId();
-                    // $this->saveShiftAssignment($shift_id,$shift_list['required_employee'],$shift_list['scheduleID']);
+                    $shift_id=$shift->getId();
+                    $this->saveShiftAssignment($shift_id,$shift_list['required_employee'],$shift_list['scheduleID']);
+                    $this->_saveEmployeeWorkShift($shift_id);
             }
 
             //若果该排班对计划中所有日期生效； 
@@ -284,6 +285,7 @@ class ShiftDependentForm extends BaseForm {
                     $this->getShiftService()->saveShift($shift); 
                     $shift_id=$shift->getId();
                     $this->saveShiftAssignment($shift_id,$shift_list['required_employee'],$shift_list['scheduleID']);
+                    $this->_saveEmployeeWorkShift($shift_id);
                 }
                    
             }
@@ -322,6 +324,9 @@ class ShiftDependentForm extends BaseForm {
                     $this->getShiftService()->saveShift($shift); 
                     $shift_id=$shift->getId();
                     $this->saveShiftAssignment($shift_id,$shift_list['required_employee'],$shift_list['scheduleID']);
+                    $this->_saveEmployeeWorkShift($shift_id);
+                    $this->_saveEmployeeWorkShift($shift_id);
+
                 }
             }
 
@@ -333,7 +338,7 @@ class ShiftDependentForm extends BaseForm {
         }
     }
 
-     public function saveShiftAssignment($shiftId,$required_employee,$schedule_id){
+    public function saveShiftAssignment($shiftId,$required_employee,$schedule_id){
         for($i=0;$i<$required_employee;$i++){
             $shiftAssignment = new WorkShiftAssignment;
             $shiftAssignment->setShiftId($shiftId);
@@ -346,15 +351,22 @@ class ShiftDependentForm extends BaseForm {
 
     //默认如果创建班，也就给全部员工分配上这个班
     private function _saveEmployeeWorkShift($workShiftId) {
+
+
+       //获取所有员工编号。然后喂每个员工分配这个班
+       $empArray = $this->getShiftService()->getEmployeeList();
+
         $empWorkShiftCollection = new Doctrine_Collection('EmployeeWorkShift');
-        
         for ($i = 0; $i < count($empArray); $i++) {
             $empWorkShift = new EmployeeWorkShift();
             $empWorkShift->setWorkShiftId($workShiftId);
-            $empWorkShift->setEmpNumber($empArray[$i]);
+            
+            $empWorkShift->setEmpNumber($empArray[$i]['empNumber']);
+
             $empWorkShiftCollection->add($empWorkShift);
+
         }
-        $this->getWorkShiftService()->saveEmployeeWorkShiftCollection($empWorkShiftCollection);
+        $this->getShiftService()->saveEmployeeWorkShiftCollection($empWorkShiftCollection);
     }
 
 

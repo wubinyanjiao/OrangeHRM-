@@ -7,7 +7,16 @@ class ContranctaSearchForm extends BaseForm {
     private $readOnlyWidgetNames = array();
     private $gender;
     private $employee;
-    public $fullName;
+    public $shiftService;
+
+
+    private function getShiftService() {
+
+        if(is_null($this->shiftService)) {
+            $this->shiftService = new ShiftService();
+        }
+        return $this->shiftService;
+    }
 
     public function configure() {
 
@@ -73,6 +82,7 @@ class ContranctaSearchForm extends BaseForm {
     private function _getShiftDateList() {
 
         $scheduleID = $this->getOption('scheduleID');
+
 
         $shiftDateService = new ShiftDateService();
         $shifDateList = $shiftDateService->getShiftDates($scheduleID);
@@ -160,6 +170,7 @@ class ContranctaSearchForm extends BaseForm {
 
             // 该班次分配给某员工
             'shiftForEmployeeShiftSelect' => new sfWidgetFormSelect(array('choices' => $this->_getShiftTypeList())),
+            'shiftDateForEmployee' => new sfWidgetFormSelect(array('choices' => $this->_getShiftDateList())),
             'shiftForEmployee' => new sfWidgetFormSelect(array('choices' => $this->_getEmployeeList())),
             'shiftForEmployeeWeight' => new sfWidgetFormInputText(),
             'shiftForEmployeeStatus' => new sfWidgetFormSelect(array('choices' => $status)),
@@ -207,111 +218,117 @@ class ContranctaSearchForm extends BaseForm {
 
         );
 
+        $file_name='patternContranct_'.$this->schedule_id;
+
+        
+
+            $data=$this->getShiftService()->saveFile($file_name);
+           // echo'<pre>';var_dump($data['nightAfterNightLeisureShift'][0]['nightAfterNightLeisureShiftSelect']);exit;
+
         //setting default values
-        $widgets['nightAfterNightLeisureStatus']->setAttribute('value', '');
-        $widgets['nightAfterNightLeisureWeight']->setAttribute('value', '');
-        $widgets['nightAfterNightLeisureShiftSelect']->setAttribute('value','');
+        $widgets['nightAfterNightLeisureStatus']->setAttribute('value', $data['nightAfterNightLeisureShift'][0]['nightAfterNightLeisureStatus']);
+        $widgets['nightAfterNightLeisureWeight']->setAttribute('value', $data['nightAfterNightLeisureShift'][0]['nightAfterNightLeisureWeight']);
+        $widgets['nightAfterNightLeisureShiftSelect']->setAttribute('value',$data['nightAfterNightLeisureShift'][0]['nightAfterNightLeisureShiftSelect']);
 
          //setting default values
-        $widgets['averageAssignment']->setAttribute('value', '');
-        $widgets['averageAssignmentShiftSelect']->setAttribute('value','');
-        $widgets['averageAssignmentWeight']->setAttribute('value', '');
-        $widgets['averageAssignmentStatus']->setAttribute('value', '');
+        $widgets['averageAssignment']->setAttribute('value', $data['averageAssignment'][0]['averageAssignment']);
+        $widgets['averageAssignmentShiftSelect']->setAttribute('value',$data['averageAssignment'][0]['averageAssignmentShiftSelect']);
+        $widgets['averageAssignmentWeight']->setAttribute('value', $data['averageAssignment'][0]['averageAssignmentWeight']);
+        $widgets['averageAssignmentStatus']->setAttribute('value', $data['averageAssignment'][0]['averageAssignmentStatus']);
 
         // 班次只分配给男性
-        $widgets['shiftdOnlyforManShiftSelect']->setAttribute('value','');
-        $widgets['shiftdOnlyforManWeight']->setAttribute('value', '');
-        $widgets['shiftdOnlyforManStatus']->setAttribute('value', '');
+        $widgets['shiftdOnlyforManShiftSelect']->setAttribute('value',$data['shiftdOnlyforMan'][0]['shiftdOnlyforManShiftSelect']);
+        $widgets['shiftdOnlyforManWeight']->setAttribute('value', $data['shiftdOnlyforMan'][0]['shiftdOnlyforManWeight']);
+        $widgets['shiftdOnlyforManStatus']->setAttribute('value', $data['shiftdOnlyforMan'][0]['shiftdOnlyforManStatus']);
 
-        // 每周公休分配
-        $widgets['freeTwoDaysSelect']->setAttribute('value','');
-        $widgets['freeTwoDaysWeight']->setAttribute('value', '');
-        $widgets['freeTwoDaysStatus']->setAttribute('value', '');
+        // 每周公休分配??????
+
+        $widgets['freeTwoDaysSelect']->setAttribute('value',$data['freeTwoDays']['freeTwoDaysSelect']);
+        $widgets['freeTwoDaysWeight']->setAttribute('value', $data['freeTwoDays']['freeTwoDaysWeight']);
+        $widgets['freeTwoDaysStatus']->setAttribute('value', $data['freeTwoDays']['freeTwoDaysStatus']);
 
         //该班次分配后间隔后再分配
-        $widgets['assignmentAfterIntervalShiftSelect']->setAttribute('value', '');
-        $widgets['assignmentAfterIntervalEmployee']->setAttribute('value','');
-        $widgets['assignmentAfterIntervalWeight']->setAttribute('value', '');
-        $widgets['assignmentAfterIntervalStatus']->setAttribute('value', '');
+        $widgets['assignmentAfterIntervalShiftSelect']->setAttribute('value', $data['assignmentAfterInterval'][0]['assignmentAfterIntervalShiftSelect']);
+        $widgets['assignmentAfterIntervalEmployee']->setAttribute('value',$data['assignmentAfterInterval'][0]['assignmentAfterIntervalEmployee']);
+        $widgets['assignmentAfterIntervalWeight']->setAttribute('value', $data['assignmentAfterInterval'][0]['assignmentAfterIntervalWeight']);
+        $widgets['assignmentAfterIntervalStatus']->setAttribute('value', $data['assignmentAfterInterval'][0]['assignmentAfterIntervalStatus']);
 
 
         //该班次分配后持续分配
 
-        $widgets['assignmentAfterShiftSelect']->setAttribute('value', '');
-        $widgets['assignmentAfterShiftDays']->setAttribute('value','');
-        $widgets['assignmentAfterShiftWeight']->setAttribute('value', '');
-        $widgets['assignmentAfterShiftStatus']->setAttribute('value', '');
+        $widgets['assignmentAfterShiftSelect']->setAttribute('value', $data['assignmentAfterShift'][0]['assignmentAfterShiftSelect']);
+        $widgets['assignmentAfterShiftDays']->setAttribute('value',$data['assignmentAfterShift'][0]['assignmentAfterShiftDays']);
+        $widgets['assignmentAfterShiftWeight']->setAttribute('value', $data['assignmentAfterShift'][0]['assignmentAfterShiftWeight']);
+        $widgets['assignmentAfterShiftStatus']->setAttribute('value', $data['assignmentAfterShift'][0]['assignmentAfterShiftStatus']);
 
 
         //最多允许连续工作几个周末
 
-        $widgets['allowWeekendShift']->setAttribute('value','');
-        $widgets['maxWeekendShiftWeight']->setAttribute('value', '');
-        $widgets['maxWeekendShiftStatus']->setAttribute('value', '');
+        $widgets['allowWeekendShift']->setAttribute('value',$data['maxWeekendShift']['allowWeekendShift']);
+        $widgets['maxWeekendShiftWeight']->setAttribute('value', $data['maxWeekendShift']['maxWeekendShiftWeight']);
+        $widgets['maxWeekendShiftStatus']->setAttribute('value', $data['maxWeekendShift']['maxWeekendShiftStatus']);
 
 
         //周六日连休
 
-        $widgets['restOnStaAndSunOn']->setAttribute('value','');
-        $widgets['restOnStaAndSunWeight']->setAttribute('value', '');
-        $widgets['restOnStaAndSunStatus']->setAttribute('value', '');
+        $widgets['restOnStaAndSunOn']->setAttribute('value',$data['restOnStaAndSun']['restOnStaAndSunOn']);
+        $widgets['restOnStaAndSunWeight']->setAttribute('value', $data['restOnStaAndSun']['restOnStaAndSunWeight']);
+        $widgets['restOnStaAndSunStatus']->setAttribute('value', $data['restOnStaAndSun']['restOnStaAndSunStatus']);
 
          
          // 该班次不分配给某员工
 
-        $widgets['shiftNotForEmployeeShiftSelect']->setAttribute('value', '');
-        $widgets['shiftNotForEmployee']->setAttribute('value','');
-        $widgets['shiftNotForEmployeeWeight']->setAttribute('value', '');
-        $widgets['shiftDate']->setAttribute('value', '');
-        $widgets['shiftNotForEmployeeStatus']->setAttribute('value', '');
+        $widgets['shiftNotForEmployeeShiftSelect']->setAttribute('value', $data['shiftNotForEmployee'][0]['shiftNotForEmployeeShiftSelect']);
+        $widgets['shiftNotForEmployee']->setAttribute('value',$data['shiftNotForEmployee'][0]['shiftNotForEmployee']);
+        $widgets['shiftNotForEmployeeWeight']->setAttribute('value', $data['shiftNotForEmployee'][0]['shiftNotForEmployeeWeight']);
+        $widgets['shiftDate']->setAttribute('value', $data['shiftNotForEmployee'][0]['shiftDate']);
+        $widgets['shiftNotForEmployeeStatus']->setAttribute('value', $data['shiftNotForEmployee'][0]['shiftNotForEmployeeStatus']);
 
 
         // 该班次分配给某员工
 
-        $widgets['shiftForEmployeeShiftSelect']->setAttribute('value', '');
-        $widgets['shiftForEmployee']->setAttribute('value','');
-        $widgets['shiftForEmployeeWeight']->setAttribute('value', '');
-        $widgets['shiftForEmployeeStatus']->setAttribute('value', '');
+        $widgets['shiftForEmployeeShiftSelect']->setAttribute('value', $data['shiftForEmployee'][0]['shiftForEmployeeShiftSelect']);
+        $widgets['shiftForEmployee']->setAttribute('value',$data['shiftForEmployee'][0]['maxWeekendShiftStatus']);
+        $widgets['shiftForEmployeeWeight']->setAttribute('value', $data['shiftForEmployee'][0]['shiftForEmployeeWeight']);
+        $widgets['shiftDateForEmployee']->setAttribute('value', $data['shiftForEmployee'][0]['shiftDateForEmployee']);
+        $widgets['shiftForEmployeeStatus']->setAttribute('value', $data['shiftForEmployee'][0]['shiftForEmployeeStatus']);
 
 
         //不希望此班次后继续班次
 
-        $widgets['startShiftSelect']->setAttribute('value', '');
-        $widgets['nextShiftSelect']->setAttribute('value','');
-        $widgets['restAfterOneShiftWeight']->setAttribute('value', '');
-        $widgets['restAfterOneShiftStatus']->setAttribute('value', '');
+        $widgets['startShiftSelect']->setAttribute('value', $data['restAfterOneShift'][0]['startShiftSelect']);
+        $widgets['nextShiftSelect']->setAttribute('value',$data['restAfterOneShift'][0]['nextShiftSelect']);
+        $widgets['restAfterOneShiftWeight']->setAttribute('value', $data['restAfterOneShift'][0]['restAfterOneShiftWeight']);
+        $widgets['restAfterOneShiftStatus']->setAttribute('value', $data['restAfterOneShift'][0]['restAfterOneShiftStatus']);
 
 
         // 周六工作在周二或周四安排调休
 
-        $widgets['restOnTuOrTuesWeight']->setAttribute('value', '');
-        $widgets['restOnTuOrTuesStatus']->setAttribute('value', '');
+        $widgets['restOnTuOrTuesWeight']->setAttribute('value', $data['restOnTuOrTues']['restOnTuOrTuesWeight']);
+        $widgets['restOnTuOrTuesStatus']->setAttribute('value', $data['restOnTuOrTues']['restOnTuOrTuesStatus']);
 
         //连续周末分配同一班次
 
-        $widgets['continuWeekOneShiftWeight']->setAttribute('value', '');
-        $widgets['continuWeekOneShiftStatus']->setAttribute('value', '');
+        $widgets['continuWeekOneShiftWeight']->setAttribute('value', $data['continuWeekOneShift']['continuWeekOneShiftWeight']);
+        $widgets['continuWeekOneShiftStatus']->setAttribute('value', $data['continuWeekOneShift']['continuWeekOneShiftStatus']);
 
         //最少任务天数分配
 
-        $widgets['minWorkDayCount']->setAttribute('value', '');
-        $widgets['minWorkDayWeight']->setAttribute('value', '');
-        $widgets['minWorkDayStatus']->setAttribute('value', '');
+        $widgets['minWorkDayCount']->setAttribute('value', $data['minWorkDay']['minWorkDayCount']);
+        $widgets['minWorkDayWeight']->setAttribute('value', $data['minWorkDay']['minWorkDayWeight']);
+        $widgets['minWorkDayStatus']->setAttribute('value', $data['minWorkDay']['minWorkDayStatus']);
 
         //最多任务天数分配
 
-        $widgets['maxWorkDayCount']->setAttribute('value', '');
-        $widgets['maxWorkDayWeight']->setAttribute('value', '');
-        $widgets['maxWorkDayStatus']->setAttribute('value', '');
+        $widgets['maxWorkDayCount']->setAttribute('value', $data['maxWorkDay']['maxWorkDayCount']);
+        $widgets['maxWorkDayWeight']->setAttribute('value', $data['maxWorkDay']['maxWorkDayWeight']);
+        $widgets['maxWorkDayStatus']->setAttribute('value', $data['maxWorkDay']['maxWorkDayStatus']);
 
 
         // 最少允许连续工作几个周末
 
-         $widgets['minWorkWeekendCount']->setAttribute('value', '');
-        $widgets['minWorkWeekendStatus']->setAttribute('value', '');
-
-
-
+        $widgets['minWorkWeekendCount']->setAttribute('value', $data['minWorkWeekendNum']['minWorkWeekendCount']);
+        $widgets['minWorkWeekendStatus']->setAttribute('value', $data['minWorkWeekendNum']['minWorkWeekendStatus']);
 
         
         return $widgets;
@@ -408,16 +425,20 @@ class ContranctaSearchForm extends BaseForm {
 
         'shiftNotForEmployee' => new sfValidatorChoice(array('required' => false, 'choices' => array_keys($this->_getEmployeeList()))),
 
+        'shiftDate' => new sfValidatorChoice(array('required' => false, 'choices' => array_keys($this->_getShiftDateList()))),
+
         'shiftNotForEmployeeWeight' => new sfValidatorString(array('required' => false, 'max_length' => 30, 'trim' => true), array('max_length' => 'Middle Name Length exceeded 30 characters')),
 
         'shiftNotForEmployeeStatus' => new sfValidatorString(array('required' => false, 'max_length' => 30, 'trim' => true),
                     array('required' => 'Last Name Empty!', 'max_length' => 'Last Name Length exceeded 30 characters')),
 
-        // 该班次分配给某员工
+        // 该班次分配给某员工 
 
         'shiftForEmployeeShiftSelect' => new sfValidatorChoice(array('required' => false, 'choices' => array_keys($this->_getShiftTypeList()))),
 
         'shiftForEmployee' => new sfValidatorChoice(array('required' => false, 'choices' => array_keys($this->_getEmployeeList()))),
+
+        'shiftDateForEmployee' => new sfValidatorChoice(array('required' => false, 'choices' => array_keys($this->_getShiftDateList()))),
 
         'shiftForEmployeeWeight' => new sfValidatorString(array('required' => false, 'max_length' => 30, 'trim' => true), array('max_length' => 'Middle Name Length exceeded 30 characters')),
 

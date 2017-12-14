@@ -3,17 +3,23 @@
 
 class createXmlAction extends baseShiftAction {
 
-
-
     public function execute($request) {
-
-       
 
         $scheduleID=$request->getParameter('schedule_id');
         $this->getShiftService()->createXml($scheduleID);
         // $this->getShiftService()->createRotaryXml($scheduleID);
         $this->schedule_id=$scheduleID;
+        //执行java程序；
+
+        $file_path="/Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/files/TCM_xml_schedule.xml";
+        $roaster_path="/Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/Linux-NurseRostering/NurseRostering.jar";
+        $java_path="/Library/Java/JavaVirtualMachines/jdk-9.0.1.jdk/Contents/Home/bin/java";
+
+        exec("$java_path  -jar $roaster_path  $file_path 2>&1",$output, $return_val);
+
         $result=$this->getShiftService()->getRosterResult();
+
+
 
         $shiftTypes=$this->getShiftService()->getShiftTypeList($scheduleID);
 		$shiftTypes = array_column($shiftTypes, NULL, 'id');
@@ -25,6 +31,8 @@ class createXmlAction extends baseShiftAction {
 
         $this->result=$result;
         $assignment_list=$result['Assignment'];
+
+        // echo'<pre>';var_dump($assignment_list);exit;
 
 
 

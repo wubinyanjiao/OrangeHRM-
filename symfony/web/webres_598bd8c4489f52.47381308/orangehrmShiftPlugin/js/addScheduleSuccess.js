@@ -150,13 +150,23 @@ $(document).ready(function() {
                 uniqueName: true,
                 maxlength: 50
             },
-            'workShift[workHours][from]':{
-                required: true, 
-                validWorkHours: true
+            
+            'workShift[dateOfBirth]': {
+                    required: true,
+                    valid_date: function() {
+                        return {
+                            required: true,
+                            format:datepickerDateFormat,
+                            displayFormat:displayDateFormat
+                        }
+                    }
+                },
+            'workShift[copy]' : {
+                required:true,
+             
+              
             },
-            'workShift[workHours][to]':{
-                required: true
-            }
+         
         },
         messages: {
             'workShift[name]' : {
@@ -164,11 +174,12 @@ $(document).ready(function() {
                 uniqueName: lang_nameAlreadyExist,
                 maxlength: lang_exceed50Charactors
             },
-            'workShift[workHours][from]':{
-                required : lang_Required,
-                validWorkHours: lang_FromTimeLessThanToTime
+          
+            'workShift[dateOfBirth]':{
+               required:lang_invalidDate,
+                    valid_date: lang_invalidDate
             },
-            'workShift[workHours][to]':{
+            'workShift[workHours]':{
                 required : lang_Required
             }            
         }

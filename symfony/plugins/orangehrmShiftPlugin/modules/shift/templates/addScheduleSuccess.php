@@ -1,4 +1,10 @@
-<?php use_javascript(plugin_web_path('orangehrmShiftPlugin', 'js/addScheduleSuccess')); ?>
+<?php 
+use_javascript(plugin_web_path('orangehrmShiftPlugin', 'js/addScheduleSuccess')); 
+
+// use_stylesheet(plugin_web_path('orangehrmShiftPlugin', 'css/addScheduleSuccess.css'));
+
+?>
+
 
 <div id="workShift" class="box" <?php echo $hideForm ? "style='display:none'" : "";?> >
     
@@ -79,9 +85,18 @@
 </div>
 <!-- Confirmation box HTML: Ends -->
 
+
+<?php
+
+    $dateFormat = get_datepicker_date_format($sf_user->getDateFormat());
+    $displayDateFormat = str_replace('yy', 'yyyy', $dateFormat);
+?>
+
+
 <script type="text/javascript">
 
     var workShiftList = <?php echo $form->getScheduleListAsJson();?>;
+    var lang_invalidDate = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, array('%format%' => $displayDateFormat)) ?>';
         
     var workShiftInfoUrl = "<?php echo url_for("shift/createShift?schedule_id="); ?>";
     var workShiftEmpInfoUrl = "<?php echo url_for("admin/getWorkShiftEmpInfoJson?id="); ?>";
@@ -92,12 +107,15 @@
     var lang_addWorkShift = "<?php echo __("Add Work Shift"); ?>";
     var lang_editWorkShift = "<?php echo __("Edit Work Shift"); ?>";
     var lang_nameAlreadyExist = '<?php echo __(ValidationMessages::ALREADY_EXISTS); ?>';
-        var lang_FromTimeLessThanToTime = "<?php echo __('From time should be less than To time'); ?>";
+    var lang_FromTimeLessThanToTime = "<?php echo __('From time should be less than To time'); ?>";
+    
+
     function getDate(datestr){  
               var temp = datestr.split("-");  
               var date = new Date(temp[0],temp[1]-1,temp[2]); 
               if(isNaN(date)){
                 alert("请先选择年份");
+
                 return false;
             }else{
                 return date; 
@@ -131,6 +149,10 @@
             var start_time=$('#dependent_dateOfBirth').val();
         
             var startTime = getDate(start_time); 
+            if(startTime==false){
+                this.checked=false;
+            }
+
             //获取七天后时间
             var ddd=7;
             ttt=new Date(start_time).getTime()+ddd*24000*3600;
@@ -145,6 +167,9 @@
 
             var start_time=$('#dependent_dateOfBirth').val();
             var startTime = getDate(start_time);  
+            if(startTime==false){
+                this.checked=false;
+            }
             //获取七天后时间
             var ddd=14;
             ttt=new Date(start_time).getTime()+ddd*24000*3600;
@@ -158,6 +183,9 @@
 
             var start_time=$('#dependent_dateOfBirth').val();
             var startTime = getDate(start_time);  
+            if(startTime==false){
+                this.checked=false;
+            }
             //获取七天后时间
             var ddd=31;
             ttt=new Date(start_time).getTime()+ddd*24000*3600;
@@ -171,6 +199,9 @@
 
             var start_time=$('#dependent_dateOfBirth').val();
             var startTime = getDate(start_time);  
+            if(startTime==false){
+                this.checked=false;
+            }
             //获取七天后时间
             var ddd=28;
             ttt=new Date(start_time).getTime()+ddd*24000*3600;

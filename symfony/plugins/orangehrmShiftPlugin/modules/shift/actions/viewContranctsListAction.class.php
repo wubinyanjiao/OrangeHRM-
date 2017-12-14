@@ -257,6 +257,7 @@ class viewContranctsListAction extends baseShiftAction {
                     $shiftForEmployee[$key]['shiftForEmployeeShiftSelect']=$value;
                     $shiftForEmployee[$key]['shiftForEmployeeWeight']=$_POST['shiftForEmployeeWeight'][$key];
                     $shiftForEmployee[$key]['shiftForEmployee']=$_POST['shiftForEmployee'][$key];
+                    $shiftForEmployee[$key]['shiftDateForEmployee']=$_POST['shiftDateForEmployee'][$key];
                     $shiftForEmployee[$key]['shiftForEmployeeStatus']=$_POST['shiftForEmployeeStatus'][$key];
                 }
 
@@ -264,11 +265,10 @@ class viewContranctsListAction extends baseShiftAction {
 
             }else{
 
-
-
                     $shift_for_employee[0]['shiftForEmployeeShiftSelect']=$_POST['personal']['shiftForEmployeeShiftSelect'];
                     $shift_for_employee[0]['shiftForEmployeeWeight']=$_POST['personal']['shiftForEmployeeWeight'];
                     $shift_for_employee[0]['shiftForEmployee']=$_POST['personal']['shiftForEmployee'];
+                    $shift_for_employee[0]['shiftDateForEmployee']=$_POST['personal']['shiftDateForEmployee'];
                     $shift_for_employee[0]['shiftForEmployeeStatus']=$_POST['personal']['shiftForEmployeeStatus'];
 
                    
@@ -278,6 +278,7 @@ class viewContranctsListAction extends baseShiftAction {
                             $shiftForEmployee[$key]['shiftForEmployeeShiftSelect']=$value;
                             $shiftForEmployee[$key]['shiftForEmployeeWeight']=$_POST['shiftForEmployeeWeight'][$key];
                             $shiftForEmployee[$key]['shiftForEmployee']=$_POST['shiftForEmployee'][$key];
+                            $shiftForEmployee[$key]['shiftDateForEmployee']=$_POST['shiftDateForEmployee'][$key];
                             $shiftForEmployee[$key]['shiftForEmployeeStatus']=$_POST['shiftForEmployeeStatus'][$key];
                         }
                         $shift_for_employee=array_merge($shift_for_employee,$shiftForEmployee);
@@ -285,11 +286,7 @@ class viewContranctsListAction extends baseShiftAction {
 
             }
 
-            
             $patternList['shiftForEmployee']=$shift_for_employee;
-
-
-
 
             //该班次分配后持续分配
             $assignment_after_shift=array();
@@ -375,7 +372,7 @@ class viewContranctsListAction extends baseShiftAction {
             $freeTwoDays['freeTwoDaysWeight']=$_POST['personal']['freeTwoDaysWeight'];
             $freeTwoDays['freeTwoDaysSelect']=$_POST['personal']['freeTwoDaysSelect'];
             $freeTwoDays['freeTwoDaysStatus']=$_POST['personal']['freeTwoDaysStatus'];
-            $patternList['noBehindShift']=$freeTwoDays;
+            $patternList['freeTwoDays']=$freeTwoDays;
 
             //最多允许连续工作几个周末
             $maxWeekendShift=array();
@@ -396,7 +393,7 @@ class viewContranctsListAction extends baseShiftAction {
 
             $maxWorkDay=array();
             $maxWorkDay['maxWorkDayWeight']=$_POST['personal']['maxWorkDayWeight'];
-            $maxWorkDay['minWorkDayCount']=$_POST['personal']['maxWorkDayCount'];
+            $maxWorkDay['maxWorkDayCount']=$_POST['personal']['maxWorkDayCount'];
             $maxWorkDay['maxWorkDayStatus']=$_POST['personal']['maxWorkDayStatus'];
             $patternList['maxWorkDay']=$maxWorkDay;
 
@@ -425,15 +422,10 @@ class viewContranctsListAction extends baseShiftAction {
             $minWorkWeekendNum['minWorkWeekendStatus']=$_POST['personal']['minWorkWeekendStatus'];
             $patternList['minWorkWeekendNum']=$minWorkWeekendNum;
 
-            $data=$this->getShiftService()->saveFile('patternContranct',$patternList);
+            $file_name='patternContranct_'.$schedule_id;
 
-            /*if ($this->form->isValid()) {
+            $data=$this->getShiftService()->saveFile($file_name,$patternList);
 
-            // echo'<pre>';var_dump($patternList);exit;
-            //将规则存储为静态文件$TCM=$this->saveFile('TCMschedule',$tcm_pharmacy);
-                $this->getShiftService()->saveFile('patternContranct',$patternList);
-            
-            } */
         }
     }
     
