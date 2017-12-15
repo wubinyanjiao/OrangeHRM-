@@ -688,9 +688,8 @@ class ShiftService extends BaseService {
         $shiftTypes=$this->getShiftTypeList($scheduleID);
         $shiftAssignments=$this->getShiftAssignmentList($scheduleID);
 
-
-        $patternList=$this->saveFile('patternContranct');
-
+        $filename='patternContranct_'.$scheduleID;
+        $patternList=$this->saveFile($filename);
 
     
         
@@ -949,9 +948,9 @@ class ShiftService extends BaseService {
         $patternIndex['FreeTwoDaysEveryWeekPattern']=$index;
         $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['id']='5';
         $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['code']='5';
-        $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['weight']=$patternList['noBehindShift']["freeTwoDaysWeight"];
+        $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['weight']=$patternList['freeTwoDays']["freeTwoDaysWeight"];
         $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['workDayLength']='7';
-        $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['freeDayLength']=$patternList['noBehindShift']["freeTwoDaysSelect"];
+        $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['freeDayLength']=$patternList['freeTwoDays']["freeTwoDaysSelect"];
 
 
         
@@ -2611,13 +2610,6 @@ class ShiftService extends BaseService {
         $tcm_pharmacy['nurseRosterParametrization']['planningWindowStart']['@attributes']['reference']=$firstDateIndex;
         $tcm_pharmacy['nurseRosterParametrization']['planningWindowStart']['@data']='';
 
-
-
-        
-
-
-
-
         //值班人员
 
         //持续上某一个班
@@ -2698,14 +2690,15 @@ class ShiftService extends BaseService {
         
 
         // 每周公休分配
+    
         $index++;
         $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['@attributes']['id']= $index;
         $patternIndex['FreeTwoDaysEveryWeekPattern']=$index;
         $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['id']='5';
         $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['code']='5';
-        $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['weight']=$patternList['noBehindShift']["freeTwoDaysWeight"];
+        $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['weight']=$patternList['freeTwoDays']["freeTwoDaysWeight"];
         $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['workDayLength']='7';
-        $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['freeDayLength']=$patternList['noBehindShift']["freeTwoDaysSelect"];
+        $tcm_pharmacy['patternList']['FreeTwoDaysEveryWeekPattern']['freeDayLength']=$patternList['freeTwoDays']["freeTwoDaysSelect"];
 
 
         

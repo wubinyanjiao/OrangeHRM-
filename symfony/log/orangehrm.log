@@ -4476,3 +4476,5 @@ Stack trace:
 #33 {main}
 [14-Dec-2017 17:50:23 Asia/Shanghai] PHP Parse error:  syntax error, unexpected 'var_dump' (T_STRING) in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/ShiftService.php on line 614
 [14-Dec-2017 17:55:49 Asia/Shanghai] PHP Parse error:  syntax error, unexpected 'var_dump' (T_STRING), expecting ',' or ';' in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/ContranctaSearchForm.php on line 226
+[14-Dec-2017 21:28:08 Asia/Shanghai] PHP Parse error:  syntax error, unexpected '$patternList' (T_VARIABLE) in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/ShiftService.php on line 692
+[15-Dec-2017 09:39:05 Asia/Shanghai] PHP Parse error:  syntax error, unexpected '}' in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotaryForm.php on line 197
