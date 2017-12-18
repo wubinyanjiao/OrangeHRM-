@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+  <SchedulingPeriodID>roster_18</SchedulingPeriodID>
+  <Competitor>Geoffrey De Smet with OptaPlanner</Competitor>
+  <SoftConstraintsPenalty>-1276</SoftConstraintsPenalty>
+  <Assignment>
+    <Date>2017-12-30</Date>
+    <Employee>57</Employee>
+    <ShiftType>40</ShiftType>
+  </Assignment>
+  <Assignment>
+    <Date>2017-12-30</Date>
+    <Employee>61</Employee>
+    <ShiftType>40</ShiftType>
+  </Assignment>
+  <Assignment>
+    <Date>2017-12-30</Date>
+    <Employee>62</Employee>
+    <ShiftType>40</ShiftType>
+  </Assignment>
+  <Assignment>
+    <Date>2017-12-31</Date>
+    <Employee>63</Employee>
+    <ShiftType>40</ShiftType>
+  </Assignment>
+  <Assignment>
+    <Date>2017-12-31</Date>
+    <Employee>64</Employee>
+    <ShiftType>40</ShiftType>
+  </Assignment>
+  <Assignment>
+    <Date>2017-12-31</Date>
+    <Employee>65</Employee>
+    <ShiftType>40</ShiftType>
+  </Assignment>
+  <Assignment>
+    <Date>2018-01-01</Date>
+    <Employee>58</Employee>
+    <ShiftType>40</ShiftType>
+  </Assignment>
+  <Assignment>
+    <Date>2018-01-01</Date>
+    <Employee>66</Employee>
+    <ShiftType>40</ShiftType>
+  </Assignment>
+  <Assignment>
+    <Date>2018-01-01</Date>
+    <Employee>57</Employee>
+    <ShiftType>40</ShiftType>
+  </Assignment>
+  <Assignment>
+    <Date>2018-01-02</Date>
+    <Employee>61</Employee>
+    <ShiftType>40</ShiftType>
+  </Assignment>
+  <Assignment>
+    <Date>2018-01-02</Date>
+    <Employee>62</Employee>
+    <ShiftType>40</ShiftType>
+  </Assignment>
+  <Assignment>
+    <Date>2018-01-02</Date>
+    <Employee>57</Employee>
+    <ShiftType>40</ShiftType>
+  </Assignment>
+</Solution>
+

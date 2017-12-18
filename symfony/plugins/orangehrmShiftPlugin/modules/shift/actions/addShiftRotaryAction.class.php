@@ -12,10 +12,7 @@ class addShiftRotaryAction extends baseShiftAction {
             $this->form = $form;
         }
     }
-
-
     
-
     public function execute($request) {
         
         $loggedInEmpNum = $this->getUser()->getEmployeeNumber();
@@ -31,25 +28,34 @@ class addShiftRotaryAction extends baseShiftAction {
         $param = array( 'scheduleID'=>$schedule_id);
 
         $this->setForm(new AddShiftRotaryForm(array(), $param, true));
+      
         $this->deleteForm = new EmployeeEmergencyContactsDeleteForm(array(), $param, true);
         $this->shiftRosters = $this->getShiftService()->getShiftRosters();
+
+
         $this->jopdocument_list=$this->getJobDocument();
-        
-    
+       // echo'<pre>'; var_dump($this->jopdocument_list);exit;
+
+  
     }
 
    
 
     public function getJobDocument(){
-        $jopDocuments=$this->getShiftService()->getJobDepartmentList();
-       
-       $jopdocument_list=array();
-        foreach($jopDocuments as $key=>$jopDocument){
-            $jopdocument_list[$jopDocument['id']]=$jopDocument['name'];
+        $locationList = array('' => '-- ' . __('Select') . ' --');
+
+        $locationService = new LocationService();
+        $locations = $locationService->getLocationList();        
+
+        $accessibleLocations = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntityIds('Location');
+ 
+        foreach ($locations as $location) {
+            if (in_array($location->id, $accessibleLocations)) {
+                $locationList[$location->id] = $location->name;
+            }
         }
-
-
-        return $jopdocument_list;
+      
+        return($locationList);
     }
 
 }

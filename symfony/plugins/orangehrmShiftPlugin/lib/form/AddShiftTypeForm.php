@@ -174,20 +174,23 @@ class AddShiftTypeForm extends BaseForm {
         }
 
 
-        $this->_saveShiftTypeToSkill($shiftType->getId(),$newList);
+        $this->_saveShiftTypeToSkill($shiftType->getId(),$newList,$scheduleID);
    
         return $message;    
 
     }
 
-    public function _saveShiftTypeToSkill($shiftTypeID,$skills){
-
-
+    public function _saveShiftTypeToSkill($shiftTypeID,$skills,$scheduleID){
+        // echo'<pre>';
         if(!empty($shiftTypeID)&&!empty($skills)){
             foreach ($skills as $key => $skill) {
                 $workTypeSkill=new WorkTypeSkill();
+
+
                 $workTypeSkill->setShiftTypeId($shiftTypeID);
                 $workTypeSkill->setSkillId($skill);
+            
+                $workTypeSkill->setScheduleId($scheduleID);
                 $workTypeSkill->save();
             }
         }

@@ -21,6 +21,15 @@ class ShiftDao extends BaseDao {
         }
     }
 
+    public function saveRotaryResult(WorkRotaryEmplayee $workRotary) {
+        
+        try {
+            $workRotary->save();            
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }
+    }
+
     public function saveWorkEntityIds(WorkShiftEntityIds $shiftEntity) {
         try {
             $shiftEntity->save();            
@@ -274,9 +283,10 @@ class ShiftDao extends BaseDao {
         // @codeCoverageIgnoreEnd
     }
 
-    public function getShiftTypeToSkillList() {
+    public function getShiftTypeToSkillList($schedule_id) {
         try {
-            $q = Doctrine_Query::create()->from('WorkTypeSkill')
+            $q = Doctrine_Query::create()->from('WorkTypeSkill ws')
+                                        ->where('ws.schedule_id = ?', $schedule_id)
                                          ->orderBy('id');
 
             return $q->fetchArray();
@@ -345,8 +355,6 @@ class ShiftDao extends BaseDao {
     
     public function getShiftContranct($shift_id,$status) {
 
-
-
         try {
             $q = Doctrine_Query:: create()->from('WorkShiftContranct sc')
                             ->where('sc.shift_id = ?', $shift_id)
@@ -360,6 +368,21 @@ class ShiftDao extends BaseDao {
         }
    
     }
+
+    public function getRotaryEmpListById($rotary_id) {
+
+        try {
+            $q = Doctrine_Query:: create()->from('WorkRotaryEmplayee we')
+                            ->where('we.rotary_id = ?', $rotary_id)
+                            ->orderBy('we.id ASC');
+
+            return $q->fetchArray();
+
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }
+    }
+
     public function getEntityByName($schedule_id,$tag_name) {
         try {
             $q = Doctrine_Query:: create()->from('WorkShiftEntityIds se')

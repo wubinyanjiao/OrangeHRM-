@@ -1,10 +1,8 @@
 
-
-
 <div class="box ">
 <div class="miniList" id="listing">
         <div class="head" align="center">
-            <h1><?php echo __("排班列表"); ?></h1>
+            <h1><?php echo __("轮班列表"); ?></h1>
         </div>
         
         <div class="inner">
@@ -22,7 +20,9 @@
                     <thead>
                         <tr>
                         	<th><?php echo __("姓名"); ?></th>
-		                     <?php foreach($date_list as $key=>$date){?>
+                            <th><?php echo __("所属部门"); ?></th>
+		                     <?php foreach($date_list as $key=>$date){
+                                ?>
 		                     <th><?php echo $date ?></th>
 		                     <?php }?>
                         </tr>
@@ -30,32 +30,39 @@
                     <!-- 内容部分 -->
                     <tbody >
                         <?php
-                      		foreach ($emarray as $key=>$employee) :
+                            //循环所有员工
+                      		foreach ($date_employ_list as $key=>$employee) :
                       		 $cssClass = ($row % 2) ? 'even' : 'odd';
                            	 echo '<tr class="' . $cssClass . '">';
                             
                          ?>
 
                            <td><?php echo $employeeList[$key]['firstName']; ?></td>
+                           <?php
+                                
+                            foreach ($employee as $k => $kdepartment) {
+                            ?>
+                             <td><?php 
+                               // echo'<pre>';var_dump($locationList);exit;
 
-                            <?php foreach($employee as $k=>$singempl){?>
+                             echo $locationList[$kdepartment['orangeDepartment']];?></td>
+                            <?php
+                                break;
+                             }
+                            ?>   
+ 	
+                            
 
-                             <td> 
-                             	<?php
-                 
-                             		foreach ($singempl as $ktyp => $shiftType) {
-                             			$arr[$key][$k][$ktyp]=$shiftType;
-                             		}
-
-                             		$valstr=implode('--', $arr[$key][$k]);
-
-                             	?>					
-								<span href=""><?php echo $valstr ?></span>
-                             	
-                             </td>
 
                             <?php
-                        		}
+                                
+                                foreach ($employee as $k => $kdepartment) {
+                            ?>
+                             <td><?php echo $locationList[$kdepartment['rotaryDepartment']];?></td>
+                                
+                                
+                                   
+                            <?php }
                             ?>      
 
                          <?php

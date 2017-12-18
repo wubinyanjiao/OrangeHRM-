@@ -21,6 +21,10 @@ abstract class BaseWorkTypeSkill extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 11,
              ));
+        $this->hasColumn('schedule_id', 'integer', 11, array(
+             'type' => 'integer',
+             'length' => 11,
+             ));
     }
 
      public function setUp()

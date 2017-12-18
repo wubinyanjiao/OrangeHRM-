@@ -119,6 +119,7 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
                             <th><?php echo __("第一个部门"); ?></th>
                             <th><?php echo __("第二个部门"); ?></th>
                             <th><?php echo __("第三个部门"); ?></th>
+                            <th><?php echo __("查看轮转结果"); ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -152,6 +153,9 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
                             </td>
                             
                             <?php
+                            // echo'<pre>';
+                            // var_dump($jopdocument_list[$shiftRoster->secondDepartment]);
+                            // exit;
                           
                             // echo "<td valigh='top'>" . $shiftRoster->name . '</td>';
                             echo "<td valigh='top'>" . $shiftRoster->dateFrom . '</td>';
@@ -159,7 +163,14 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
                             echo "<td valigh='top'>" . $jopdocument_list[$shiftRoster->firstDepartment]. '</td>';
                             echo "<td valigh='top'>" .  $jopdocument_list[$shiftRoster->secondDepartment] . '</td>';
                             echo "<td valigh='top'>" . $jopdocument_list[$shiftRoster->thirdDepartment] . '</td>';
-                            echo '</tr>';
+
+                            ?>
+                         
+                 
+                            <td><a class='btn1' href='<?php echo url_for("shift/getRotary?rotaryId=$shiftRoster->id"); ?>'>点击查看</a>
+                            </td>
+                        </tr>
+                            <?php 
                             $row++;
                         endforeach;
                         } ?>

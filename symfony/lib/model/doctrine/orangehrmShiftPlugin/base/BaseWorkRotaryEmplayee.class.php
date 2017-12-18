@@ -1,5 +1,3 @@
-WorkRotaryEmplayee
-
 <?php
 
 
@@ -44,7 +42,7 @@ abstract class BaseWorkRotaryEmplayee extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 6,
              ));
-        $this->hasColumn('rotary_department_id as totaryDepartment', 'integer', 6, array(
+        $this->hasColumn('rotary_department_id as rotaryDepartment', 'integer', 6, array(
              'type' => 'integer',
              'length' => 6,
              ));

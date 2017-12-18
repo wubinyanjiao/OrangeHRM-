@@ -124,7 +124,7 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
                             <th class="dependentName"><?php echo __("Name"); ?></th>
                             <th><?php echo __("排班类型"); ?></th>
                             <th><?php echo __("选择日期"); ?></th>
-                            <th><?php echo __("添加约束"); ?></th>
+                            <th><?php //echo __("添加约束"); ?></th>
                             <th><?php echo __("排班开始时间"); ?></th>
                             <th><?php echo __("排班结束时间"); ?></th>
                            
@@ -178,7 +178,7 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
                        
                             <td> <?php echo $shiftTypes[$shift_type_id];?></td>
                             <td><?php echo $shiftDates[$shift_date_id]; ?></td>
-                             <td><a class='btn1' href='<?php echo url_for("shift/addShiftContract?schedule_id=$schedule_id&shift_id=$shift_id"); ?>'>分配员工</a>  </td>
+                             
                             <td><?php echo $dependent->start_time; ?></td>
                             <td> <?php echo $dependent->end_time; ?></td>
                             <?php

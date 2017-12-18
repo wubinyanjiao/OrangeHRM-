@@ -12,7 +12,6 @@ class AddShiftRotaryForm extends BaseForm {
         return $this->shiftService;
     }
   
-
     public function configure() {
 
 
@@ -143,6 +142,7 @@ class AddShiftRotaryForm extends BaseForm {
 
     }
 
+
      /*
         具体操作步骤
         第一，分别罗列出三个部门所有员工；
@@ -155,59 +155,192 @@ class AddShiftRotaryForm extends BaseForm {
     public function setRoatary($shift_rotary){
 
 
+        //获取约束条件
+    /*    $data=$this->getShiftService()->saveFile('rotaryContranct');
+        echo '<pre>';var_dump($data);exit;*/
+
+
+
         $firDoc=$shift_rotary['firDocument'];
         $secDoc=$shift_rotary['secDocument'];
         $thirDoc=$shift_rotary['thirDocument'];
+
+
+        $date_from=$shift_rotary['date_from'];
+        $date_to=$shift_rotary['date_to'];
+
+      
+        //获取期间月个数
+        $date_from = strtotime($date_from); // 自动为00:00:00 时分秒 两个时间之间的年和月份  
+        $date_to = strtotime($date_to);  
+   
+        $monarr = array();  
+        $monarr[] = date('Y-m-d',$date_from); // 当前月;  
+        while( ($date_from = strtotime('+1 month', $date_from)) <= $date_to){  
+              $monarr[] = date('Y-m-d',$date_from); // 取得递增月;   
+        }  
+
       
         //获取部门员工信息；
         $document_employee=$this->getShiftService()->getEmoloyeeLocation();
 
         //获得每个部门下的员工
         foreach ($document_employee as $key => $employee) {
-            $empLocation[$employee['locationId']][]=$employee['Employee'];
+            $empLocation[$employee['locationId']][$key]['empNumber']=$employee['Employee']['empNumber'];
+            $empLocation[$employee['locationId']][$key]['firstName']=$employee['Employee']['firstName'];
+            $empLocation[$employee['locationId']][$key]['working_years']=$employee['Employee']['working_years'];
+            $empLocation[$employee['locationId']][$key]['orange_department']=$employee['locationId'];
         }
-       
-  
 
-        //第一个部门所有员工的详细信息
+        //第一个部门所有员工的按照工作年限排序
         $firsDocEmp=$empLocation[$firDoc];
 
-        // var_dump($firsDocEmp);exit; 
         
-        //第一个部门中工龄最大的员工empNumber
-        $firsDocEmp = array_column($firsDocEmp, 'working_years', 'empNumber');
-        $firMax= array_search(max($firsDocEmp), $firsDocEmp);  
+        foreach ($firsDocEmp as $key => $val) {  
+          $tmp[$key] = $val['working_years'];  
+        }  
+        array_multisort($tmp,SORT_ASC,$firsDocEmp);
 
-         
         //第二个部门员工
         $secDocEmp=$empLocation[$secDoc];
+        foreach ($secDocEmp as $key => $val) {  
+          $tmp_sec[$key] = $val['working_years'];  
+        }  
+        array_multisort($tmp_sec,SORT_ASC,$secDocEmp);
+
         //第三个部门员工
         $thirDocEmp=$empLocation[$thirDoc];
+        foreach ($thirDocEmp as $key => $val) {  
+          $tmp_thir[$key] = $val['working_years'];  
+        }  
+        array_multisort($tmp_thir,SORT_ASC,$thirDocEmp);
+    
+        //循环每个月
+        $moth_count=count($monarr);
 
-        foreach ($firsDocEmp as $key_fir => $fir_emp) {
-            //获取工龄最大的员工；
-            //获取轮换时间：一个月轮换
-            //原始部门ID；
-            //轮转部门ID：
-            $rotaryEmp['rotary_id']="";
-            $this->saveRotaryEmployee()
+        $tmp_fir=array();
+        $tmp_sec=array();
+        $tmp_thir=array();
+
+        $rotary_emp=array();
+
+         
+        for($i=0;$i<$moth_count;$i++){
+
+            //循环，如果第一个部门存在部门满三年的员工，则把其中年限最长的加入到第二个部门
+            if(null !== $firsDocEmp[$i]){
+                // var_dump($thirDocEmp[$i]['orange_department']);exit;
+                if(null == $secDocEmp[$i] && null !== $thirDocEmp[$i]){//第一个部门和第三个部门有复合轮转的员工
+                    $tmp_thir[$i]=$firsDocEmp[$i];
+                    $tmp_thir[$i]['date_from']=$monarr[$i];
+                    $tmp_thir[$i]['rotary_department']=$thirDocEmp[$i]['orange_department'];
+                    
+
+                    $tmp_fir[$i]=$thirDocEmp[$i];
+                    $tmp_fir[$i]['date_from']=$monarr[$i];
+                    $tmp_fir[$i]['rotary_department']=$firsDocEmp[$i]['orange_department'];
+
+                    unset($firsDocEmp[$i]);
+                    unset($thirDocEmp[$i]);
+
+                    break;
+
+                }else if(null !== $secDocEmp[$i] && null == $thirDocEmp[$i]){//第一个部门和第二个部门有复合轮转的员工
+                    
+                    $tmp_sec[$i]=$firsDocEmp[$i];
+                    $tmp_sec[$i]['date_from']=$monarr[$i];
+                    $tmp_sec[$i]['rotary_department']=$secDocEmp[$i]['orange_department'];
+                    
+
+                    $tmp_fir[$i]=$secDocEmp[$i];
+                    $tmp_fir[$i]['date_from']=$monarr[$i];
+                    $tmp_fir[$i]['rotary_department']=$firsDocEmp[$i]['orange_department'];
 
 
-           
+                    unset($firsDocEmp[$i]);
+                    unset($secDocEmp[$i]);
+
+                    break;
+                } else if(null !== $secDocEmp[$i] && null !== $thirDocEmp[$i]){// 如果三个部门都有符合轮转条件的员工
+                    $tmp_sec[$i]=$firsDocEmp[$i];
+                    $tmp_sec[$i]['date_from']=$monarr[$i];
+                    $tmp_sec[$i]['rotary_department']=$secDocEmp[$i]['orange_department'];
+                    
+
+                    $tmp_thir[$i]=$secDocEmp[$i];
+                    $tmp_thir[$i]['date_from']=$monarr[$i];
+
+                    $tmp_thir[$i]['rotary_department']=$thirDocEmp[$i]['orange_department'];
+                    
+
+                    $tmp_fir[$i]=$thirDocEmp[$i];
+                    $tmp_fir[$i]['date_from']=$monarr[$i];
+                    $tmp_fir[$i]['rotary_department']=$firsDocEmp[$i]['orange_department'];
+
+                  
+                    unset($firsDocEmp[$i]);
+                    unset($secDocEmp[$i]);
+                    unset($thirDocEmp[$i]);
+
+                    // break;
+
+                }
+
+            }else{//如果第一个部门没有符合轮转条件的员工，第二和第三个部门参与轮转
+                if(null == $secDocEmp[$i] || null == $thirDocEmp[$i]){//如果第二个部门也没有复合条件的轮转的人
+                    break;
+                }else{//第二个部门和第三个部门有复合轮转的员工
+
+                    $tmp_thir[$i]=$secDocEmp[$i];
+
+                    $tmp_thir[$i]['date_from']=$monarr[$i];
+                    $tmp_thir[$i]['rotary_department']=$thirDocEmp[$i]['orange_department'];
+                    
+
+                    $tmp_sec[$i]=$thirDocEmp[$i];
+                    $tmp_sec[$i]['date_from']=$monarr[$i];
+                    $tmp_sec[$i]['rotary_department']=$secDocEmp[$i]['orange_department'];
+
+                    unset($secDocEmp[$i]);
+                    unset($thirDocEmp[$i]);
+
+                }
+            }
+        }
+    
+
+        $rotary_employees=array_merge($tmp_fir,$tmp_sec,$tmp_thir);
+        
+        foreach ($rotary_employees as $key => $value) {
+            $rotaryEmp['rotary_id']=$shift_rotary['id'];
+            $rotaryEmp['empNumber']=$value['empNumber'];
+            $rotaryEmp['dateFrom']=$value['date_from'];
+            $rotaryEmp['dateTo']=$value['date_from'];
+            $rotaryEmp['orangeDepartment']=$value['orange_department'];
+            $rotaryEmp['rotaryDepartment']=$value['rotary_department'];
+            $rotary_emp=new WorkRotaryEmplayee();
+            $this->saveRotaryEmployee($rotaryEmp);
         }
 
-        
     }
 
     public function saveRotaryEmployee($rotaryEmp){
+
         $rotary_emp=new WorkRotaryEmplayee();
 
+      
         $rotary_emp->setRotaryId($rotaryEmp['rotary_id']);
-        $rotary_emp->setRotaryId($rotaryEmp['emp_number']);
-        $rotary_emp->setDateFrom($rotaryEmp['date_from']);
-        $rotary_emp->setDateTo($rotaryEmp['date_to']);
-        $rotary_emp->setOrangeDepartment($rotaryEmp['orange_department_id']);
-        $rotary_emp->settRotaryDepartment($rotaryEmp['rotary_department_id']);
+
+        $rotary_emp->setEmpNumber($rotaryEmp['empNumber']);
+
+        $rotary_emp->setDateFrom($rotaryEmp['dateFrom']);
+        $rotary_emp->setDateTo($rotaryEmp['dateTo']);
+
+        $rotary_emp->setOrangeDepartment($rotaryEmp['orangeDepartment']);
+        $rotary_emp->setRotaryDepartment($rotaryEmp['rotaryDepartment']);
+  
+        $this->getShiftService()->saveRotaryResult($rotary_emp);
+    
 
     }
 
