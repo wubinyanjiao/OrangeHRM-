@@ -27,7 +27,7 @@ class addShiftRotaryAction extends baseShiftAction {
 
         $param = array( 'scheduleID'=>$schedule_id);
 
-        $this->setForm(new AddShiftRotaryForm(array(), $param, true));
+        $this->setForm(new AddShiftRotary2Form(array(), $param, true));
       
         $this->deleteForm = new EmployeeEmergencyContactsDeleteForm(array(), $param, true);
         $this->shiftRosters = $this->getShiftService()->getShiftRosters();

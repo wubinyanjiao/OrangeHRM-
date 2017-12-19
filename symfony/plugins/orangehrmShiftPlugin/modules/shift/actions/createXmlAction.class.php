@@ -25,6 +25,7 @@ class createXmlAction extends baseShiftAction {
             $java_path="/Library/Java/JavaVirtualMachines/jdk-9.0.1.jdk/Contents/Home/bin/java";
 
             exec("$java_path  -jar $roaster_path  $file_path 2>&1",$output, $return_val);
+            // sleep(500);
             $result=$this->getShiftService()->getRosterResult($scheduleID);
         }
 

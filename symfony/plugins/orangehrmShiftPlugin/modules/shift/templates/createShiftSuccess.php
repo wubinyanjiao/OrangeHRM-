@@ -26,7 +26,7 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
    
     <div id="addPaneDependent">
         <div class="head">
-            <h1 id="heading"><?php echo __('创建排班'); ?></h1>
+            <h1 id="heading"><?php echo __('创建任务'); ?></h1>
         </div>
         
         <div class="inner">
@@ -46,7 +46,7 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
 
                         </li>
                         <li class="checkbox">
-                            <a class='btn1' href='<?php echo url_for("shift/addShiftType?schedule_id=$schedule_id"); ?>'>创建排班类型</a>        
+                            <a class='btn1' href='<?php echo url_for("shift/addShiftType?schedule_id=$schedule_id"); ?>'>创建任务类型</a>        
                         </li>
                     
                          <li>
@@ -124,7 +124,7 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
                             <th class="dependentName"><?php echo __("Name"); ?></th>
                             <th><?php echo __("排班类型"); ?></th>
                             <th><?php echo __("选择日期"); ?></th>
-                            <th><?php //echo __("添加约束"); ?></th>
+                            
                             <th><?php echo __("排班开始时间"); ?></th>
                             <th><?php echo __("排班结束时间"); ?></th>
                            
@@ -354,7 +354,7 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
 
         // Add a emergency contact
         $('#btnAddDependent').click(function() {
-            $("#heading").text("<?php echo __("创建排班");?>");
+            $("#heading").text("<?php echo __("创建任务");?>");
             clearAddForm();
 
             // Hide list action buttons and checkbox

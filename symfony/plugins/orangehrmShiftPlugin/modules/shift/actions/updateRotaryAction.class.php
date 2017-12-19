@@ -17,21 +17,26 @@ class updateRotaryAction extends baseShiftAction {
 
         $param = array();
 
-        $this->form = new AddShiftRotaryForm(array(), $param, true);
+        $this->form = new AddShiftRotary2Form(array(), $param, true);
 
         if ($this->getRequest()->isMethod('post')) {
 
             $this->form->bind($request->getParameter($this->form->getName()));
 
+
+
             if ($this->form->isValid()) {
+
+               
                 $this->form->save();
+               
                 $this->getUser()->setFlash('viewEmergencyContacts.success', __(TopLevelMessages::SAVE_SUCCESS));
             }
         }
         
         $empNumber = $request->getParameter('empNumber');
 
-        $this->redirect("shift/AddShiftRotary");
+        $this->redirect("shift/AddShiftRotary1");
     }
 
 }

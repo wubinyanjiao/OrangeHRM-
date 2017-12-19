@@ -1,3 +1,4 @@
+
 <?php
 $numContacts = count($shiftRosters);
 $haveContacts = $numContacts > 0;

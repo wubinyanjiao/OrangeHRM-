@@ -71,7 +71,7 @@ class addRotaryConstractAction extends baseShiftAction {
             $document_rotary['third_document']=$_POST['rotartContract']['third_rotary_document'];
             $document_rotary['weight']=$_POST['rotartContract']['document_rotary_Weight'];
             $document_rotary['status']=$_POST['rotartContract']['document_rotary_status'];
-            $document_rotary['document_rotary']=$document_rotary;
+            $rotary_List['document_rotary']=$document_rotary;
 
 
              //门诊满几年轮转
@@ -96,6 +96,8 @@ class addRotaryConstractAction extends baseShiftAction {
             $leader_no_rotary['weight']=$_POST['rotartContract']['leader_no_rotary_weight'];
             $leader_no_rotary['status']=$_POST['rotartContract']['leader_no_rotary_status'];
             $rotary_List['leader_no_rotary']=$leader_no_rotary;
+
+            // echo'<pre>';var_dump($rotary_List);exit;
           
             $data=$this->getShiftService()->saveFile('rotaryContranct',$rotary_List);
 

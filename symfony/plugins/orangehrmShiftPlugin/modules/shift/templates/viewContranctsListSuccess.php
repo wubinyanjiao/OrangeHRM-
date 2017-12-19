@@ -43,8 +43,7 @@
                                     <?php echo $form['nightAfterNightLeisureStatus']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Last Name'))); ?>
                                 </li>
 
-                                <a href="#?" id="addNightLeisure" style="text-decoration: none;color:#33AC3F;font-size:16px;font-weight:bold;" class="addButton"> +</a>
-                                <a href='#?' id='treeLink_delete_3' style='text-decoration: none; list-style: none;color:#AA4935;font-size:16px;font-weight:bold;' class='deleteButton'> x</a>
+                           
                             </ol>    
                         </li>
                     </ol>
@@ -452,7 +451,7 @@
 
     $(function() { 
         
-        $("#addNightLeisure").click(function() { 
+        /*$("#addNightLeisure").click(function() { 
             var count=$(".nightLeisure").length;
 
             var nighttempTr = $("#nightLeisure").clone(true); 
@@ -487,7 +486,7 @@
                 $(this).parent().parent().remove(); 
                 } 
                 } 
-        });
+        });*/
 
 
 

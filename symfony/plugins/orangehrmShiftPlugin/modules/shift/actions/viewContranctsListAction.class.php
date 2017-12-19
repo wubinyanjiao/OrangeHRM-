@@ -55,7 +55,7 @@ class viewContranctsListAction extends baseShiftAction {
            //组合夜班后夜休数组
 
             $nightAfterNight=array();
-            $nightAfterNightLeisure=array();
+            /*$nightAfterNightLeisure=array();
 
              if(!isset($_POST['personal']['nightAfterNightLeisureShiftSelect'])){
                 foreach ($_POST['nightAfterNightLeisureShiftSelect'] as $key => $value) {
@@ -85,7 +85,11 @@ class viewContranctsListAction extends baseShiftAction {
                     $nightAfterNight=array_merge($nightAfterNight,$nightAfterNightLeisure);
 
                 }
-            }
+            }*/
+
+            $nightAfterNight['nightAfterNightLeisureShiftSelect']=$_POST['personal']['nightAfterNightLeisureShiftSelect'];
+            $nightAfterNight['nightAfterNightLeisureWeight']=$_POST['personal']['nightAfterNightLeisureWeight'];
+            $nightAfterNight['nightAfterNightLeisureStatus']=$_POST['personal']['nightAfterNightLeisureStatus'];
 
 
             $patternList['nightAfterNightLeisureShift']=$nightAfterNight;
