@@ -1148,7 +1148,7 @@ class ShiftService extends BaseService {
 
         $booleanContractIndex[$index]=$index;
 
-        /*$index++;
+        $index++;
         $tcm_pharmacy['contractList'][2]['Contract']['@attributes']['id']=$index;
 
         $contractIndex[2]=$index;
@@ -1426,7 +1426,7 @@ class ShiftService extends BaseService {
         $tcm_pharmacy['contractList'][3]['Contract']['contractLineList'][8]['BooleanContractLine']['contractLineType']='ALTERNATIVE_SKILL_CATEGORY';
         $tcm_pharmacy['contractList'][3]['Contract']['contractLineList'][8]['BooleanContractLine']['enabled']='true';
         $tcm_pharmacy['contractList'][3]['Contract']['contractLineList'][8]['BooleanContractLine']['weight']='1';
-        $booleanContractIndex[$index]=$index;*/
+        $booleanContractIndex[$index]=$index;
 
 
         //contractLineList列表
@@ -2244,6 +2244,8 @@ class ShiftService extends BaseService {
         $index++;
         $tcm_pharmacy['shiftAssignmentList']['@attributes']['id']=$index;
 
+
+       // echo '<pre>'; var_dump($shiftAssignments);exit;
       
         foreach($shiftAssignments as $key=>$shiftAssignment){
 

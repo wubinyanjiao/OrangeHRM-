@@ -9627,3 +9627,287 @@ Stack trace:
 [20-Dec-2017 01:09:43 Asia/Shanghai] PHP Fatal error:  Class 'AddShiftRotary1Form' not found in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/modules/shift/actions/AddShiftRotaryAction.class.php on line 30
 [20-Dec-2017 01:14:00 Asia/Shanghai] PHP Fatal error:  Class 'AddShiftRotary2Form' not found in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/modules/shift/actions/AddShiftRotaryAction.class.php on line 30
 [20-Dec-2017 01:16:10 Asia/Shanghai] PHP Fatal error:  Cannot redeclare AddShiftRotary2Form::getRotaryManWomen() in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 181
+[20-Dec-2017 10:26:22 Asia/Shanghai] PHP Fatal error:  Function name must be a string in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/ShiftDependentForm.php on line 263
+三 12/20 10:38:30 2017,803 [9458] ERROR filter.ExceptionCatcherFilter - Uncaught Exception: exception 'Doctrine_Query_Exception' with message 'Unknown column shift_date' in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query/Orderby.php:94
+Stack trace:
+#0 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query/Abstract.php(2101): Doctrine_Query_Orderby->parse('st.shift_date A...')
+#1 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query.php(1183): Doctrine_Query_Abstract->_processDqlQueryPart('orderby', Array)
+#2 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query.php(1149): Doctrine_Query->buildSqlQuery(true)
+#3 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query/Abstract.php(982): Doctrine_Query->getSqlQuery(Array)
+#4 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query/Abstract.php(1050): Doctrine_Query_Abstract->_execute(Array)
+#5 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query.php(267): Doctrine_Query_Abstract->execute(Array, 3)
+#6 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/dao/ShiftDao.php(190): Doctrine_Query->fetchArray()
+#7 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/ShiftService.php(79): ShiftDao->getShiftTypeList('36')
+#8 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/ShiftService.php(696): ShiftService->getShiftTypeList('36')
+#9 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/modules/shift/actions/createXmlAction.class.php(10): ShiftService->createXml('36')
+#10 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(92): createXmlAction->execute(Object(sfWebRequest))
+#11 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmExecutionFilter.php(42): sfExecutionFilter->executeAction(Object(createXmlAction))
+#12 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(78): orangehrmExecutionFilter->executeAction(Object(createXmlAction))
+#13 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(53): sfExecutionFilter->handleAction(Object(sfFilterChain), Object(createXmlAction))
+#14 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfExecutionFilter->execute(Object(sfFilterChain))
+#15 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfCommonFilter.class.php(29): sfFilterChain->execute()
+#16 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfCommonFilter->execute(Object(sfFilterChain))
+#17 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmPostExecutionFilter.php(22): sfFilterChain->execute()
+#18 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): orangehrmPostExecutionFilter->execute(Object(sfFilterChain))
+#19 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/ModuleFilter.php(56): sfFilterChain->execute()
+#20 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ModuleFilter->execute(Object(sfFilterChain))
+#21 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/authorization/filter/ohrmAuthorizationFilter.php(101): sfFilterChain->execute()
+#22 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ohrmAuthorizationFilter->execute(Object(sfFilterChain))
+#23 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/SessionInfoFetcherFilter.php(67): sfFilterChain->execute()
+#24 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): SessionInfoFetcherFilter->execute(Object(sfFilterChain))
+#25 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/OrangeI18NFilter.php(58): sfFilterChain->execute()
+#26 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): OrangeI18NFilter->execute(Object(sfFilterChain))
+#27 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/ExceptionCatcherFilter.php(26): sfFilterChain->execute()
+#28 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ExceptionCatcherFilter->execute(Object(sfFilterChain))
+#29 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfBasicSecurityFilter.class.php(72): sfFilterChain->execute()
+#30 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfBasicSecurityFilter->execute(Object(sfFilterChain))
+#31 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfRenderingFilter.class.php(33): sfFilterChain->execute()
+#32 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfRenderingFilter->execute(Object(sfFilterChain))
+#33 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/controller/sfController.class.php(238): sfFilterChain->execute()
+#34 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/controller/sfFrontWebController.class.php(48): sfController->forward('shift', 'createXml')
+#35 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/util/sfContext.class.php(173): sfFrontWebController->dispatch()
+#36 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/web/index.php(22): sfContext->dispatch()
+#37 {main}
+
+Next exception 'DaoException' with message 'Unknown column shift_date' in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/dao/ShiftDao.php:193
+Stack trace:
+#0 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/ShiftService.php(79): ShiftDao->getShiftTypeList('36')
+#1 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/ShiftService.php(696): ShiftService->getShiftTypeList('36')
+#2 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/modules/shift/actions/createXmlAction.class.php(10): ShiftService->createXml('36')
+#3 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(92): createXmlAction->execute(Object(sfWebRequest))
+#4 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmExecutionFilter.php(42): sfExecutionFilter->executeAction(Object(createXmlAction))
+#5 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(78): orangehrmExecutionFilter->executeAction(Object(createXmlAction))
+#6 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(53): sfExecutionFilter->handleAction(Object(sfFilterChain), Object(createXmlAction))
+#7 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfExecutionFilter->execute(Object(sfFilterChain))
+#8 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfCommonFilter.class.php(29): sfFilterChain->execute()
+#9 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfCommonFilter->execute(Object(sfFilterChain))
+#10 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmPostExecutionFilter.php(22): sfFilterChain->execute()
+#11 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): orangehrmPostExecutionFilter->execute(Object(sfFilterChain))
+#12 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/ModuleFilter.php(56): sfFilterChain->execute()
+#13 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ModuleFilter->execute(Object(sfFilterChain))
+#14 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/authorization/filter/ohrmAuthorizationFilter.php(101): sfFilterChain->execute()
+#15 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ohrmAuthorizationFilter->execute(Object(sfFilterChain))
+#16 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/SessionInfoFetcherFilter.php(67): sfFilterChain->execute()
+#17 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): SessionInfoFetcherFilter->execute(Object(sfFilterChain))
+#18 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/OrangeI18NFilter.php(58): sfFilterChain->execute()
+#19 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): OrangeI18NFilter->execute(Object(sfFilterChain))
+#20 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/ExceptionCatcherFilter.php(26): sfFilterChain->execute()
+#21 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ExceptionCatcherFilter->execute(Object(sfFilterChain))
+#22 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfBasicSecurityFilter.class.php(72): sfFilterChain->execute()
+#23 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfBasicSecurityFilter->execute(Object(sfFilterChain))
+#24 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfRenderingFilter.class.php(33): sfFilterChain->execute()
+#25 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfRenderingFilter->execute(Object(sfFilterChain))
+#26 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/controller/sfController.class.php(238): sfFilterChain->execute()
+#27 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/controller/sfFrontWebController.class.php(48): sfController->forward('shift', 'createXml')
+#28 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/util/sfContext.class.php(173): sfFrontWebController->dispatch()
+#29 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/web/index.php(22): sfContext->dispatch()
+#30 {main}
+[20-Dec-2017 10:38:30 Asia/Shanghai] Empty module and/or action after parsing the URL "/webres_598bd8c4489f52.47381308/themes/default/images/error-btn.png" (/).
+三 12/20 10:39:50 2017,600 [8489] ERROR filter.ExceptionCatcherFilter - Uncaught Exception: exception 'Doctrine_Query_Exception' with message 'Unknown column shift_date' in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query/Orderby.php:94
+Stack trace:
+#0 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query/Abstract.php(2101): Doctrine_Query_Orderby->parse('st.shift_date A...')
+#1 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query.php(1183): Doctrine_Query_Abstract->_processDqlQueryPart('orderby', Array)
+#2 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query.php(1149): Doctrine_Query->buildSqlQuery(true)
+#3 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query/Abstract.php(982): Doctrine_Query->getSqlQuery(Array)
+#4 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query/Abstract.php(1050): Doctrine_Query_Abstract->_execute(Array)
+#5 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query.php(267): Doctrine_Query_Abstract->execute(Array, 3)
+#6 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/dao/ShiftDao.php(190): Doctrine_Query->fetchArray()
+#7 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/ShiftService.php(79): ShiftDao->getShiftTypeList('36')
+#8 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/ShiftService.php(696): ShiftService->getShiftTypeList('36')
+#9 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/modules/shift/actions/createXmlAction.class.php(10): ShiftService->createXml('36')
+#10 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(92): createXmlAction->execute(Object(sfWebRequest))
+#11 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmExecutionFilter.php(42): sfExecutionFilter->executeAction(Object(createXmlAction))
+#12 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(78): orangehrmExecutionFilter->executeAction(Object(createXmlAction))
+#13 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(53): sfExecutionFilter->handleAction(Object(sfFilterChain), Object(createXmlAction))
+#14 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfExecutionFilter->execute(Object(sfFilterChain))
+#15 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfCommonFilter.class.php(29): sfFilterChain->execute()
+#16 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfCommonFilter->execute(Object(sfFilterChain))
+#17 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmPostExecutionFilter.php(22): sfFilterChain->execute()
+#18 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): orangehrmPostExecutionFilter->execute(Object(sfFilterChain))
+#19 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/ModuleFilter.php(56): sfFilterChain->execute()
+#20 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ModuleFilter->execute(Object(sfFilterChain))
+#21 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/authorization/filter/ohrmAuthorizationFilter.php(101): sfFilterChain->execute()
+#22 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ohrmAuthorizationFilter->execute(Object(sfFilterChain))
+#23 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/SessionInfoFetcherFilter.php(67): sfFilterChain->execute()
+#24 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): SessionInfoFetcherFilter->execute(Object(sfFilterChain))
+#25 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/OrangeI18NFilter.php(58): sfFilterChain->execute()
+#26 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): OrangeI18NFilter->execute(Object(sfFilterChain))
+#27 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/ExceptionCatcherFilter.php(26): sfFilterChain->execute()
+#28 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ExceptionCatcherFilter->execute(Object(sfFilterChain))
+#29 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfBasicSecurityFilter.class.php(72): sfFilterChain->execute()
+#30 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfBasicSecurityFilter->execute(Object(sfFilterChain))
+#31 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfRenderingFilter.class.php(33): sfFilterChain->execute()
+#32 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfRenderingFilter->execute(Object(sfFilterChain))
+#33 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/controller/sfController.class.php(238): sfFilterChain->execute()
+#34 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/controller/sfFrontWebController.class.php(48): sfController->forward('shift', 'createXml')
+#35 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/util/sfContext.class.php(173): sfFrontWebController->dispatch()
+#36 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/web/index.php(22): sfContext->dispatch()
+#37 {main}
+
+Next exception 'DaoException' with message 'Unknown column shift_date' in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/dao/ShiftDao.php:193
+Stack trace:
+#0 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/ShiftService.php(79): ShiftDao->getShiftTypeList('36')
+#1 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/ShiftService.php(696): ShiftService->getShiftTypeList('36')
+#2 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/modules/shift/actions/createXmlAction.class.php(10): ShiftService->createXml('36')
+#3 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(92): createXmlAction->execute(Object(sfWebRequest))
+#4 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmExecutionFilter.php(42): sfExecutionFilter->executeAction(Object(createXmlAction))
+#5 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(78): orangehrmExecutionFilter->executeAction(Object(createXmlAction))
+#6 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(53): sfExecutionFilter->handleAction(Object(sfFilterChain), Object(createXmlAction))
+#7 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfExecutionFilter->execute(Object(sfFilterChain))
+#8 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfCommonFilter.class.php(29): sfFilterChain->execute()
+#9 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfCommonFilter->execute(Object(sfFilterChain))
+#10 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmPostExecutionFilter.php(22): sfFilterChain->execute()
+#11 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): orangehrmPostExecutionFilter->execute(Object(sfFilterChain))
+#12 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/ModuleFilter.php(56): sfFilterChain->execute()
+#13 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ModuleFilter->execute(Object(sfFilterChain))
+#14 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/authorization/filter/ohrmAuthorizationFilter.php(101): sfFilterChain->execute()
+#15 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ohrmAuthorizationFilter->execute(Object(sfFilterChain))
+#16 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/SessionInfoFetcherFilter.php(67): sfFilterChain->execute()
+#17 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): SessionInfoFetcherFilter->execute(Object(sfFilterChain))
+#18 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/OrangeI18NFilter.php(58): sfFilterChain->execute()
+#19 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): OrangeI18NFilter->execute(Object(sfFilterChain))
+#20 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/ExceptionCatcherFilter.php(26): sfFilterChain->execute()
+#21 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ExceptionCatcherFilter->execute(Object(sfFilterChain))
+#22 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfBasicSecurityFilter.class.php(72): sfFilterChain->execute()
+#23 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfBasicSecurityFilter->execute(Object(sfFilterChain))
+#24 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfRenderingFilter.class.php(33): sfFilterChain->execute()
+#25 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfRenderingFilter->execute(Object(sfFilterChain))
+#26 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/controller/sfController.class.php(238): sfFilterChain->execute()
+#27 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/controller/sfFrontWebController.class.php(48): sfController->forward('shift', 'createXml')
+#28 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/util/sfContext.class.php(173): sfFrontWebController->dispatch()
+#29 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/web/index.php(22): sfContext->dispatch()
+#30 {main}
+[20-Dec-2017 10:39:50 Asia/Shanghai] Empty module and/or action after parsing the URL "/webres_598bd8c4489f52.47381308/themes/default/images/error-btn.png" (/).
+三 12/20 10:41:02 2017,099 [8965] ERROR filter.ExceptionCatcherFilter - Uncaught Exception: exception 'Doctrine_Query_Exception' with message 'Unknown column shift_index' in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query/Orderby.php:94
+Stack trace:
+#0 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query/Abstract.php(2101): Doctrine_Query_Orderby->parse('st.shift_index ...')
+#1 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query.php(1183): Doctrine_Query_Abstract->_processDqlQueryPart('orderby', Array)
+#2 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query.php(1149): Doctrine_Query->buildSqlQuery(true)
+#3 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query/Abstract.php(982): Doctrine_Query->getSqlQuery(Array)
+#4 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query/Abstract.php(1050): Doctrine_Query_Abstract->_execute(Array)
+#5 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Query.php(267): Doctrine_Query_Abstract->execute(Array, 3)
+#6 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/dao/ShiftDao.php(190): Doctrine_Query->fetchArray()
+#7 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/ShiftService.php(79): ShiftDao->getShiftTypeList('36')
+#8 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/ShiftService.php(696): ShiftService->getShiftTypeList('36')
+#9 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/modules/shift/actions/createXmlAction.class.php(10): ShiftService->createXml('36')
+#10 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(92): createXmlAction->execute(Object(sfWebRequest))
+#11 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmExecutionFilter.php(42): sfExecutionFilter->executeAction(Object(createXmlAction))
+#12 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(78): orangehrmExecutionFilter->executeAction(Object(createXmlAction))
+#13 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(53): sfExecutionFilter->handleAction(Object(sfFilterChain), Object(createXmlAction))
+#14 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfExecutionFilter->execute(Object(sfFilterChain))
+#15 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfCommonFilter.class.php(29): sfFilterChain->execute()
+#16 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfCommonFilter->execute(Object(sfFilterChain))
+#17 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmPostExecutionFilter.php(22): sfFilterChain->execute()
+#18 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): orangehrmPostExecutionFilter->execute(Object(sfFilterChain))
+#19 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/ModuleFilter.php(56): sfFilterChain->execute()
+#20 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ModuleFilter->execute(Object(sfFilterChain))
+#21 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/authorization/filter/ohrmAuthorizationFilter.php(101): sfFilterChain->execute()
+#22 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ohrmAuthorizationFilter->execute(Object(sfFilterChain))
+#23 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/SessionInfoFetcherFilter.php(67): sfFilterChain->execute()
+#24 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): SessionInfoFetcherFilter->execute(Object(sfFilterChain))
+#25 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/OrangeI18NFilter.php(58): sfFilterChain->execute()
+#26 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): OrangeI18NFilter->execute(Object(sfFilterChain))
+#27 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/ExceptionCatcherFilter.php(26): sfFilterChain->execute()
+#28 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ExceptionCatcherFilter->execute(Object(sfFilterChain))
+#29 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfBasicSecurityFilter.class.php(72): sfFilterChain->execute()
+#30 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfBasicSecurityFilter->execute(Object(sfFilterChain))
+#31 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfRenderingFilter.class.php(33): sfFilterChain->execute()
+#32 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfRenderingFilter->execute(Object(sfFilterChain))
+#33 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/controller/sfController.class.php(238): sfFilterChain->execute()
+#34 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/controller/sfFrontWebController.class.php(48): sfController->forward('shift', 'createXml')
+#35 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/util/sfContext.class.php(173): sfFrontWebController->dispatch()
+#36 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/web/index.php(22): sfContext->dispatch()
+#37 {main}
+
+Next exception 'DaoException' with message 'Unknown column shift_index' in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/dao/ShiftDao.php:193
+Stack trace:
+#0 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/ShiftService.php(79): ShiftDao->getShiftTypeList('36')
+#1 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/ShiftService.php(696): ShiftService->getShiftTypeList('36')
+#2 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/modules/shift/actions/createXmlAction.class.php(10): ShiftService->createXml('36')
+#3 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(92): createXmlAction->execute(Object(sfWebRequest))
+#4 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmExecutionFilter.php(42): sfExecutionFilter->executeAction(Object(createXmlAction))
+#5 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(78): orangehrmExecutionFilter->executeAction(Object(createXmlAction))
+#6 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfExecutionFilter.class.php(53): sfExecutionFilter->handleAction(Object(sfFilterChain), Object(createXmlAction))
+#7 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfExecutionFilter->execute(Object(sfFilterChain))
+#8 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfCommonFilter.class.php(29): sfFilterChain->execute()
+#9 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfCommonFilter->execute(Object(sfFilterChain))
+#10 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmPostExecutionFilter.php(22): sfFilterChain->execute()
+#11 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): orangehrmPostExecutionFilter->execute(Object(sfFilterChain))
+#12 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/ModuleFilter.php(56): sfFilterChain->execute()
+#13 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ModuleFilter->execute(Object(sfFilterChain))
+#14 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmCorePlugin/lib/authorization/filter/ohrmAuthorizationFilter.php(101): sfFilterChain->execute()
+#15 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ohrmAuthorizationFilter->execute(Object(sfFilterChain))
+#16 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/SessionInfoFetcherFilter.php(67): sfFilterChain->execute()
+#17 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): SessionInfoFetcherFilter->execute(Object(sfFilterChain))
+#18 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/OrangeI18NFilter.php(58): sfFilterChain->execute()
+#19 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): OrangeI18NFilter->execute(Object(sfFilterChain))
+#20 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/apps/orangehrm/lib/filter/ExceptionCatcherFilter.php(26): sfFilterChain->execute()
+#21 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): ExceptionCatcherFilter->execute(Object(sfFilterChain))
+#22 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfBasicSecurityFilter.class.php(72): sfFilterChain->execute()
+#23 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfBasicSecurityFilter->execute(Object(sfFilterChain))
+#24 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfRenderingFilter.class.php(33): sfFilterChain->execute()
+#25 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/filter/sfFilterChain.class.php(53): sfRenderingFilter->execute(Object(sfFilterChain))
+#26 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/controller/sfController.class.php(238): sfFilterChain->execute()
+#27 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/controller/sfFrontWebController.class.php(48): sfController->forward('shift', 'createXml')
+#28 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/symfony/lib/util/sfContext.class.php(173): sfFrontWebController->dispatch()
+#29 /Users/wubin/Documents/Github/www/OrangeHRM/symfony/web/index.php(22): sfContext->dispatch()
+#30 {main}
+[20-Dec-2017 10:41:02 Asia/Shanghai] Empty module and/or action after parsing the URL "/webres_598bd8c4489f52.47381308/themes/default/images/error-btn.png" (/).
+[20-Dec-2017 11:19:10 Asia/Shanghai] Action "shift/AddShiftRotary1" does not exist.
+[20-Dec-2017 11:19:16 Asia/Shanghai] Action "shift/AddShiftRotary1" does not exist.
+[20-Dec-2017 11:26:26 Asia/Shanghai] Action "shift/AddShiftRotary1" does not exist.
+[20-Dec-2017 11:26:39 Asia/Shanghai] Action "shift/AddShiftRotary1" does not exist.
+[20-Dec-2017 11:27:33 Asia/Shanghai] PHP Parse error:  syntax error, unexpected 'for' (T_FOR) in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 873
+[20-Dec-2017 11:27:41 Asia/Shanghai] PHP Parse error:  syntax error, unexpected 'for' (T_FOR) in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 873
+[20-Dec-2017 14:17:07 Asia/Shanghai] Empty module and/or action after parsing the URL "/webres_598bd8c4489f52.47381308/orangehrmAdminPlugin/css/viewEducationSuccess.css" (/).
+[20-Dec-2017 14:17:13 Asia/Shanghai] Empty module and/or action after parsing the URL "/webres_598bd8c4489f52.47381308/orangehrmAdminPlugin/css/viewEducationSuccess.css" (/).
+[20-Dec-2017 14:22:59 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:23:03 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:24:37 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:24:40 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:24:42 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:25:29 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:25:33 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:25:36 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:25:39 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:25:42 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:25:45 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:25:48 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:26:55 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:26:57 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:27:07 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:27:10 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:27:40 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:28:32 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:28:33 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:28:41 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:28:43 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:28:58 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:29:08 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:29:11 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:30:07 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:30:10 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:30:39 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:30:42 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:30:51 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:30:55 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:31:02 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:31:14 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:31:16 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:31:27 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:31:29 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:32:01 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:32:07 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:32:10 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:32:42 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:32:56 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:33:01 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:33:06 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:33:08 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:33:22 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:37:39 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:37:41 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 14:52:17 Asia/Shanghai] PHP Parse error:  syntax error, unexpected ';', expecting ']' in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 227
+[20-Dec-2017 21:46:16 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 21:46:19 Asia/Shanghai] Action "public/head_pic" does not exist.
+[20-Dec-2017 21:46:21 Asia/Shanghai] Action "public/head_pic" does not exist.

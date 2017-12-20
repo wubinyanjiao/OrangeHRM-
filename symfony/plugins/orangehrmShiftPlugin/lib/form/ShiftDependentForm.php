@@ -260,7 +260,9 @@ class ShiftDependentForm extends BaseForm {
                     $shift->setCreateAt($create_at); 
                     $this->getShiftService()->saveShift($shift);
                     $shift_id=$shift->getId();
-                    $this->saveShiftAssignment($shift_id,$shift_list['required_employee'],$shift_list['scheduleID']);
+                    $shift_date=$shift->getShiftdateId();
+                    
+                    $this->saveShiftAssignment($shift_id,$shift_list['required_employee'],$shift_list['scheduleID'],$shift_date);
                     $this->_saveEmployeeWorkShift($shift_id);
             }
 
@@ -284,7 +286,8 @@ class ShiftDependentForm extends BaseForm {
                     $shift->setShiftdateId($key); 
                     $this->getShiftService()->saveShift($shift); 
                     $shift_id=$shift->getId();
-                    $this->saveShiftAssignment($shift_id,$shift_list['required_employee'],$shift_list['scheduleID']);
+                    $shift_date=$shift->getShiftdateId();
+                    $this->saveShiftAssignment($shift_id,$shift_list['required_employee'],$shift_list['scheduleID'],$shift_date);
                     $this->_saveEmployeeWorkShift($shift_id);
                 }
                    
@@ -323,7 +326,8 @@ class ShiftDependentForm extends BaseForm {
                     $shift->setShiftdateId($index); 
                     $this->getShiftService()->saveShift($shift); 
                     $shift_id=$shift->getId();
-                    $this->saveShiftAssignment($shift_id,$shift_list['required_employee'],$shift_list['scheduleID']);
+                    $shift_date=$shift->getShiftdateId();
+                    $this->saveShiftAssignment($shift_id,$shift_list['required_employee'],$shift_list['scheduleID'],$shift_date);
                     $this->_saveEmployeeWorkShift($shift_id);
                     $this->_saveEmployeeWorkShift($shift_id);
 
@@ -338,12 +342,13 @@ class ShiftDependentForm extends BaseForm {
         }
     }
 
-    public function saveShiftAssignment($shiftId,$required_employee,$schedule_id){
+    public function saveShiftAssignment($shiftId,$required_employee,$schedule_id,$shift_date){
         for($i=0;$i<$required_employee;$i++){
             $shiftAssignment = new WorkShiftAssignment;
             $shiftAssignment->setShiftId($shiftId);
             $shiftAssignment->setScheduleId($schedule_id);
             $shiftAssignment->setShiftIndex($i);
+            $shiftAssignment->setShiftDate($shift_date);
             $this->getShiftService()->saveShiftAssignments($shiftAssignment);
         }
         

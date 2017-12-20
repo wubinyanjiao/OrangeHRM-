@@ -216,7 +216,7 @@ class ShiftDao extends BaseDao {
         try {
             $q = Doctrine_Query:: create()->from('WorkShiftAssignment st')
                             ->where('st.schedule_id = ?', $scheduleId)
-                            ->orderBy('st.id ASC');
+                            ->orderBy('st.shift_date ASC');
 
             return $q->fetchArray();
 
@@ -299,9 +299,13 @@ class ShiftDao extends BaseDao {
 
     public function getEmoloyeeLocation() {
         try {
-            $q = Doctrine_Query::create()->from('EmpLocations el')
+            /*$q = Doctrine_Query::create()->from('EmpLocations el')
                                          ->leftJoin('el.Employee e')
-                                         ->orderBy('el.emp_number');
+                                         ->orderBy('el.emp_number');*/
+            $q = Doctrine_Query::create()->from('Employee e')
+                                         ->leftJoin('e.EmpLocations el')
+                                         ->leftJoin('e.EmployeeEducation ee')
+                                         ->orderBy('e.emp_number');
 
             return $q->fetchArray();
         // @codeCoverageIgnoreStart
