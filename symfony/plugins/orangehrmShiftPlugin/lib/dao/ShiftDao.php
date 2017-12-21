@@ -315,6 +315,16 @@ class ShiftDao extends BaseDao {
         // @codeCoverageIgnoreEnd
     }
 
+    public function getLeaderList(){
+        try {
+            $q = Doctrine_Query::create()->from('Subunit')
+                                         ->orderBy('id');
+            return $q->fetchArray();
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }
+    }
+
     public function getShiftRosters(){
         try {
             $q = Doctrine_Query::create()->from('WorkShiftRotary')

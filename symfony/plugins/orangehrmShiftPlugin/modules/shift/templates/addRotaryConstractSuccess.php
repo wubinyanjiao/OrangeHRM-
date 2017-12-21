@@ -172,7 +172,7 @@
 
                                  <li>
                                     <div class="fieldDescription"><em>*</em> <?php echo __('至少需要几年'); ?></div>
-                                    <?php echo $form['rotary_limit_year']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Last Name'))); ?>
+                                    <?php echo $form['min_age_rotary']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Last Name'))); ?>
                                 </li>
                                 <li style="margin-bottom: 13px">
                                     <div class="fieldDescription"><?php echo __('权重(赋值越大，权重越高'); ?></div>
@@ -192,10 +192,7 @@
                             <label for="Full_Name" class="hasTopFieldHelp"><?php echo __('组长不参与轮转'); ?></label>
                             <ol class="fieldsInLine">
 
-                                 <li>
-                                    <div class="fieldDescription"><em>*</em> <?php echo __('至少需要几年'); ?></div>
-                                    <?php echo $form['leader_no_rotary_year']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Last Name'))); ?>
-                                </li>
+                               
                                 <li style="margin-bottom: 13px">
                                     <div class="fieldDescription"><?php echo __('权重(赋值越大，权重越高'); ?></div>
                                     <?php echo $form['leader_no_rotary_weight']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Middle Name'))); ?>

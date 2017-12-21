@@ -535,6 +535,10 @@ abstract class BaseEmployee extends sfDoctrineRecord
              'type' => 'string',
              'length' => 50,
              ));
+        $this->hasColumn('location_time', 'date', 25, array(
+             'type' => 'date',
+             'length' => 25,
+             ));
     }
 
     public function setUp()
@@ -730,6 +734,6 @@ abstract class BaseEmployee extends sfDoctrineRecord
         $this->hasMany('EmpChildren', array(
              'local' => 'emp_number',
              'foreign' => 'emp_number'));
-
     }
+
 }

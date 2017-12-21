@@ -126,6 +126,12 @@ class ShiftService extends BaseService {
     public function getEmoloyeeLocation(){
         return $this->getShiftDao()->getEmoloyeeLocation();
     }
+
+    public function getLeaderList(){
+        return $this->getShiftDao()->getLeaderList();
+    }
+
+    
     
     /**
      * Check if user with given userId is an admin

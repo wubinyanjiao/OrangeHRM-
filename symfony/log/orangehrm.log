@@ -9911,3 +9911,32 @@ Stack trace:
 [20-Dec-2017 21:46:16 Asia/Shanghai] Action "public/head_pic" does not exist.
 [20-Dec-2017 21:46:19 Asia/Shanghai] Action "public/head_pic" does not exist.
 [20-Dec-2017 21:46:21 Asia/Shanghai] Action "public/head_pic" does not exist.
+[21-Dec-2017 10:06:03 Asia/Shanghai] Action "shift/AddShiftRotary1" does not exist.
+[21-Dec-2017 12:04:04 Asia/Shanghai] Action "shift/AddShiftRotary1" does not exist.
+[21-Dec-2017 12:05:03 Asia/Shanghai] Action "shift/AddShiftRotary1" does not exist.
+[21-Dec-2017 12:05:53 Asia/Shanghai] Action "shift/AddShiftRotary1" does not exist.
+[21-Dec-2017 16:35:57 Asia/Shanghai] PHP Fatal error:  Function name must be a string in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 288
+[21-Dec-2017 16:37:13 Asia/Shanghai] PHP Parse error:  syntax error, unexpected ';' in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 288
+[21-Dec-2017 17:17:29 Asia/Shanghai] PHP Parse error:  syntax error, unexpected '}', expecting ';' in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 323
+[21-Dec-2017 17:44:36 Asia/Shanghai] PHP Parse error:  syntax error, unexpected '}', expecting ';' in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 374
+[21-Dec-2017 18:32:36 Asia/Shanghai] PHP Parse error:  syntax error, unexpected ';', expecting ']' in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 343
+[21-Dec-2017 18:34:04 Asia/Shanghai] PHP Parse error:  syntax error, unexpected '=' in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 348
+[21-Dec-2017 19:21:08 Asia/Shanghai] PHP Parse error:  syntax error, unexpected '}' in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 404
+[21-Dec-2017 19:23:32 Asia/Shanghai] Empty module and/or action after parsing the URL "/webres_598bd8c4489f52.47381308/themes/default/images/logo.png" (/).
+[21-Dec-2017 19:23:36 Asia/Shanghai] Empty module and/or action after parsing the URL "/webres_598bd8c4489f52.47381308/themes/default/images/logo.png" (/).
+[21-Dec-2017 19:23:57 Asia/Shanghai] Empty module and/or action after parsing the URL "/webres_598bd8c4489f52.47381308/themes/default/images/logo.png" (/).
+[21-Dec-2017 19:25:19 Asia/Shanghai] Empty module and/or action after parsing the URL "/webres_598bd8c4489f52.47381308/themes/default/images/logo.png" (/).
+[21-Dec-2017 19:25:30 Asia/Shanghai] Empty module and/or action after parsing the URL "/webres_598bd8c4489f52.47381308/themes/default/images/logo.png" (/).
+[21-Dec-2017 19:25:32 Asia/Shanghai] Empty module and/or action after parsing the URL "/webres_598bd8c4489f52.47381308/themes/default/images/logo.png" (/).
+[21-Dec-2017 19:25:42 Asia/Shanghai] Empty module and/or action after parsing the URL "/webres_598bd8c4489f52.47381308/themes/default/images/logo.png" (/).
+[21-Dec-2017 21:35:33 Asia/Shanghai] PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO), expecting function (T_FUNCTION) in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 285
+[21-Dec-2017 21:35:52 Asia/Shanghai] PHP Parse error:  syntax error, unexpected '$empLocation' (T_VARIABLE) in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 347
+[21-Dec-2017 22:40:12 Asia/Shanghai] PHP Parse error:  syntax error, unexpected end of file, expecting function (T_FUNCTION) in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/model/doctrine/orangehrmPimPlugin/base/BaseEmployee.class.php on line 738
+[21-Dec-2017 22:40:12 Asia/Shanghai] PHP Fatal error:  Call to a member function evictAll() on null in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Connection.php on line 1267
+[21-Dec-2017 22:41:07 Asia/Shanghai] PHP Parse error:  syntax error, unexpected end of file, expecting function (T_FUNCTION) in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/model/doctrine/orangehrmPimPlugin/base/BaseEmployee.class.php on line 738
+[21-Dec-2017 22:41:07 Asia/Shanghai] PHP Fatal error:  Call to a member function evictAll() on null in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/lib/vendor/lexpress/doctrine1/lib/Doctrine/Connection.php on line 1267
+[21-Dec-2017 22:44:32 Asia/Shanghai] PHP Parse error:  syntax error, unexpected ')' in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 352
+[21-Dec-2017 22:47:15 Asia/Shanghai] PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO) in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 332
+[21-Dec-2017 23:06:26 Asia/Shanghai] PHP Parse error:  syntax error, unexpected '$data' (T_VARIABLE) in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 1105
+[21-Dec-2017 23:07:01 Asia/Shanghai] PHP Parse error:  syntax error, unexpected '$data' (T_VARIABLE) in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 1105
+[21-Dec-2017 23:11:56 Asia/Shanghai] PHP Parse error:  syntax error, unexpected 'exit' (T_EXIT) in /Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/form/AddShiftRotary2Form.php on line 3781

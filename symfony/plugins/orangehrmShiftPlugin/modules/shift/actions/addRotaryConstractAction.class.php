@@ -92,7 +92,7 @@ class addRotaryConstractAction extends baseShiftAction {
 
             //组长不参与轮转
             $leader_no_rotary=array();
-            $leader_no_rotary['count']=$_POST['rotartContract']['leader_no_rotary_year'];
+            // $leader_no_rotary['count']=$_POST['rotartContract']['leader_no_rotary_year'];
             $leader_no_rotary['weight']=$_POST['rotartContract']['leader_no_rotary_weight'];
             $leader_no_rotary['status']=$_POST['rotartContract']['leader_no_rotary_status'];
             $rotary_List['leader_no_rotary']=$leader_no_rotary;

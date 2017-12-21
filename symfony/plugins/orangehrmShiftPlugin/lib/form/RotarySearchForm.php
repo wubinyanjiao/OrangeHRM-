@@ -135,7 +135,7 @@ class RotarySearchForm extends BaseForm {
 
             //组长不参与轮转
 
-            'leader_no_rotary_year' => new sfWidgetFormInputText(),
+            // 'leader_no_rotary_year' => new sfWidgetFormInputText(),
             'leader_no_rotary_weight' => new sfWidgetFormInputText(),
             'leader_no_rotary_status' => new sfWidgetFormSelect(array('choices' => $status)),
       
@@ -191,7 +191,7 @@ class RotarySearchForm extends BaseForm {
 
          //组长不参与轮转
 
-        $widgets['leader_no_rotary_year']->setAttribute('value', '');
+        // $widgets['leader_no_rotary_year']->setAttribute('value', '');
         $widgets['leader_no_rotary_weight']->setAttribute('value', '');
         $widgets['leader_no_rotary_status']->setAttribute('value', '');
 
@@ -286,7 +286,7 @@ class RotarySearchForm extends BaseForm {
 
          	//组长不参与轮转
 
-        	 'leader_no_rotary_year' => new sfValidatorString(array('required' => false, 'max_length' => 30, 'trim' => true), array('max_length' => 'Middle Name Length exceeded 30 characters')),
+        	 // 'leader_no_rotary_year' => new sfValidatorString(array('required' => false, 'max_length' => 30, 'trim' => true), array('max_length' => 'Middle Name Length exceeded 30 characters')),
 
             'leader_no_rotary_weight' => new sfValidatorString(array('required' => false, 'max_length' => 30, 'trim' => true), array('max_length' => 'Middle Name Length exceeded 30 characters')),
             

@@ -36,7 +36,7 @@ class updateRotaryAction extends baseShiftAction {
         
         $empNumber = $request->getParameter('empNumber');
 
-        $this->redirect("shift/AddShiftRotary1");
+        $this->redirect("shift/AddShiftRotary");
     }
 
 }

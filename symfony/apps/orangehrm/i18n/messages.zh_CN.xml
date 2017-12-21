@@ -2210,7 +2210,7 @@
       </trans-unit>
       <trans-unit id="552">
         <source>Leave</source>
-        <target>休假</target>
+        <target>假期</target>
       </trans-unit>
       <trans-unit id="553">
         <source>Leave Balance (Days)</source>
@@ -3122,7 +3122,7 @@
       </trans-unit>
       <trans-unit id="780">
         <source>Performance</source>
-        <target>绩效</target>
+        <target>培训</target>
       </trans-unit>
       <trans-unit id="781">
         <source>Performed By</source>
@@ -3266,7 +3266,7 @@
       </trans-unit>
       <trans-unit id="816">
         <source>Recruitment</source>
-        <target>招聘</target>
+        <target>绩效</target>
       </trans-unit>
       <trans-unit id="817">
         <source>Reject</source>

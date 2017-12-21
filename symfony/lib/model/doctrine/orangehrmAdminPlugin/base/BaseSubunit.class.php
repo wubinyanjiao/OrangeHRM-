@@ -54,6 +54,12 @@ abstract class BaseSubunit extends sfDoctrineRecord
              'type' => 'string',
              'length' => 400,
              ));
+        
+        $this->hasColumn('leader_id', 'integer', 11, array(
+             'type' => 'integer',
+             'primary' => true,
+             'length' => 11,
+             ));
     }
 
     public function setUp()
