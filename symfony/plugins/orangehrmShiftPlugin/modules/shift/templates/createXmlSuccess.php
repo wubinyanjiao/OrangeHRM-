@@ -11,24 +11,24 @@
      
             <form name="frmEmpDelDependents" id="frmEmpDelDependents" method="" action="">
 
-                  <p id="listActions">
-                
+                <p id="listActions">
                     <input type="button" id="btnCSV" class="" value="<?php echo __("导出excel表"); ?>"/>
-                  
+                    
+                    <input type="button" id="addTr2" value="循环">
                 </p>
        
                 <table id="dependent_list" class="table hover" >
                 <!-- 标题 -->
-                    <thead>
+                 
                         <tr>
                         	<th><?php echo __("姓名"); ?></th>
 		                     <?php foreach($date_list as $key=>$date){?>
 		                     <th><?php echo $date ?></th>
 		                     <?php }?>
                         </tr>
-                    </thead>
+                 
                     <!-- 内容部分 -->
-                    <tbody >
+                    
                         <?php
                       		foreach ($emarray as $key=>$employee) :
                       		 $cssClass = ($row % 2) ? 'even' : 'odd';
@@ -64,7 +64,7 @@
                            	endforeach;
                         ?>
                        
-                    </tbody>
+                
                     <p>
                     
                 </p>
@@ -77,17 +77,44 @@
       
     $(document).ready(function(){
 
+        function addTr(row){
+            //获取table最后一行 $("#tab tr:last")
+             //获取table第一行 $("#tab tr").eq(0)
+             //获取table倒数第二行 $("#tab tr").eq(-2)
+            trHtml= "<tr>"+$("#dependent_list tr:last").html()+"</tr>";
+         
+             var $tr=$("#dependent_list"+" tr").eq(row);
+              
+             if($tr.size()==0){
+                alert("指定的table id或行数不存在！");
+                return;
+             }
+             $tr.after(trHtml);
+        }
 
+        function delTr(){
+            //获取选中的复选框，然后循环遍历删除
+              
+            $("#dependent_list tr:last").remove();
+                  
+        }
 
-         $('#btnCSV').click(function() {
+        $('#btnCSV').click(function() {
 
             
             location.href = "<?php echo url_for('shift/createCSV?schedule_id='.$schedule_id) ?>";
         });
 
-          $('#export').click(function(){
-                
-            })
+
+        $('#addTr2').click(function() {
+
+
+
+            addTr(0);
+            delTr();
+
+        });
+
        
 
     });
