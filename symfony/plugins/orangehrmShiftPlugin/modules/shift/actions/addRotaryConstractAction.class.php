@@ -100,8 +100,11 @@ class addRotaryConstractAction extends baseShiftAction {
             // echo'<pre>';var_dump($rotary_List);exit;
           
             $data=$this->getShiftService()->saveFile('rotaryContranct',$rotary_List);
+            $this->redirect("shift/addShiftRotary?schedule_id=$scheduleID");
 
         }
+
+
     }
     
     /**

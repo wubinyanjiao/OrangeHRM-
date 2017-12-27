@@ -19,7 +19,7 @@
 abstract class baseShiftAction extends sfAction {
     
     private $shiftTypeService;
-    private $shiftEventService;
+    private $workShiftService;
     private $shifService;
     private $shiftDateService;
     
@@ -40,6 +40,14 @@ abstract class baseShiftAction extends sfAction {
             $this->shiftTypeService->setShiftTypeDao(new ShiftTypeDao());
         }
         return $this->shiftTypeService;
+    }
+
+    public function getScheduleService() {
+        if (is_null($this->workShiftService)) {
+            $this->workShiftService = new ScheduleService();
+            $this->workShiftService->setScheduleDao(new ScheduleDao());
+        }
+        return $this->workShiftService;
     }
 
     //获取排班类型实例

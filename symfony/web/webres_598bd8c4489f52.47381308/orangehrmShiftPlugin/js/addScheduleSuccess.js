@@ -54,9 +54,14 @@ $(document).ready(function() {
 
         $("a").attr("href",url); 
 
-      
-  
+    });
 
+    $('#btnCatch').click(function() {
+             var row = $(this).closest("tr");
+            var scheudleId = row.find('input').val();workShiftResult
+            var url = workShiftResult+scheudleId;
+
+        $("a").attr("href",url); 
     });
 
 

@@ -7,58 +7,40 @@ class createXmlAction extends baseShiftAction {
   
 
         $scheduleID=$request->getParameter('schedule_id');
-        $this->getShiftService()->createXml($scheduleID);
-        // $this->getShiftService()->createRotaryXml($scheduleID);
+  
         $this->schedule_id=$scheduleID;
       
-
-        
-
-     
-
-        $result=$this->getShiftService()->getRosterResult($scheduleID);
-
-      
-        if(false ==$result){
-            $file_path="/Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/files/roster_".$scheduleID.'.xml';
-            $roaster_path="/Users/wubin/Documents/Github/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/Linux-NurseRostering/NurseRostering.jar";
-            $java_path="/Library/Java/JavaVirtualMachines/jdk-9.0.1.jdk/Contents/Home/bin/java";
-
-            exec("$java_path  -jar $roaster_path  $file_path 2>&1",$output, $return_val);
-            // sleep(500);
-            $result=$this->getShiftService()->getRosterResult($scheduleID);
-        }
-
-
+        $assignment_list=$this->getShiftService()->getRosterResult($scheduleID);
 
         $shiftTypes=$this->getShiftService()->getShiftTypeList($scheduleID);
 		$shiftTypes = array_column($shiftTypes, NULL, 'id');
 
 		$employeeList=$this->getShiftService()->getEmployeeList();
 		$employeeList = array_column($employeeList, NULL, 'empNumber');
-        
 
+        $param=array('scheduleID' => $scheduleID);
+        
+        $this->updateShiftResultForm = new UpdateShiftResultForm(array(),$param,true);
 
         $this->result=$result;
-        $assignment_list=$result['Assignment'];
+       
 
-
-        $employ_list=array_column($assignment_list,'Employee');
+        $employ_list=array_column($assignment_list,'emp_number');
         $employ_list=array_unique($employ_list);
 
-        $date_list=array_column($assignment_list,'Date');
+        $date_list=array_column($assignment_list,'shift_date');
         $date_list=array_unique($date_list);
 
-      
+ 
 
         //列出每一个员工的所有天的排班
        // var_dump($result['Assignment']);exit;
-
+ 
         foreach ($employ_list as $key => $employee) {
 
         	foreach ($assignment_list as $k => $assignment) {
 
-        		if($assignment['Employee']==$employee){
+        		if($assignment['emp_number']==$employee){
         			$employee_array[$employee][]=$assignment;
         		}
         	}
@@ -69,22 +51,37 @@ class createXmlAction extends baseShiftAction {
 
         foreach ($employee_array as $key => $employee) {
 
-        	$employ_day=array_column($employee,'Date');
+        	$employ_day=array_column($employee,'shift_date');
         	$employ_day=array_unique($employ_day);
         	
 
         	$diff=array_diff($date_list, $employ_day);
 
+
  			if(!empty($diff)){
  				foreach ($diff as $difkey=> $difday) {
+
+
  					$emarray[$key][$difday][]='休息';
  				}
+
+              
  			}
 
         	foreach ($date_list as $ked => $date) {
         		foreach ($employee as $ks => $emday) {
-        			if($date==$emday['Date']){
-        				$emarray[$key][$date][]=$shiftTypes[$emday['ShiftType']]['name'];
+                 
+        			if($date==$emday['shift_date']){
+                   
+        				// $emarray[$key][$date][$emday['id']]=$shiftTypes[$emday['shift_type_id']]['name'];
+
+                        if(is_numeric($emday['shift_type_id'])){
+                            $emarray[$key][$date][$emday['id']]=$shiftTypes[$emday['shift_type_id']]['name'];
+                        }else{
+                            $emarray[$key][$date][$emday['id']]=$emday['shift_type_id'];
+                        }
+                        
+
         			}
         		}
         		
@@ -94,7 +91,7 @@ class createXmlAction extends baseShiftAction {
         }
 
 
-        $this->emarray=$emarray;
+        $this->emarray=isset($new_emarray)?$new_emarray:$emarray;
         $this->date_list=$date_list;
         $this->employeeList=$employeeList;
 

@@ -30,8 +30,9 @@ class addScheduleAction extends baseShiftAction {
         }
 
         $this->setForm(new AddScheduleForm());
-        // $workScheduleList = $this->getScheduleService()->getScheduleList();
-        $this->_setListComponent($workScheduleList);
+        
+        // echo'<pre>';var_dump($workScheduleList);exit;
+        // $this->_setListComponent($workScheduleList);
         $params = array();
         $this->parmetersForListCompoment = $params;
         $hideForm = true;
@@ -48,15 +49,20 @@ class addScheduleAction extends baseShiftAction {
                 $hideForm = false;
             }
         }
-        $this->hideForm = $hideForm;
+
+        $workScheduleList = $this->getScheduleService()->getScheduleListNew();
+        $this->workScheduleList=$workScheduleList;
+    
+        // echo '<pre>';var_dump($this->workScheduleList);exit;
+        // $this->hideForm = $hideForm;
         // $this->default = $this->getWorkScheduleService()->getWorkScheduleDefaultStartAndEndTime();
     }
 
-    private function _setListComponent($workShiftList) {
-        $configurationFactory = new WorkScheduleHeaderFactory();
-        ohrmListComponent::setConfigurationFactory($configurationFactory);
-        ohrmListComponent::setListData($workShiftList);
-    }
+    // private function _setListComponent($workShiftList) {
+    //     $configurationFactory = new WorkScheduleHeaderFactory();
+    //     ohrmListComponent::setConfigurationFactory($configurationFactory);
+    //     ohrmListComponent::setListData($workShiftList);
+    // }
 
 }
 

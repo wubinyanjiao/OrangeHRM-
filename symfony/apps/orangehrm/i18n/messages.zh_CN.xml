@@ -2210,7 +2210,7 @@
       </trans-unit>
       <trans-unit id="552">
         <source>Leave</source>
-        <target>假期</target>
+        <target>休假</target>
       </trans-unit>
       <trans-unit id="553">
         <source>Leave Balance (Days)</source>
@@ -3122,7 +3122,7 @@
       </trans-unit>
       <trans-unit id="780">
         <source>Performance</source>
-        <target>培训</target>
+        <target>绩效</target>
       </trans-unit>
       <trans-unit id="781">
         <source>Performed By</source>
@@ -3266,7 +3266,7 @@
       </trans-unit>
       <trans-unit id="816">
         <source>Recruitment</source>
-        <target>绩效</target>
+        <target>招聘</target>
       </trans-unit>
       <trans-unit id="817">
         <source>Reject</source>
@@ -6421,7 +6421,7 @@
         <source>End Time</source>
         <target>结束时间</target>
       </trans-unit> 
-
+<<<<<<< .mine
       <trans-unit id="1565">
         <source>Status</source>
         <target>状态</target>
@@ -6523,7 +6523,7 @@
         <source>My Overtime</source>
         <target>我的加班</target>
       </trans-unit>
-
+>>>>>>> .r45
     </body>
   </file>
 </xliff>

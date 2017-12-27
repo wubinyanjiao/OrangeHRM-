@@ -33,6 +33,7 @@ class ShiftTypeDao extends BaseDao {
         }
         
     }
+    
     public function getShiftTypeById($id) {
         
         try {
@@ -56,6 +57,7 @@ class ShiftTypeDao extends BaseDao {
         }
    
     }
+
 
     public function getSkillsByType($shifttype_id) {
       

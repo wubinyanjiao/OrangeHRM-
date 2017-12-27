@@ -413,7 +413,11 @@
                     </ol>
 
    
-                    <p><input type="button" id="btnSave" value="<?php echo __("Edit"); ?>" /></p>
+                    <p>
+                        <input type="button" id="btnSave" value="<?php echo __("Edit"); ?>" />
+                        <input type="button" id="btnXml" class="" value="<?php echo __("生成排班"); ?>"/>
+                    </p>
+
                
                 </fieldset>
             </form>
@@ -450,6 +454,10 @@
     var readOnlyFields = <?php echo json_encode($form->getReadOnlyWidgetNames());?>
 
     $(function() { 
+
+        $('#btnXml').click(function() {
+            location.href = "<?php echo url_for('shift/runJava?schedule_id='.$schedule_id) ?>";
+        });
         
         /*$("#addNightLeisure").click(function() { 
             var count=$(".nightLeisure").length;

@@ -1,6 +1,4 @@
 
-
-
 <div class="box ">
 <div class="miniList" id="listing">
         <div class="head" align="center">
@@ -13,7 +11,7 @@
 
                 <p id="listActions">
                     <input type="button" id="btnCSV" class="" value="<?php echo __("导出excel表"); ?>"/>
-                    
+                    <input type="hidden" id="schedule_id" class="" value="<?php echo $schedule_id; ?>"/>
                     <input type="button" id="addTr2" value="循环">
                 </p>
        
@@ -33,6 +31,9 @@
                       		foreach ($emarray as $key=>$employee) :
                       		 $cssClass = ($row % 2) ? 'even' : 'odd';
                            	 echo '<tr class="' . $cssClass . '">';
+
+
+
                             
                          ?>
 
@@ -44,13 +45,21 @@
                              	<?php
                  
                              		foreach ($singempl as $ktyp => $shiftType) {
+
                              			$arr[$key][$k][$ktyp]=$shiftType;
                              		}
 
-                             		$valstr=implode('--', $arr[$key][$k]);
+
+                                    foreach ($arr[$key][$k] as $ke => $ve) {
+                                       
+                                    
+                             		// $valstr=implode('--', $arr[$key][$k]);
 
                              	?>					
-								<span href=""><?php echo $valstr ?></span>
+								<a id="<?php echo $ke; ?>"data-toggle='modal' href='#languageDialog' style='text-decoration: none; list-style: none;color:#5d5d5d;font-size:14px;font-weight:bold;' class='averageAssign_deleteButton'><?php echo $ve; ?></a>
+                                <?php }?>
+
+                           
                              	
                              </td>
 
@@ -71,9 +80,50 @@
                 </table>                 
             </form>
         </div>
+
+
+        <!-- Message for supported languages -->
+         <div class="modal hide" id="languageDialog">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3><?php echo __('创建类型')?></h3>
+            </div>
+            <div class="modal-body">
+                <p>
+                <form name="frmEmpEmgContact" id="frmEmpEmgContact" method="post" action="<?php echo url_for('shift/updateShiftResult?schedule_id=' . $schedule_id); ?>">
+                    <?php echo $updateShiftResultForm['_csrf_token']; ?>
+                    <?php echo $updateShiftResultForm["scheduleID"]->render(); ?>
+                    <?php echo $updateShiftResultForm["shiftResultID"]->render(); ?>
+                    <fieldset>
+                        <ol>
+                           
+                            </li>
+                           
+                            <li>
+                                <?php echo $updateShiftResultForm['employee']->renderLabel(__('选择员工') . ' <em>*</em>'); ?>
+                                <?php echo $updateShiftResultForm['employee']->render(array("class" => "formInputText", "maxlength" => 25)); ?>
+                            </li>
+                          
+                            
+                            <li class="required">
+                                <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                            </li>
+                        </ol>
+                        <p>
+                            <input type="button" class="" name="btnSaveEContact" id="btnSaveEContact" value="<?php echo __("Save"); ?>"/>
+                        </p>
+                    </fieldset>
+                </form>       
+                </p>
+              </div>
+            
+        </div>
+        <!-- End-of-msg -->
     </div> 
    </div>
    <script type="text/javascript">
+
+    var activateShiftUrl = '<?php echo url_for('shift/createXml?schedule_id=' . $schedule_id); ?>';
       
     $(document).ready(function(){
 
@@ -81,7 +131,7 @@
             //获取table最后一行 $("#tab tr:last")
              //获取table第一行 $("#tab tr").eq(0)
              //获取table倒数第二行 $("#tab tr").eq(-2)
-            trHtml= "<tr>"+$("#dependent_list tr:last").html()+"</tr>";
+            trHtml= "<tr>"+$("#dependent_list  td:eq(0) tr:last").html()+"</tr>";
          
              var $tr=$("#dependent_list"+" tr").eq(row);
               
@@ -95,7 +145,7 @@
         function delTr(){
             //获取选中的复选框，然后循环遍历删除
               
-            $("#dependent_list tr:last").remove();
+            $("#dependent_list tr:last td:eq(0)").remove();
                   
         }
 
@@ -108,12 +158,25 @@
 
         $('#addTr2').click(function() {
 
-
-
-            addTr(0);
-            delTr();
+            location.href = "<?php echo url_for('shift/rollXML?schedule_id='.$schedule_id) ?>";
+            
 
         });
+
+
+        $('#frmEmpDelDependents a').live('click', function() {
+          
+            var id = $(this).attr("id");
+
+            $('#emgcontacts_shiftResultID').val(id);
+            
+        });
+
+        $('#btnSaveEContact').click(function() {
+            $('#frmEmpEmgContact').submit();
+        });
+
+    
 
        
 

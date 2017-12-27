@@ -26,6 +26,18 @@ abstract class BaseWorkShiftType extends sfDoctrineRecord
              'length' => 11,
              ));
 
+        $this->hasColumn('copy_type', 'integer', 11, array(
+             'type' => 'integer',
+             'length' => 11,
+             ));
+
+        $this->hasColumn('require_employee', 'integer', 11, array(
+             'type' => 'integer',
+             'length' => 11,
+             ));
+
+
+
 
         $this->hasColumn('start_time', 'time', null, array(
              'type' => 'time',

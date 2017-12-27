@@ -44,6 +44,20 @@ class ScheduleDao extends BaseDao {
         }        
         
     }
+    public function getScheduleListNew() {
+        
+        try {
+            
+            $q = Doctrine_Query::create()->from('WorkSchedule')
+                                         ->orderBy('id');
+            
+            return $q->fetchArray();            
+            
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }        
+        
+    }
 
     public function updateSchedule(WorkSchedule $workShift) {
 

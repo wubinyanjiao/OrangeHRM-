@@ -4,6 +4,8 @@
 class ShiftDao extends BaseDao {
 
     public function saveShift(WorkShiftNew $shift) {
+
+      // echo '<pre>';  var_dump($shift);exit;
         try {
             $shift->save();            
         } catch (Exception $e) {
@@ -134,6 +136,17 @@ class ShiftDao extends BaseDao {
         }
         
     }
+    
+
+    public function saveShiftResult(WorkShiftResult $shiftResult) {
+        
+        try {
+            $shiftResult->save();            
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }
+        
+    }
 
 
     public function getShiftDateList($scheduleId) {
@@ -141,6 +154,23 @@ class ShiftDao extends BaseDao {
         try {
             $q = Doctrine_Query:: create()->from('WorkShiftDate sd')
                             ->leftJoin('sd.shiftList t')
+                            ->where('sd.schedule_id = ?', $scheduleId)
+                            ->orderBy('sd.id ASC');
+
+            return $q->fetchArray();
+
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }
+        
+    }
+
+ 
+    public function getShiftDateListArr($scheduleId) {
+         
+        try {
+            $q = Doctrine_Query:: create()->from('WorkShiftDate sd')
+                      
                             ->where('sd.schedule_id = ?', $scheduleId)
                             ->orderBy('sd.id ASC');
 
@@ -195,6 +225,22 @@ class ShiftDao extends BaseDao {
         
     }
 
+
+    public function getRosterResult($scheduleID){
+
+        try {
+            $q = Doctrine_Query:: create()->from('WorkShiftResult st')
+                            ->where('st.schedule_id = ?', $scheduleID)
+                            ->orderBy('st.id ASC');
+
+            return $q->fetchArray();
+
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }
+  
+    }
+
     public function getShiftTypeById($typeid) {
          
         try {
@@ -208,6 +254,20 @@ class ShiftDao extends BaseDao {
             throw new DaoException($e->getMessage(), $e->getCode(), $e);
         }
         
+    }
+
+    public function getShiftResutById($id){
+        try {
+            $q = Doctrine_Query:: create()->from('WorkShiftResult st')
+                            ->where('st.id = ?', $id)
+                            ->orderBy('st.id ASC');
+
+            return $q->fetchOne();
+
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }
+
     }
 
 

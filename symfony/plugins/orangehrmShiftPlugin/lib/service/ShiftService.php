@@ -59,6 +59,12 @@ class ShiftService extends BaseService {
 
         return $this->getShiftDao()->getShifts($schedule_id);
     }
+    public function saveShiftResult(WorkShiftResult $shiftResult) {
+        
+        return $this->getShiftDao()->saveShiftResult($shiftResult);
+        
+    }
+    
     public function getShiftList($schedule_id) {
 
         return $this->getShiftDao()->getShiftList($schedule_id);
@@ -68,10 +74,16 @@ class ShiftService extends BaseService {
         return $this->getShiftDao()->getShiftDateList($schedule_id);
     }
 
+    public function getShiftDateListArr($schedule_id) {
+
+        return $this->getShiftDao()->getShiftDateListArr($schedule_id);
+    }
+
     public function getShiftDateById($dateId) {
 
         return $this->getShiftDao()->getShiftDateById($dateId);
     }
+    
 
 
     public function getShiftTypeList($schedule_id) {
@@ -87,7 +99,12 @@ class ShiftService extends BaseService {
     public function getShiftTypeById($type_id) {
 
         return $this->getShiftDao()->getShiftTypeById($type_id);
-    }
+    } 
+
+    public function getShiftResutById($id) {
+
+        return $this->getShiftDao()->getShiftResutById($id);
+    } 
     public function getShiftAssignmentList($schedule_id) {
 
         return $this->getShiftDao()->getShiftAssignmentList($schedule_id);
@@ -2282,13 +2299,32 @@ class ShiftService extends BaseService {
 
     public function getRosterResult($scheduleID){
 
+        return $this->getShiftDao()->getRosterResult($scheduleID);
+  
+    }
+
+
+
+    public function setRosterResult($scheduleID){
+
         $file_path='http://localhost:8080/www/OrangeHRM/symfony/plugins/orangehrmShiftPlugin/lib/service/files/roster_'.$scheduleID.'_solved.xml';
 
 
        $arr = file_get_contents($file_path);
 
        $result=$this->xmlToArray($arr);
-       return $result;
+
+
+       foreach ($result['Assignment'] as $key => $assignment) {
+            $shiftResult=new WorkShiftResult;
+            $shiftResult->setScheduleID($scheduleID);
+            $shiftResult->setShiftDate($assignment['Date']);
+            $shiftResult->setEmpNumber($assignment['Employee']);
+            $shiftResult->setShiftTypeId($assignment['ShiftType']);
+            $this->saveShiftResult($shiftResult); 
+
+        }
+      
   
     }
 

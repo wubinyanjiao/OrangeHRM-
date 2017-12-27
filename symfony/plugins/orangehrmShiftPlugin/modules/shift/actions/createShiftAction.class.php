@@ -53,8 +53,11 @@ class createShiftAction extends baseShiftAction {
             }
 
             $essMode = !$adminMode && !empty($loggedInEmpNum) && ($empNumber == $loggedInEmpNum);
-            $param = array('empNumber' => $empNumber, 'ESS' => $essMode, 'dependentPermissions' => $this->dependentPermissions,'scheduleID' => $schedule_id);
 
+            
+
+            $param = array('empNumber' => $empNumber, 'ESS' => $essMode, 'dependentPermissions' => $this->dependentPermissions,'scheduleID' => $schedule_id);
+            $this->leavecommentForm = new AddShiftTypeForm(array(),$param,true);
             $this->setForm(new ShiftDependentForm(array(), $param, true));
             $this->deleteForm = new EmployeeEmergencyContactsDeleteForm(array(), $param, true);
 
@@ -64,11 +67,19 @@ class createShiftAction extends baseShiftAction {
             $this->shiftTypes = $this->getShiftTypeService()->getShiftTypes($schedule_id);
 
             $shift_type_time=$this->_getShiftTypeTime();
+
+
             ////根据排班计划从数据库中获取排班列表
             $this->shift_list=$this->getShiftService()->getShifts($schedule_id);
 
+
+            $shiftDate_list=$this->getShiftService()->getShiftDateList($schedule_id);
+
+
             $this->shiftTypes=$this->_getShiftTypeList();
             $this->shiftDates=$this->_getShiftDateList();
+            $this->shiftdates_list=$shiftDate_list;
+           // echo '<pre>';var_dump( $this->shiftdates_list);exit;
           
             $shifttype=$_POST['shiftTypeID'];
 
@@ -103,10 +114,11 @@ class createShiftAction extends baseShiftAction {
 
         //获取排班类型列表
         foreach($this->shiftTypes as $shiftType) {
-          
+
+
             $type_time['start_time'] = substr($shiftType->start_time,0,5);
             $type_time['end_time'] = substr($shiftType->end_time,0,5);
-
+            $type_time['required_employee'] = $shiftType->require_employee;
             $time_list[$shiftType->getId()] = $type_time;
             
         }

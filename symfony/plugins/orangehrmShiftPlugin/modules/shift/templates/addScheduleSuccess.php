@@ -1,6 +1,7 @@
 <?php 
 use_javascript(plugin_web_path('orangehrmShiftPlugin', 'js/addScheduleSuccess')); 
 
+$haveContacts=$workScheduleList -> count();
 // use_stylesheet(plugin_web_path('orangehrmShiftPlugin', 'css/addScheduleSuccess.css'));
 
 ?>
@@ -9,7 +10,7 @@ use_javascript(plugin_web_path('orangehrmShiftPlugin', 'js/addScheduleSuccess'))
 <div id="workShift" class="box" <?php echo $hideForm ? "style='display:none'" : "";?> >
     
     <div class="head">
-        <h1 id="workShiftHeading"><?php echo __("Work Shift"); ?></h1>
+        <h1 id="workShiftHeading"><?php echo __("排班计划"); ?></h1>
     </div>
     
     <div class="inner">
@@ -62,12 +63,87 @@ use_javascript(plugin_web_path('orangehrmShiftPlugin', 'js/addScheduleSuccess'))
         </form>
         
     </div>
+    <div id="customerList">
     
+        <div class="head">
+            <h1><?php echo __("计划列表"); ?></h1>
+        </div>
+        
+        <div class="inner">
+            
+            <?php include_partial('global/flash_messages', array('prefix' => 'viewEmergencyContacts')); ?>
+            
+            <form name="frmEmpDelEmgContacts" id="frmEmpDelEmgContacts" method="post" action="">
+       
+             
+                
+                <table id="emgcontact_list" class="table hover">
+                    <thead>
+                        <tr>
+                            
+                            <th class="check" style="width:2%"><input type='checkbox' id='checkAll'/></th>
+                           
+                            <th><?php echo __("ID"); ?></th>
+                            <th class="emgContactName"><?php echo __("轮班类型名"); ?></th>
+                            <th><?php echo __("开始时间"); ?></th>
+                       
+                            <th><?php echo __("查看排班"); ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if (!$haveContacts) { ?>
+                        <tr>
+                            
+                            <td class="check"></td>
+                            
+                            <td><?php echo __(TopLevelMessages::NO_RECORDS_FOUND); ?></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <?php } else {
+                        $row = 0;
+                        
+                        foreach ($workScheduleList as $schedule) :
+                            
+                            $cssClass = ($row % 2) ? 'even' : 'odd';
+                            echo '<tr class="' . $cssClass . '">';
+                            echo "<td class='check'><input type='checkbox' class='checkbox' name='chkecontactdel[]' value='" . $schedule['id'] . "'/></td>";
+
+                          
+                            ?>
+                            <td id="<?php echo $schedule['id']?>" value="<?php echo $schedule['id']?>"><?php echo $schedule['id'];?></td>
+                            <td class="emgContactName" valign="top">
+                                <a href="#" id="schedule_shift"><?php echo $schedule['name']; ?></a>
+                            </td>
+                             <input type="hidden" id="scheduleID_<?php echo $schedule->id; ?>" value="<?php echo $schedule->schedule_id?>" />
+                            <input type="hidden" id="shiftTypeID_<?php echo $schedule->id; ?>" value="<?php echo $schedule->id?>" />
+
+                            <input type="hidden" id="shiftTypeName_<?php echo $schedule->id; ?>" value="<?php echo $schedule->name?>" />
+                            <input type="hidden" id="abbreviation_<?php echo $schedule->id; ?>" value="<?php echo $schedule->name?>" />
+                            <input type="hidden" id="end_time_<?php echo $schedule->id; ?>" value="<?php echo $end_time;?>" />
+                            <input type="hidden" id="start_time_<?php echo $schedule->id; ?>" value="<?php echo $start_time;?>" />
+                            <input type="hidden" id="status_<?php echo $schedule->id; ?>" value="<?php echo $schedule->status;?>" />
+                            <?php
+                          
+                            echo "<td valigh='top'>" . $schedule['shiftDate'] . '</td>';
+                    
+                            echo "<td valigh='top'><a id='btnCatch'>" .'点击查看'. '</a></td>';
+                            echo '</tr>';
+                            $row++;
+                        endforeach;
+                        } ?>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+</div>
 </div>
 
-<div id="customerList">
-    <?php include_component('core', 'ohrmList', $parmetersForListCompoment); ?>
-</div>
+
+
 
 <!-- Confirmation box HTML: Begins -->
 <div class="modal hide" id="deleteConfModal">
@@ -95,10 +171,16 @@ use_javascript(plugin_web_path('orangehrmShiftPlugin', 'js/addScheduleSuccess'))
 
 <script type="text/javascript">
 
+       $('#btnCatch').click(function() {
+            location.href = "<?php echo url_for('shift/runJava?schedule_id='.$schedule_id) ?>";
+        });
+        
+
     var workShiftList = <?php echo $form->getScheduleListAsJson();?>;
     var lang_invalidDate = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, array('%format%' => $displayDateFormat)) ?>';
         
     var workShiftInfoUrl = "<?php echo url_for("shift/createShift?schedule_id="); ?>";
+    var workShiftResult = "<?php echo url_for("shift/createXml?schedule_id="); ?>";
     var workShiftEmpInfoUrl = "<?php echo url_for("admin/getWorkShiftEmpInfoJson?id="); ?>";
 
     var lang_Required = '<?php echo __(ValidationMessages::REQUIRED); ?>';
@@ -154,7 +236,7 @@ use_javascript(plugin_web_path('orangehrmShiftPlugin', 'js/addScheduleSuccess'))
             }
 
             //获取七天后时间
-            var ddd=7;
+            var ddd=6;
             ttt=new Date(start_time).getTime()+ddd*24000*3600;
             endTime=new Date();
             endTime.setTime(ttt);
@@ -171,7 +253,7 @@ use_javascript(plugin_web_path('orangehrmShiftPlugin', 'js/addScheduleSuccess'))
                 this.checked=false;
             }
             //获取七天后时间
-            var ddd=14;
+            var ddd=12;
             ttt=new Date(start_time).getTime()+ddd*24000*3600;
             endTime=new Date();
             endTime.setTime(ttt);
@@ -187,7 +269,7 @@ use_javascript(plugin_web_path('orangehrmShiftPlugin', 'js/addScheduleSuccess'))
                 this.checked=false;
             }
             //获取七天后时间
-            var ddd=31;
+            var ddd=18;
             ttt=new Date(start_time).getTime()+ddd*24000*3600;
             endTime=new Date();
             endTime.setTime(ttt);
@@ -203,7 +285,7 @@ use_javascript(plugin_web_path('orangehrmShiftPlugin', 'js/addScheduleSuccess'))
                 this.checked=false;
             }
             //获取七天后时间
-            var ddd=28;
+            var ddd=24;
             ttt=new Date(start_time).getTime()+ddd*24000*3600;
             endTime=new Date();
             endTime.setTime(ttt);

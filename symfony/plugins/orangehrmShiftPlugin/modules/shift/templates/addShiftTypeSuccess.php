@@ -38,10 +38,7 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
                             <?php echo $form['shiftTypeName']->renderLabel(__('Shift Type Name') . ' <em>*</em>'); ?>
                             <?php echo $form['shiftTypeName']->render(array("class" => "formInputText", "maxlength" => 50)); ?>
                         </li>
-                        <li>
-                            <?php echo $form['abbreviation']->renderLabel(__('Abbreviation') . ' <em>*</em>'); ?>
-                            <?php echo $form['abbreviation']->render(array("class" => "formInputText", "maxlength" => 50)); ?>
-                        </li>
+                    
                         <li>
                             <?php echo $form['start_time']->renderLabel(__('Start Time') . ' <em>*</em>'); ?>
                             <?php echo $form['start_time']->render(array("class" => "formInputText", "maxlength" => 50)); ?>

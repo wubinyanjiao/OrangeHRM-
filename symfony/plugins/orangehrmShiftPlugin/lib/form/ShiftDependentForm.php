@@ -110,7 +110,7 @@ class ShiftDependentForm extends BaseForm {
         $status = array('1' => __('Enabled'), '0' => __('Disabled'));
   
         $leaveStatusChoices =array('1'=> '周一', '2'=> '周二', '3'=>'周三','4'=>'周四', '5'=> '周五', '6'=>'周六','7'=>'周日');
-        $setStatusChoices =array('1' => "-- ". 'Select' . " --", '2'=> '一天', '3'=>'该轮班中所有天','4'=> '自定义');
+        $setStatusChoices =array('' => "-- ". 'Select' . " --", '2'=> '一天', '3'=>'该轮班中所有天','4'=> '自定义');
        
         $i18nHelper = sfContext::getInstance()->getI18N();
         
@@ -122,10 +122,10 @@ class ShiftDependentForm extends BaseForm {
         $widgets['start_time'] = new ohrmWidgetTimeDropDown();
 
         $widgets['end_time'] = new ohrmWidgetTimeDropDown();
-        $widgets['relationshipType'] = new sfWidgetFormSelect(array('choices' => $setStatusChoices));
+     /*   $widgets['relationshipType'] = new sfWidgetFormSelect(array('choices' => $setStatusChoices));
         $widgets['relationship'] = new ohrmWidgetCheckboxGroup(
                 array('choices' => $leaveStatusChoices,
-                      'show_all_option' => true));
+                      'show_all_option' => true));*/
 
         $widgets['required_employee'] = new sfWidgetFormInputText();
 
@@ -155,10 +155,10 @@ class ShiftDependentForm extends BaseForm {
            
             'shiftType' => new sfValidatorString(array('required' => true, 'max_length' => 13)),
             'shiftDays' => new sfValidatorString(array('required' => true, 'max_length' => 13)),
-            'relationshipType' => new sfValidatorChoice(array('choices' => array_keys($relationshipChoices))),
+            /*'relationshipType' => new sfValidatorChoice(array('choices' => array_keys($relationshipChoices))),
             'relationship' => new sfValidatorChoice(
                 array('choices' => array_keys($leaveStatusChoices), 
-                      'required' => false, 'multiple' => true)),
+                      'required' => false, 'multiple' => true)),*/
             'status' => new sfValidatorString(array('required' => false)),
         );
         
@@ -212,16 +212,9 @@ class ShiftDependentForm extends BaseForm {
 
         return number_format($hours, 2);
     }
-    /**
-     * Save employee contract
-     创建排班；是在指定计划中的指定某一天的一个排班；
-     首先判断轮班类型：通过时间来判断是否发生了改变，如果发生了改变，保存修改，如果没有变，则不需要修改；
-     其次，判断该排班复制情况：
-      1, 仅仅对当天有效：则只保存在该scheduldid 下的shiftDayID 下面
-      2，如果是复制到所有天：foreach计划中的所有天，然后将排班复制进去；
-      3，如果只是应用到指定天（例如，周六，周日）：则循环所有天，然后将排班输入
-     */
+
     public function save() { 
+
 
         $shift_list['shiftName']=$this->getValue('name');//轮班名称
         $shift_list['shift_id']=$this->getValue('shiftId');//轮班名称
@@ -239,13 +232,18 @@ class ShiftDependentForm extends BaseForm {
         $this->shiftDates = $this->getShiftDateService()->getShiftDates($shift_list['scheduleID']);
         $shift_date=$this->_getShiftDateList();
         unset($shift_date[""]);
-     
+
+
+      
+
+       $shiftTypeEntity=$this->getShiftTypeService()->getShiftTypeById($shift_list['shiftType']);
+
+
         //新建排班
         if (empty($shift_list['shift_id'])) {
              //如果排班仅对当天生效；
-            if($shift_list['relationshipType']==2){
+            if($shiftTypeEntity->copy_type==2){
                     $shift = new WorkShiftNew;
-                    
                     $create_at=date("Y-m-d",time());
                     $shift->setName($shift_list['shiftName']);
                     $shift->setStartTime($shift_list['start_time']);    
@@ -267,7 +265,7 @@ class ShiftDependentForm extends BaseForm {
             }
 
             //若果该排班对计划中所有日期生效； 
-            if($shift_list['relationshipType']==3){
+            if($shiftTypeEntity->copy_type==3){
                 // var_dump($shift_date);exit;
                 
                 foreach ($shift_date as $key => $shiftDate) {
@@ -293,7 +291,7 @@ class ShiftDependentForm extends BaseForm {
                    
             }
             //如果排班特定日期生效；
-            if($shift_list['relationshipType']==4){
+            if($shiftTypeEntity->copy_type==4){
 
                 //获取日期对应的星期ID,日期ID对应星期ID；
                 foreach ($shift_date as $key => $date) {
@@ -329,14 +327,32 @@ class ShiftDependentForm extends BaseForm {
                     $shift_date=$shift->getShiftdateId();
                     $this->saveShiftAssignment($shift_id,$shift_list['required_employee'],$shift_list['scheduleID'],$shift_date);
                     $this->_saveEmployeeWorkShift($shift_id);
-                    $this->_saveEmployeeWorkShift($shift_id);
+               
 
                 }
             }
 
             $message = array('messageType' => 'success', 'message' => __(TopLevelMessages::SAVE_SUCCESS));
         } else {//更新
-            $shift = $this->getShiftService()->getShiftById($id);
+
+
+
+            $shift = $this->getShiftService()->getShiftById($shift_list['shift_id']);
+
+            
+            $create_at=date("Y-m-d",time());
+            $shift->setName($shift_list['shiftName']);
+
+            $shift->setStartTime($shift_list['start_time']);    
+            $shift->setEndTime($shift_list['end_time']);  
+            $shift->setScheduleId($shift_list['scheduleID']);
+            $shift->setShiftTypeId($shift_list['shiftType']);
+            $shift->setShiftdateId($shift_list['shiftDate']); 
+            $shift->setCreateAt($create_at); 
+            $shift->setHoursPerDay($this->getDuration($shift_list['start_time'], $shift_list['end_time']));
+            $shift->setStatus($shift_list['status']); 
+            $shift->setRequiredEmployee($shift_list['required_employee']);
+            $shift->setCreateAt($create_at); 
             $this->getShiftService()->saveShift($shift); 
             $message = array('messageType' => 'success', 'message' => __(TopLevelMessages::UPDATE_SUCCESS));
         }
@@ -356,7 +372,6 @@ class ShiftDependentForm extends BaseForm {
 
     //默认如果创建班，也就给全部员工分配上这个班
     private function _saveEmployeeWorkShift($workShiftId) {
-
 
        //获取所有员工编号。然后喂每个员工分配这个班
        $empArray = $this->getShiftService()->getEmployeeList();

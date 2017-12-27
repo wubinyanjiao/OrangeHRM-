@@ -61,6 +61,10 @@ class ScheduleService extends BaseService {
         return $this->scheduleDao->getScheduleList();
     }
 
+    public function getScheduleListNew() {
+        return $this->scheduleDao->getScheduleListNew();
+    }
+
     public function updateSchedule($schedule) {
         return $this->scheduleDao->updateSchedule($schedule);
     }
@@ -70,7 +74,6 @@ class ScheduleService extends BaseService {
     }
     
     public function getShiftContranctsBySchedule($status=null) {
-
 
         return $this->getScheduleDao()->getShiftContranctsBySchedule($status);
     }

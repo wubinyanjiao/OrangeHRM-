@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <NurseRoster id="1">
 	<id>1</id>
-	<code>roster_undefined</code>
+	<code>roster_1</code>
 	<nurseRosterParametrization id="2">
 		<id>0</id>
 		<planningWindowStart reference=""/>

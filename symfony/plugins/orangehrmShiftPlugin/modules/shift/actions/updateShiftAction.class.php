@@ -32,8 +32,11 @@ class updateShiftAction extends baseShiftAction {
      */
     public function execute($request) {
 
-        $contacts = $request->getParameter('shift_type');
+        $contacts = $request->getParameter('emgcontacts');
 
+        $schedule_id= $request->getParameter('schedule_id');
+        // var_dump($schedule_id);exit;
+       
        
         $loggedInEmpNum = $this->getUser()->getEmployeeNumber();
         $adminMode = $this->getUser()->hasCredential(Auth::ADMIN_ROLE);
@@ -41,13 +44,17 @@ class updateShiftAction extends baseShiftAction {
         $essMode = !$adminMode && !empty($loggedInEmpNum) && ($empNumber == $loggedInEmpNum);
 
         $param = array('empNumber' => $empNumber, 'ESS' => $essMode, 'emergencyContactPermissions' => $this->emergencyContactPermissions);
+       
 
         $this->form = new AddShiftTypeForm(array(), $param, true);
-
+        
         if ($this->getRequest()->isMethod('post')) {
 
             $this->form->bind($request->getParameter($this->form->getName()));
+
             if ($this->form->isValid()) {
+
+               
                 $shifType=$this->form->save();
              
                 $schedule_id=$shifType['scheduleID'];
@@ -57,7 +64,7 @@ class updateShiftAction extends baseShiftAction {
         
         $empNumber = $request->getParameter('empNumber');
 
-        $this->redirect("shift/addShiftType?schedule_id=$schedule_id");
+        $this->redirect("shift/createShift?schedule_id=$schedule_id");
     }
 
 }

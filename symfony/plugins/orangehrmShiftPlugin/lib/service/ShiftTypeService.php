@@ -63,6 +63,8 @@ class ShiftTypeService extends BaseService {
         return $this->getShiftTypeDao()->saveShiftType($shiftType);
     }
 
+    
+
     public function getShiftTypes($schedule_id) {
         return $this->getShiftTypeDao()->getShiftTypes($schedule_id);
     }

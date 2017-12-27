@@ -22,7 +22,7 @@ class AddShiftTypeForm extends BaseForm {
     public function configure() {
 
         $scheduleID = $this->getOption('scheduleID');
-        
+    
         $widgets = array('scheduleID' => new sfWidgetFormInputHidden(array(), array('value' => $scheduleID)));
         $validators = array('scheduleID' => new sfValidatorString(array('required' => false)));
         
@@ -47,15 +47,20 @@ class AddShiftTypeForm extends BaseForm {
         $widgets = array();
 
         $status = array('1' => __('Enabled'), '0' => __('Disabled'));
+        $setStatusChoices =array('' => "-- ". 'Select' . " --", '2'=> '一天', '3'=>'该轮班中所有天','4'=> '自定义');
         $skills= $this->getSkillList();
         //creating widgets
         $widgets['shiftTypeID'] = new sfWidgetFormInputHidden();
         $widgets['end_time'] = new ohrmWidgetTimeDropDown();
        
         $widgets['shiftTypeName'] =new sfWidgetFormInputText();
-        $widgets['abbreviation'] = new sfWidgetFormInputText();
+       
         $widgets['start_time'] = new ohrmWidgetTimeDropDown();
-        
+
+        $widgets['required_employee'] = new sfWidgetFormInputText();
+
+        $widgets['relationshipType'] = new sfWidgetFormSelect(array('choices' => $setStatusChoices));
+
         $widgets['status'] = new sfWidgetFormSelect(array('choices' => $status), array("class" => "formInputText"));
      
         // $widgets['skill'] = new ohrmWidgetCheckboxGroup(
@@ -71,10 +76,11 @@ class AddShiftTypeForm extends BaseForm {
     public function getEmergencyContactValidators(){
 
         $skills= $this->getSkillList();
+        $relationshipChoices =array('1' => "-- ", '2'=> '一天', '3'=>'该轮班中所有天','4'=> '自定义');
         $validators = array(
             'shiftTypeID' => new sfValidatorNumber(array('required' => false, 'min' => 1)),
             'shiftTypeName' => new sfValidatorString(array('required' => true)),
-            'abbreviation' => new sfValidatorString(array('required' => true)),
+            // 'abbreviation' => new sfValidatorString(array('required' => true)),
             'start_time' => new sfValidatorTime(array(
                     'required' => true,
                     'time_format' => "/(?P<hour>2[0-3]|[01][0-9]):(?P<minute>[0-5][0-9])/",
@@ -83,6 +89,9 @@ class AddShiftTypeForm extends BaseForm {
                     'required' => true,
                     'time_format' => "/(?P<hour>2[0-3]|[01][0-9]):(?P<minute>[0-5][0-9])/",
                     'time_output' => 'H:i')),
+            'required_employee' => new sfValidatorString(array('required' => true, 'trim'=>true, 'max_length'=>100)),
+
+            'relationshipType' => new sfValidatorChoice(array('choices' => array_keys($relationshipChoices))),
             
             'status' => new sfValidatorString(array('required' => false)),
             // 'skill' => new sfValidatorChoice(
@@ -104,15 +113,20 @@ class AddShiftTypeForm extends BaseForm {
 
     public function save() {
 
+        
+
         $scheduleID=$this->getValue('scheduleID');
+
         $shiftTypeID=(int)$this->getValue('shiftTypeID');
         $shift_type['shiftTypeName']=$this->getValue('shiftTypeName');
-        $shift_type['abbreviation']=$this->getValue('abbreviation');
         $shift_type['start_time']=$this->getValue('start_time');
         $shift_type['end_time']=$this->getValue('end_time');
         $shift_type['status']=$this->getValue('status');
+        $shift_type['required_employee']=$this->getValue('required_employee');
+        $shift_type['relationshipType']=$this->getValue('relationshipType');
         $shift_type['scheduleID']=$scheduleID;
 
+       
         if (empty($shiftTypeID)) {
             $shiftType = new WorkShiftType();
             $message = array('scheduleID'=>$scheduleID,'messageType' => 'success', 'message' => __(TopLevelMessages::SAVE_SUCCESS));
@@ -127,6 +141,8 @@ class AddShiftTypeForm extends BaseForm {
         $shiftType->setStartTime($shift_type['start_time']);    
         $shiftType->setEndTime($shift_type['end_time']);  
         $shiftType->setScheduleId($shift_type['scheduleID']);   
+        $shiftType->setRequireEmployee($shift_type['required_employee']);  
+        $shiftType->setCopyType($shift_type['relationshipType']);   
         $shiftType->setCreateAt($create_at); 
 
         $shiftType->setStatus($shift_type['status']);
